@@ -1,39 +1,79 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Fancy Titles ✨
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Paquete que incluye splash screens personalizados para aplicaciones Flutter, inspirados en mis videojuegos y series favoritas. Adaptadas para ser utilizadas en aplicaciones Flutter y darles un toque especial.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+Funciona tanto en modo retrato como en modo paisaje.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Instalación 💻
 
-## Features
+Instalar a través del archivo `pubspec.yaml` añadiendo la dependencia:
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  fancy_titles:
+    git:
+      url: https://github.com/sudo-poporin/fancy-titles
+      ref: main
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Uso 📖
+
+Para utilizar el paquete `fancy_titles`, primero debes importar el paquete en tu archivo Dart:
+
+```dart
+import 'package:fancy_titles/fancy_titles.dart';
+```
+
+Luego, puedes utilizar las pantallas de inicio personalizadas en tu aplicación Flutter. Aquí tienes un ejemplo básico de cómo implementar una pantalla de inicio personalizada:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:fancy_titles/fancy_titles.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Fancy Titles Demo',
+      home: Stack(
+        children: [
+            // Tu pantalla principal
+            Scaffold(
+                appBar: AppBar(title: Text('Home')),
+                body: Center(child: Text('Bienvenido a la aplicación')),
+            ),
+            // Pantalla de inicio personalizada
+            SonicManiaSplash(
+                baseText: 'FANCY',
+                secondaryText: 'EXAMPLE',
+                lastText: 'APP',
+            ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### Aplicación de ejemplo ❤️
+
+Una aplicación de ejemplo está disponible en el directorio `example`. En ella se muestra cómo utilizar el paquete `fancy_titles`.
+
+### Pantallas hechas 📸
+
+- Sonic Mania
+- Persona 5
+- Neon Genesis Evangelion
+
+![Sonic Mania](docs/images/sonic-mania-portrait.gif) ![Persona 5](docs/images/persona5-portrait.gif) ![Neon Genesis Evangelion](docs/images/evangelion-portrait.gif)
+
+## Próximas características 🚀
+
+- Clase contenedora para las pantallas de inicio
+- Más pantallas de inicio personalizadas
