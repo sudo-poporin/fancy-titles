@@ -159,7 +159,8 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: longTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily: 'EVAMatisseClassic',
+                                            fontFamily:
+                                                'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),
