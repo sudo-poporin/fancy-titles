@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "fancy-titles",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "fancy-titles (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "fancy-titles (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}
