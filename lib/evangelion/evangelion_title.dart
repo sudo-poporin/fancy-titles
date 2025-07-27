@@ -123,7 +123,8 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily: 'EVAMatisseClassic',
+                                            fontFamily:
+                                                'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),
@@ -140,7 +141,8 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily: 'EVAMatisseClassic',
+                                            fontFamily:
+                                                'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),

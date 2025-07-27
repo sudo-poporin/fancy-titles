@@ -23,7 +23,7 @@ class Persona5Text extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 40,
-                fontFamily: 'Persona',
+                fontFamily: 'packages/fancy_titles/Persona',
                 height: 1.4,
                 decoration: TextDecoration.none,
                 foreground: Paint()
@@ -42,7 +42,7 @@ class Persona5Text extends StatelessWidget {
                 height: 1.4,
                 decoration: TextDecoration.none,
                 color: blackColor,
-                fontFamily: 'Persona',
+                fontFamily: 'packages/fancy_titles/Persona',
               ),
             ),
           ),

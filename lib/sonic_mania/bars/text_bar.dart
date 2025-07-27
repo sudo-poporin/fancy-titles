@@ -227,7 +227,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
                             textStyle: TextStyle(
                               fontSize: fontSize,
                               letterSpacing: 5,
-                              fontFamily: 'ManiaZoneCard',
+                              fontFamily: 'packages/fancy_titles/ManiaZoneCard',
                               decoration: TextDecoration.none,
                               foreground: Paint()
                                 ..style = PaintingStyle.stroke
@@ -245,7 +245,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
                             textStyle: TextStyle(
                               fontSize: fontSize,
                               letterSpacing: 5,
-                              fontFamily: 'ManiaZoneCard',
+                              fontFamily: 'packages/fancy_titles/ManiaZoneCard',
                               decoration: TextDecoration.none,
                               foreground: Paint()
                                 ..style = PaintingStyle.fill
