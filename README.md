@@ -1,12 +1,12 @@
 # Fancy Titles ✨
 
-Paquete que incluye splash screens personalizados para aplicaciones Flutter, inspirados en mis videojuegos y series favoritas. Adaptadas para ser utilizadas en aplicaciones Flutter y darles un toque especial.
+Paquete que incluye splash screens personalizados para aplicaciones Flutter y darles un toque especial. Inspirados en mis videojuegos y series favoritas.
 
 Funciona tanto en modo retrato como en modo paisaje.
 
 ## Instalación 💻
 
-Instalar a través del archivo `pubspec.yaml` añadiendo la dependencia:
+Instalar a través del archivo `pubspec.yaml` agregando la dependencia:
 
 ```yaml
 dependencies:
@@ -20,13 +20,13 @@ dependencies:
 
 ## Uso 📖
 
-Para utilizar el paquete `fancy_titles`, primero debes importar el paquete en tu archivo Dart:
+Para usar el paquete `fancy_titles`, primero tenés que importar el paquete en tu archivo Dart:
 
 ```dart
 import 'package:fancy_titles/fancy_titles.dart';
 ```
 
-Luego, puedes utilizar las pantallas de inicio personalizadas en tu aplicación Flutter. Aquí tienes un ejemplo básico de cómo implementar una pantalla de inicio personalizada:
+Luego, podés usar las pantallas de inicio personalizadas en tu aplicación Flutter. Acá tenés un ejemplo básico de cómo implementar una pantalla de inicio personalizada:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
 
 ### Aplicación de ejemplo ❤️
 
-Una aplicación de ejemplo está disponible en el directorio `example`. En ella se muestra cómo utilizar el paquete `fancy_titles`.
+Una aplicación de ejemplo está disponible en el directorio `example`. En ella se muestra cómo usar el paquete `fancy_titles`.
 
 ### Pantallas hechas 📸
 
