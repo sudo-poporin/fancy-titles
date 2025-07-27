@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class Persona5Image extends StatelessWidget {
   /// Shows a hadoken image
   const Persona5Image({
-    super.key,
     required String? imagePath,
     required bool withImageBlendMode,
+    super.key,
   }) : _imagePath = imagePath,
        _withImageBlendMode = withImageBlendMode;
 

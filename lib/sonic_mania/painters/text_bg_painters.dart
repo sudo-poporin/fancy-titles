@@ -14,10 +14,7 @@ class LargeBGDraw extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final path = Path();
-
-    // ignore: cascade_invocations
-    path
+    final path = Path()
       ..moveTo(-48, size.height * 0.6)
       ..lineTo(0, size.height * 0.6)
       ..lineTo(size.width, size.height * 0.6)
@@ -46,10 +43,7 @@ class SmallBGDraw extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final path = Path();
-
-    // ignore: cascade_invocations
-    path
+    final path = Path()
       ..moveTo(-24, size.height * 0.8)
       ..lineTo(0, size.height * 0.8)
       ..lineTo(size.width, size.height * 0.8)

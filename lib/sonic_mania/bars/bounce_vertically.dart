@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,9 +13,9 @@ class BounceVertically extends StatefulWidget {
     Duration delay = Duration.zero,
     bool bounceUp = true,
     super.key,
-  })  : _delay = delay,
-        _child = child,
-        _bounceUp = bounceUp;
+  }) : _delay = delay,
+       _child = child,
+       _bounceUp = bounceUp;
 
   final Widget _child;
 

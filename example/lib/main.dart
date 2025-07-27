@@ -23,15 +23,15 @@ class _MainAppState extends State<MainApp> {
     ),
     SonicManiaSplash(
       baseText: 'FANCY',
-      secondaryText: 'TITLE',
-      lastText: 'TEST',
+      secondaryText: 'EXAMPLE',
+      lastText: 'APP',
     ),
     EvangelionTitle(
       firstText: 'FANCY',
       secondText: 'TITLE',
       thirdText: 'APPLICATION',
-      fourthText: 'TEST',
-      fifthText: 'EXAMPLE',
+      fourthText: 'EXAMPLE',
+      fifthText: 'APP',
     ),
   ];
 

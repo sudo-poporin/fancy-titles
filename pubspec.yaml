@@ -14,24 +14,21 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  very_good_analysis: ^9.0.0
 
 flutter:
   generate: true
-  assets:
-    - assets/
-    - assets/fonts/
 
   fonts:
     - family: ManiaZoneCard
       fonts:
-        - asset: assets/fonts/mania-zone-card.ttf
+        - asset: packages/fancy_titles/fonts/mania-zone-card.ttf
           weight: 400
     - family: EVAMatisseClassic
       fonts:
-        - asset: assets/fonts/EVA-Matisse_Classic.ttf
+        - asset: packages/fancy_titles/fonts/EVA-Matisse_Classic.ttf
           weight: 400
     - family: Persona
       fonts:
-        - asset: assets/fonts/Persona-5-Menu-Font-Prototype.ttf
+        - asset: packages/fancy_titles/fonts/Persona-5-Menu-Font-Prototype.ttf
           weight: 400

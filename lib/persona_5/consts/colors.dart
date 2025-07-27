@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const redColor = Color(0xFFFF1518);
 
 /// Persona 5 black color
-const blackColor = Colors.black;
+const Color blackColor = Colors.black;
 
 /// Persona 5 white color
-const whiteColor = Colors.white;
+const Color whiteColor = Colors.white;

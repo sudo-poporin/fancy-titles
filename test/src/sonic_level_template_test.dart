@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:fancy_titles/sonic_mania/sonic_mania_splash.dart';
 import 'package:flutter_test/flutter_test.dart';
 

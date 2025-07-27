@@ -1,10 +1,9 @@
 import 'package:fancy_titles/sonic_mania/bars/bars.dart';
 import 'package:fancy_titles/sonic_mania/bars/text_bar.dart';
+import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
 import 'package:fancy_titles/sonic_mania/curtains/clipped_curtain.dart';
+import 'package:fancy_titles/sonic_mania/curtains/curtains.dart';
 import 'package:flutter/material.dart';
-
-import 'clippers/clippers.dart';
-import 'curtains/curtains.dart';
 
 /// Pantalla de inicio de Sonic Mania
 class SonicManiaSplash extends StatefulWidget {
