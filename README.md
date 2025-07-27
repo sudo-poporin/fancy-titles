@@ -37,27 +37,27 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fancy Titles Demo',
-      home: Stack(
-        children: [
-            // Tu pantalla principal
-            Scaffold(
-                appBar: AppBar(title: Text('Home')),
-                body: Center(child: Text('Bienvenido a la aplicación')),
-            ),
-            // Pantalla de inicio personalizada
-            SonicManiaSplash(
-                baseText: 'FANCY',
-                secondaryText: 'EXAMPLE',
-                lastText: 'APP',
-            ),
-        ],
-      ),
-    );
-  }
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: 'Fancy Titles Demo',
+            home: Stack(
+                children: [
+                    // Tu pantalla principal
+                    Scaffold(
+                        appBar: AppBar(title: Text('Home')),
+                        body: Center(child: Text('Bienvenido a la aplicación')),
+                    ),
+                    // Pantalla de inicio personalizada
+                    SonicManiaSplash(
+                        baseText: 'FANCY',
+                        secondaryText: 'EXAMPLE',
+                        lastText: 'APP',
+                    ),
+                ],
+        ),
+        );
+    }
 }
 ```
 
