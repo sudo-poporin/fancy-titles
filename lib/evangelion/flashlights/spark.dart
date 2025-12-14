@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:fancy_titles/evangelion/painters/painters.dart';
@@ -97,13 +98,15 @@ class _SparkState extends State<Spark> {
 
   @override
   void initState() {
-    Future<void>.delayed(
-      widget.delay,
-      () => setState(() => _fadeOut = false),
-    ).then(
-      (_) => Future<void>.delayed(
-        widget.duration,
-        () => setState(() => _fadeOut = true),
+    unawaited(
+      Future<void>.delayed(
+        widget.delay,
+        () => setState(() => _fadeOut = false),
+      ).then(
+        (_) => Future<void>.delayed(
+          widget.duration,
+          () => setState(() => _fadeOut = true),
+        ),
       ),
     );
 

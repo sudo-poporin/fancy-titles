@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +114,7 @@ class _ClippedBarState extends State<ClippedBar>
       setState(() {
         _beginOffset = const Offset(-0.5, -1);
       });
-      _controller.reverse();
+      unawaited(_controller.reverse());
     });
   }
 

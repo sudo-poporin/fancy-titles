@@ -41,23 +41,27 @@ class _Persona5TitleState extends State<Persona5Title>
     _showBackground = true;
     _showText = false;
 
-    Future<void>.delayed(
-      widget._delay,
-      () => setState(() => _showBackground = false),
-    ).then(
-      (_) => Future<void>.delayed(
-        widget._duration,
-        () => setState(() => _showBackground = true),
+    unawaited(
+      Future<void>.delayed(
+        widget._delay,
+        () => setState(() => _showBackground = false),
+      ).then(
+        (_) => Future<void>.delayed(
+          widget._duration,
+          () => setState(() => _showBackground = true),
+        ),
       ),
     );
 
-    Future<void>.delayed(
-      const Duration(milliseconds: 250),
-      () => setState(() => _showText = true),
-    ).then(
-      (_) => Future<void>.delayed(
-        widget._duration,
-        () => setState(() => _showText = false),
+    unawaited(
+      Future<void>.delayed(
+        const Duration(milliseconds: 250),
+        () => setState(() => _showText = true),
+      ).then(
+        (_) => Future<void>.delayed(
+          widget._duration,
+          () => setState(() => _showText = false),
+        ),
       ),
     );
 

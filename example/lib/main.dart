@@ -16,17 +16,16 @@ class _MainAppState extends State<MainApp> {
   int _currentTitleIndex = 0;
 
   final List<Widget> _titles = [
-    Persona5Title(
+    const Persona5Title(
       text: 'Takes your heart',
       imagePath: 'assets/persona-5.png',
-      withImageBlendMode: false,
     ),
     SonicManiaSplash(
       baseText: 'FANCY',
       secondaryText: 'EXAMPLE',
       lastText: 'APP',
     ),
-    EvangelionTitle(
+    const EvangelionTitle(
       firstText: 'FANCY',
       secondText: 'TITLE',
       thirdText: 'APPLICATION',
@@ -53,7 +52,6 @@ class _MainAppState extends State<MainApp> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _Button(
                         onPressed: () => _changeTitle(0),

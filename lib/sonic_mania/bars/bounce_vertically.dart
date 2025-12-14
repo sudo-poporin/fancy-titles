@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class BounceVerticallyState extends State<BounceVertically>
     Future.delayed(const Duration(milliseconds: 250), () {
       Future.delayed(delay, () {
         if (_disposed) return;
-        _controller.forward();
+        unawaited(_controller.forward());
       });
     });
 

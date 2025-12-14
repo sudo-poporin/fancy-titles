@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +82,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
       setState(() {
         _beginOffset = widget.endOffset;
       });
-      _controller.reverse();
+      unawaited(_controller.reverse());
     });
   }
 

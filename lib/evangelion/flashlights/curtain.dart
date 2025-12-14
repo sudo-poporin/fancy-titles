@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:flutter/material.dart';
 
@@ -92,13 +94,15 @@ class _CurtainState extends State<Curtain> {
 
   @override
   void initState() {
-    Future<void>.delayed(
-      widget._delay,
-      () => setState(() => _fadeOut = false),
-    ).then(
-      (_) => Future<void>.delayed(
-        widget._duration,
-        () => setState(() => _fadeOut = true),
+    unawaited(
+      Future<void>.delayed(
+        widget._delay,
+        () => setState(() => _fadeOut = false),
+      ).then(
+        (_) => Future<void>.delayed(
+          widget._duration,
+          () => setState(() => _fadeOut = true),
+        ),
       ),
     );
 

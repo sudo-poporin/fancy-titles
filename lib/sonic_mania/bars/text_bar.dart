@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:fancy_titles/sonic_mania/bars/animated_bouncing_text.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
@@ -150,13 +152,15 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
   }
 
   void _startAnimation() {
-    _controller.forward().then((_) => _slideIn()).whenComplete(_slideOut);
+    unawaited(
+      _controller.forward().then((_) => _slideIn()).whenComplete(_slideOut),
+    );
   }
 
   /// Desliza la barra dentro de la pantalla
   void _slideIn() {
     setState(() => _beginOffset = widget._stopOffset);
-    _controller.reverse();
+    unawaited(_controller.reverse());
   }
 
   /// Desliza la barra fuera de la pantalla
@@ -164,7 +168,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
     setState(() => _canShowText = true);
     Future<void>.delayed(const Duration(milliseconds: 3500), () {
       setState(() => _endOffset = widget._stopEndOffset);
-      _controller.forward();
+      unawaited(_controller.forward());
     });
   }
 
