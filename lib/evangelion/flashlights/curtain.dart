@@ -111,7 +111,7 @@ class _CurtainState extends State<Curtain> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.sizeOf(context);
 
     switch (widget._order) {
       case CurtainOrder.first:
@@ -130,9 +130,11 @@ class _CurtainState extends State<Curtain> {
               ScaleTransition(scale: animation, child: child),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : CustomPaint(
-                  painter: FirstCurtainPainter(),
-                  size: Size(screenSize.width, screenSize.height),
+              : RepaintBoundary(
+                  child: CustomPaint(
+                    painter: FirstCurtainPainter(),
+                    size: Size(screenSize.width, screenSize.height),
+                  ),
                 ),
         );
       case CurtainOrder.third:
@@ -142,9 +144,11 @@ class _CurtainState extends State<Curtain> {
               ScaleTransition(scale: animation, child: child),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : CustomPaint(
-                  painter: SecondCurtainPainter(),
-                  size: Size(screenSize.width, screenSize.height),
+              : RepaintBoundary(
+                  child: CustomPaint(
+                    painter: SecondCurtainPainter(),
+                    size: Size(screenSize.width, screenSize.height),
+                  ),
                 ),
         );
       case CurtainOrder.fourth:
@@ -154,9 +158,11 @@ class _CurtainState extends State<Curtain> {
               ScaleTransition(scale: animation, child: child),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : CustomPaint(
-                  painter: ThirdCurtainPainter(),
-                  size: Size(screenSize.width, screenSize.height),
+              : RepaintBoundary(
+                  child: CustomPaint(
+                    painter: ThirdCurtainPainter(),
+                    size: Size(screenSize.width, screenSize.height),
+                  ),
                 ),
         );
       case CurtainOrder.fifth:
@@ -166,9 +172,11 @@ class _CurtainState extends State<Curtain> {
               ScaleTransition(scale: animation, child: child),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : CustomPaint(
-                  painter: FourthCurtainPainter(),
-                  size: Size(screenSize.width, screenSize.height),
+              : RepaintBoundary(
+                  child: CustomPaint(
+                    painter: FourthCurtainPainter(),
+                    size: Size(screenSize.width, screenSize.height),
+                  ),
                 ),
         );
       case CurtainOrder.sixth:
@@ -185,9 +193,11 @@ class _CurtainState extends State<Curtain> {
           ),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : CustomPaint(
-                  painter: FifthCurtainPainter(),
-                  size: Size(screenSize.width, screenSize.height),
+              : RepaintBoundary(
+                  child: CustomPaint(
+                    painter: FifthCurtainPainter(),
+                    size: Size(screenSize.width, screenSize.height),
+                  ),
                 ),
         );
     }

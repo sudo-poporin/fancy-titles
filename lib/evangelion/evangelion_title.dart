@@ -37,6 +37,13 @@ class _EvangelionTitleState extends State<EvangelionTitle>
   bool _animationCompleted = false;
   bool _showTransparentBg = false;
 
+  // Valores cacheados para evitar recálculos
+  double _shortTitleFontSize = 78;
+  double _longTitleFontSize = 120;
+  double _subtitle = 48;
+  Size? _cachedScreenSize;
+  Orientation? _cachedOrientation;
+
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 450), () {
@@ -61,33 +68,43 @@ class _EvangelionTitleState extends State<EvangelionTitle>
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateCachedFontSizes();
+  }
+
+  void _updateCachedFontSizes() {
     final orientation = MediaQuery.orientationOf(context);
     final screenSize = MediaQuery.sizeOf(context);
 
-    var shortTitleFontSize = 78.0;
-    var longTitleFontSize = 120.0;
-    var subtitle = 48.0;
+    // Solo recalcular si cambiaron las dependencias
+    if (_cachedOrientation != orientation || _cachedScreenSize != screenSize) {
+      _cachedOrientation = orientation;
+      _cachedScreenSize = screenSize;
 
-    // If the screen is small, e.g. mobile devices, scale the text
-    if (screenSize.shortestSide < 800) {
-      final textScaler = orientation == Orientation.portrait
-          ? 250 / screenSize.width
-          : 200 / screenSize.height;
+      // If the screen is small, e.g. mobile devices, scale the text
+      if (screenSize.shortestSide < 800) {
+        final textScaler = orientation == Orientation.portrait
+            ? 250 / screenSize.width
+            : 200 / screenSize.height;
 
-      shortTitleFontSize = 78.0 * textScaler;
-      longTitleFontSize = 120.0 * textScaler;
-      subtitle = 78.0 * textScaler;
-    } else {
-      final textScaler = orientation == Orientation.portrait
-          ? screenSize.height / screenSize.width
-          : screenSize.width / screenSize.height;
+        _shortTitleFontSize = 78.0 * textScaler;
+        _longTitleFontSize = 120.0 * textScaler;
+        _subtitle = 78.0 * textScaler;
+      } else {
+        final textScaler = orientation == Orientation.portrait
+            ? screenSize.height / screenSize.width
+            : screenSize.width / screenSize.height;
 
-      shortTitleFontSize = 78.0 * textScaler;
-      longTitleFontSize = 120.0 * textScaler;
-      subtitle = 48.0 * textScaler;
+        _shortTitleFontSize = 78.0 * textScaler;
+        _longTitleFontSize = 120.0 * textScaler;
+        _subtitle = 48.0 * textScaler;
+      }
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 125),
       transitionBuilder: (child, animation) =>
@@ -120,7 +137,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                           widget._firstText,
                                           style: TextStyle(
                                             color: const Color(0xFFF1EEFF),
-                                            fontSize: shortTitleFontSize,
+                                            fontSize: _shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
                                             fontFamily:
@@ -138,7 +155,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                           widget._secondText,
                                           style: TextStyle(
                                             color: const Color(0xFFF1EEFF),
-                                            fontSize: shortTitleFontSize,
+                                            fontSize: _shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
                                             fontFamily:
@@ -156,7 +173,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                           widget._thirdText,
                                           style: TextStyle(
                                             color: const Color(0xFFF1EEFF),
-                                            fontSize: longTitleFontSize,
+                                            fontSize: _longTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
                                             fontFamily:
@@ -175,7 +192,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                           widget._fourthText,
                                           style: TextStyle(
                                             color: const Color(0xFFF1EEFF),
-                                            fontSize: subtitle,
+                                            fontSize: _subtitle,
                                             letterSpacing: -3.5,
                                             decoration: TextDecoration.none,
                                             fontFamily: 'Arial',
@@ -193,7 +210,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                           widget._fifthText,
                                           style: TextStyle(
                                             color: const Color(0xFFF1EEFF),
-                                            fontSize: subtitle,
+                                            fontSize: _subtitle,
                                             letterSpacing: -3.5,
                                             decoration: TextDecoration.none,
                                             fontFamily: 'Arial',

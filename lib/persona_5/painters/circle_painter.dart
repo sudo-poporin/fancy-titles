@@ -1,4 +1,5 @@
 import 'package:fancy_titles/persona_5/consts/const.dart';
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 
 /// This class is used to paint concentric circles on the screen.
@@ -26,7 +27,8 @@ class CirclePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant CirclePainter oldDelegate) {
+    // Solo repintar si los valores cambian
+    return !listEquals(_inflatedValues, oldDelegate._inflatedValues);
   }
 }
