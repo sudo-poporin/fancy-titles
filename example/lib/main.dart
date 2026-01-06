@@ -14,29 +14,43 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   int _currentTitleIndex = 0;
+  int _animationKey = 0;
 
-  final List<Widget> _titles = [
-    const Persona5Title(
-      text: 'Takes your heart',
-      imagePath: 'assets/persona-5.png',
-    ),
-    SonicManiaSplash(
-      baseText: 'FANCY',
-      secondaryText: 'EXAMPLE',
-      lastText: 'APP',
-    ),
-    const EvangelionTitle(
-      firstText: 'FANCY',
-      secondText: 'TITLE',
-      thirdText: 'APPLICATION',
-      fourthText: 'EXAMPLE',
-      fifthText: 'APP',
-    ),
-  ];
+  Widget _buildTitle(int index) {
+    return switch (index) {
+      0 => const Persona5Title(
+        text: 'Takes your heart',
+        imagePath: 'assets/persona-5.png',
+      ),
+      1 => SonicManiaSplash(
+        baseText: 'FANCY',
+        secondaryText: 'EXAMPLE',
+        lastText: 'APP',
+      ),
+      2 => const EvangelionTitle(
+        firstText: 'FANCY',
+        secondText: 'TITLE',
+        thirdText: 'APPLICATION',
+        fourthText: 'EXAMPLE',
+        fifthText: 'APP',
+      ),
+      3 => MarioMakerTitle(
+        title: 'FANCY TITLES\n 1-1',
+        imagePath: 'assets/luigi.png', // Replace with mario.png
+        circleRadius: 100,
+        bottomMargin: 150,
+        onAnimationStart: () {
+          debugPrint('Mario Maker animation started!');
+        },
+      ),
+      _ => const SizedBox.shrink(),
+    };
+  }
 
   void _changeTitle(int index) {
     setState(() {
       _currentTitleIndex = index;
+      _animationKey++; // Force rebuild to restart animation
     });
   }
 
@@ -69,6 +83,11 @@ class _MainAppState extends State<MainApp> {
                         label: 'Evangelion Title',
                         isSelected: _currentTitleIndex == 2,
                       ),
+                      _Button(
+                        onPressed: () => _changeTitle(3),
+                        label: 'Mario Maker Title',
+                        isSelected: _currentTitleIndex == 3,
+                      ),
                     ],
                   ),
                 ),
@@ -76,7 +95,10 @@ class _MainAppState extends State<MainApp> {
             ),
           ),
 
-          _titles[_currentTitleIndex],
+          KeyedSubtree(
+            key: ValueKey(_animationKey),
+            child: _buildTitle(_currentTitleIndex),
+          ),
         ],
       ),
     );
