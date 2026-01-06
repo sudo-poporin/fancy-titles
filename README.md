@@ -197,6 +197,70 @@ EvangelionTitle(
 
 ---
 
+### MarioMakerTitle 🍄
+
+Inspirado en las pantallas de título de **Super Mario Maker**. Incluye un círculo con efecto de rebote (jelly), una imagen que puede ser un GIF animado, expansión del círculo para revelar el fondo amarillo, y un efecto de iris-out al finalizar.
+
+![Mario Maker](docs/images/mario-maker.gif)
+
+**Duración total:** 4 segundos (auto-destrucción automática)
+
+#### Parámetros de MarioMakerTitle
+
+| Parámetro | Tipo | Requerido | Default | Descripción |
+|-----------|------|-----------|---------|-------------|
+| `title` | `String` | ✅ | - | Texto a mostrar después de la expansión del círculo |
+| `imagePath` | `String` | ✅ | - | Ruta del asset de imagen (soporta GIFs) |
+| `onAnimationStart` | `VoidCallback?` | ❌ | `null` | Callback ejecutado al iniciar la animación (útil para sonidos) |
+| `duration` | `Duration` | ❌ | `4s` | Duración total de la animación |
+| `circleRadius` | `double` | ❌ | `80` | Radio base del círculo |
+| `bottomMargin` | `double` | ❌ | `100` | Distancia desde el fondo de la pantalla al centro del círculo |
+| `titleStyle` | `TextStyle?` | ❌ | `null` | Estilo personalizado para el texto del título |
+| `irisOutAlignment` | `Alignment` | ❌ | `center` | Hacia dónde contrae el efecto iris-out |
+| `irisOutEdgePadding` | `double` | ❌ | `50` | Distancia mínima desde los bordes para el iris-out |
+
+#### Ejemplo Básico
+
+```dart
+MarioMakerTitle(
+  title: 'COURSE WORLD',
+  imagePath: 'assets/images/mario.gif',
+)
+```
+
+#### Ejemplo con Personalización
+
+```dart
+MarioMakerTitle(
+  title: 'NEW COURSE!',
+  imagePath: 'assets/images/mario.gif',
+  duration: const Duration(seconds: 5),
+  circleRadius: 100,
+  irisOutAlignment: Alignment.bottomRight,
+  onAnimationStart: () => audioPlayer.play('mario_sound.mp3'),
+)
+```
+
+> **Nota:** Si usás `imagePath`, asegurate de agregar el asset en tu `pubspec.yaml`:
+>
+> ```yaml
+> flutter:
+>   assets:
+>     - assets/images/
+> ```
+
+#### Secuencia de Animación de MarioMakerTitle
+
+1. Fondo negro inicial aparece
+2. 0s-1.2s: El círculo rebota con efecto jelly
+3. 1.2s-1.5s: La imagen escala hacia afuera
+4. 1.2s-2s: El círculo se expande revelando el fondo amarillo
+5. 1.4s-1.9s: El título se desliza desde arriba
+6. 3.5s-4s: El título se desvanece + efecto iris-out simultáneo
+7. 4s: El widget se auto-destruye
+
+---
+
 ## API Reference 📚
 
 ### Resumen de Widgets
@@ -206,6 +270,7 @@ EvangelionTitle(
 | `SonicManiaSplash` | Sonic Mania | 5s | `baseText` |
 | `Persona5Title` | Persona 5 | 4s | `text` |
 | `EvangelionTitle` | Neon Genesis Evangelion | 5s | Ninguno (todos opcionales) |
+| `MarioMakerTitle` | Super Mario Maker | 4s | `title`, `imagePath` |
 
 ### Fuentes Incluidas
 
@@ -247,6 +312,11 @@ Todos los widgets se adaptan automáticamente a diferentes tamaños de pantalla 
 - Colores de cortinas: azul, naranja, ámbar, verde, amarillo
 - Colores de barras: rojo, naranja, azul, verde
 
+#### Colores de Mario Maker
+
+- Amarillo: `#FFC800`
+- Negro: `#000000`
+
 ---
 
 ## Aplicación de Ejemplo ❤️
@@ -269,9 +339,3 @@ flutter run
 - Más pantallas de inicio personalizadas
 - Parámetros de personalización de colores
 - Callbacks de finalización de animación
-
----
-
-## Contribuir 🤝
-
-Las contribuciones son bienvenidas. Si tenés ideas para nuevas pantallas inspiradas en videojuegos o anime, no dudes en abrir un issue o pull request.
