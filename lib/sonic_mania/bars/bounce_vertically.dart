@@ -87,14 +87,16 @@ class BounceVerticallyState extends State<BounceVertically>
       animation: _controller,
       child: widget._child,
       builder: (context, child) {
-        return Opacity(
-          opacity: opacity.value,
+        // FadeTransition es más eficiente que Opacity widget
+        // porque no fuerza un saveLayer costoso
+        return FadeTransition(
+          opacity: opacity,
           child: Transform.translate(
             offset: Offset(
               0,
               sin(2 * pi * _animation.value) * (widget._bounceUp ? 40 : -40),
             ),
-            child: widget._child,
+            child: child,
           ),
         );
       },

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:fancy_titles/evangelion/painters/painters.dart';
+import 'package:fancy_titles/evangelion/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 /// Order of the flash light
@@ -115,7 +115,7 @@ class _SparkState extends State<Spark> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.sizeOf(context);
 
     switch (widget._order) {
       case SparkOrder.first:
@@ -135,12 +135,11 @@ class _SparkState extends State<Spark> {
           },
           child: _fadeOut
               ? const SizedBox.shrink()
-              : ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                  child: CustomPaint(
-                    painter: FirstCrossPainter(),
-                    size: Size(screenSize.width, screenSize.height),
-                  ),
+              : CachedBlurPainter(
+                  painter: FirstCrossPainter(),
+                  size: Size(screenSize.width, screenSize.height),
+                  sigmaX: 15,
+                  sigmaY: 15,
                 ),
         );
       case SparkOrder.second:
@@ -164,44 +163,40 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * 0.08,
                       top: screenSize.height * 0.08,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.3,
-                          height: screenSize.height * 1.3,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color.fromARGB(163, 255, 255, 255),
-                                width: 100,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.3,
+                          screenSize.height * 1.3,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(163, 255, 255, 255),
+                              width: 100,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
                     ),
-                    ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: CustomPaint(
-                        painter: SecondCrossPainter(),
-                        size: Size(screenSize.width, screenSize.height),
-                      ),
+                    CachedBlurPainter(
+                      painter: SecondCrossPainter(),
+                      size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
                 ),
@@ -227,34 +222,33 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * -0.27,
                       top: screenSize.height * -0.27,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.05,
-                          height: screenSize.height * 1.05,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color.fromARGB(40, 24, 67, 237),
-                                width: 60,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.05,
+                          screenSize.height * 1.05,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(40, 24, 67, 237),
+                              width: 60,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
@@ -262,34 +256,33 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * -0.37,
                       top: screenSize.height * -0.37,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.25,
-                          height: screenSize.height * 1.25,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color.fromARGB(40, 24, 237, 70),
-                                width: 60,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.25,
+                          screenSize.height * 1.25,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(40, 24, 237, 70),
+                              width: 60,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
@@ -297,44 +290,40 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * -0.5,
                       top: screenSize.height * -0.5,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.5,
-                          height: screenSize.height * 1.5,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color.fromARGB(28, 237, 24, 24),
-                                width: 80,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.5,
+                          screenSize.height * 1.5,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(28, 237, 24, 24),
+                              width: 80,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
                     ),
-                    ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: CustomPaint(
-                        painter: ThirdCrossPainter(),
-                        size: Size(screenSize.width, screenSize.height),
-                      ),
+                    CachedBlurPainter(
+                      painter: ThirdCrossPainter(),
+                      size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
                 ),
@@ -360,34 +349,33 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * 0.04,
                       top: screenSize.height * -0.24,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.25,
-                          height: screenSize.height * 1.25,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 100,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.25,
+                          screenSize.height * 1.25,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 100,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
@@ -395,44 +383,42 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * -0.25,
                       top: screenSize.height * -0.35,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 1.65,
-                          height: screenSize.height * 1.65,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 100,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 1.65,
+                          screenSize.height * 1.65,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 100,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
                     ),
-                    ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                      child: CustomPaint(
-                        painter: FourthCrossRenderer(),
-                        size: Size(screenSize.width, screenSize.height),
-                      ),
+                    CachedBlurPainter(
+                      painter: FourthCrossRenderer(),
+                      size: Size(screenSize.width, screenSize.height),
+                      sigmaX: 15,
+                      sigmaY: 15,
                     ),
                   ],
                 ),
@@ -458,44 +444,40 @@ class _SparkState extends State<Spark> {
                     Positioned(
                       right: screenSize.width * -1.45,
                       top: screenSize.height * -0.5,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: SizedBox(
-                          width: screenSize.width * 3.7,
-                          height: screenSize.height * 2,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 120,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0xFF2196F3),
-                                  blurRadius: 10,
-                                  spreadRadius: 10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                                BoxShadow(
-                                  color: Color(0xFF00BCD4),
-                                  blurRadius: 10,
-                                  spreadRadius: -10,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
+                      child: CachedBlurWidget(
+                        size: Size(
+                          screenSize.width * 3.7,
+                          screenSize.height * 2,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 120,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF2196F3),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                              BoxShadow(
+                                color: Color(0xFF00BCD4),
+                                blurRadius: 10,
+                                spreadRadius: -10,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
                           ),
                         ),
                       ),
                     ),
-                    ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: CustomPaint(
-                        painter: FifthCrossPainter(),
-                        size: Size(screenSize.width, screenSize.height),
-                      ),
+                    CachedBlurPainter(
+                      painter: FifthCrossPainter(),
+                      size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
                 ),
@@ -516,12 +498,11 @@ class _SparkState extends State<Spark> {
           },
           child: _fadeOut
               ? const SizedBox.shrink()
-              : ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: CustomPaint(
-                    painter: SixthCrossPainter(),
-                    size: Size(screenSize.width, screenSize.height),
-                  ),
+              : CachedBlurPainter(
+                  painter: SixthCrossPainter(),
+                  size: Size(screenSize.width, screenSize.height),
+                  sigmaX: 5,
+                  sigmaY: 5,
                 ),
         );
     }

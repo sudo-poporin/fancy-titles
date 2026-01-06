@@ -1,6 +1,6 @@
 name: fancy_titles
 description: "Una serie de splash screens animados para Flutter basados en mis juegos y animes favoritos."
-version: 1.0.3
+version: 1.0.4
 homepage:
 
 environment:
@@ -31,4 +31,8 @@ flutter:
     - family: Persona
       fonts:
         - asset: packages/fancy_titles/fonts/Persona-5-Menu-Font-Prototype.ttf
+          weight: 400
+    - family: BouCollege
+      fonts:
+        - asset: packages/fancy_titles/fonts/Bou-College-Font.ttf
           weight: 400

@@ -35,6 +35,7 @@ class _Persona5TitleState extends State<Persona5Title>
   late bool _animationCompleted = false;
   bool _showBackground = true;
   bool _showText = false;
+  bool _imagePrecached = false;
 
   @override
   void initState() {
@@ -69,6 +70,21 @@ class _Persona5TitleState extends State<Persona5Title>
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _precacheImageIfNeeded();
+  }
+
+  void _precacheImageIfNeeded() {
+    if (!_imagePrecached && widget._imagePath != null) {
+      _imagePrecached = true;
+      unawaited(
+        precacheImage(AssetImage(widget._imagePath!), context),
+      );
+    }
+  }
+
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSecuence() {
     Future.delayed(const Duration(milliseconds: 4000), () {
@@ -80,8 +96,8 @@ class _Persona5TitleState extends State<Persona5Title>
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final height = MediaQuery.of(context).size.height;
+    final orientation = MediaQuery.orientationOf(context);
+    final height = MediaQuery.sizeOf(context).height;
     final padding = orientation == Orientation.portrait
         ? height * 0.3
         : height * 0.5;

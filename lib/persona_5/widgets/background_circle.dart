@@ -9,26 +9,29 @@ class BackgroundCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(
-      child: CustomPaint(
-        painter: CirclePainter(
-          inflatedValues: [
-            1200,
-            1100,
-            1000,
-            900,
-            800,
-            700,
-            600,
-            500,
-            400,
-            300,
-            200,
-            100,
-            0,
-            -100,
-            -200,
-          ],
+    // RepaintBoundary aísla los repintados de los círculos concéntricos
+    return const RepaintBoundary(
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: CirclePainter(
+            inflatedValues: [
+              1200,
+              1100,
+              1000,
+              900,
+              800,
+              700,
+              600,
+              500,
+              400,
+              300,
+              200,
+              100,
+              0,
+              -100,
+              -200,
+            ],
+          ),
         ),
       ),
     );

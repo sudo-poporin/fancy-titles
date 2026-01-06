@@ -128,6 +128,12 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
   late Offset _endOffset;
   late bool _canShowText;
 
+  // Valores cacheados para evitar recálculos
+  double? _cachedFontSize;
+  double? _cachedStrokeWidth;
+  Orientation? _cachedOrientation;
+  Size? _cachedScreenSize;
+
   @override
   void initState() {
     _canShowText = false;
@@ -143,6 +149,30 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
     _startAnimation();
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateCachedSizes();
+  }
+
+  void _updateCachedSizes() {
+    final orientation = MediaQuery.orientationOf(context);
+    final screenSize = MediaQuery.sizeOf(context);
+
+    // Solo recalcular si cambiaron las dependencias
+    if (_cachedOrientation != orientation || _cachedScreenSize != screenSize) {
+      _cachedOrientation = orientation;
+      _cachedScreenSize = screenSize;
+
+      final constraints = BoxConstraints(
+        maxWidth: screenSize.width,
+        maxHeight: screenSize.height,
+      );
+      _cachedFontSize = _calculateSize(context, constraints);
+      _cachedStrokeWidth = _calculateStrokeWidth(_cachedFontSize!);
+    }
   }
 
   @override
@@ -193,14 +223,19 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
       child: Stack(
         children: [
           if (!_canShowText)
-            LayoutBuilder(
-              builder: (context, constraints) {
+            Builder(
+              builder: (context) {
+                // Usar valores cacheados
+                final screenWidth = _cachedScreenSize?.width ??
+                    MediaQuery.sizeOf(context).width;
+                final fontSize = _cachedFontSize ?? 24.0;
+
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 48),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                      minWidth: MediaQuery.of(context).size.width * 0.5,
-                      minHeight: _calculateSize(context, constraints),
+                      minWidth: screenWidth * 0.5,
+                      minHeight: fontSize,
                     ),
                     child: SizedBox(child: ColoredBox(color: widget._color)),
                   ),
@@ -208,10 +243,11 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
               },
             ),
           if (_canShowText)
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final fontSize = _calculateSize(context, constraints);
-                final strokeWidth = _calculateStrokeWidth(fontSize);
+            Builder(
+              builder: (context) {
+                // Usar valores cacheados en lugar de recalcular
+                final fontSize = _cachedFontSize ?? 24.0;
+                final strokeWidth = _cachedStrokeWidth ?? 4.0;
 
                 return CustomPaint(
                   painter: widget._painter,
@@ -220,44 +256,47 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    child: Stack(
-                      children: [
-                        Transform.scale(
-                          scaleY: widget._isWhiteText ? 1 : 1.23,
-                          alignment: Alignment.bottomCenter,
-                          child: BouncingText(
-                            text: widget._text,
-                            bounceUp: widget._bounceUp,
-                            textStyle: TextStyle(
-                              fontSize: fontSize,
-                              letterSpacing: 5,
-                              fontFamily: 'packages/fancy_titles/ManiaZoneCard',
-                              decoration: TextDecoration.none,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = strokeWidth
-                                ..color = widget._textBorderColor,
+                    // RepaintBoundary aísla repintados del Stack stroke + fill
+                    child: RepaintBoundary(
+                      child: Stack(
+                        children: [
+                          Transform.scale(
+                            scaleY: widget._isWhiteText ? 1 : 1.23,
+                            alignment: Alignment.bottomCenter,
+                            child: BouncingText(
+                              text: widget._text,
+                              bounceUp: widget._bounceUp,
+                              textStyle: TextStyle(
+                                fontSize: fontSize,
+                                letterSpacing: 5,
+                                fontFamily: 'packages/fancy_titles/ManiaZoneCard',
+                                decoration: TextDecoration.none,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = strokeWidth
+                                  ..color = widget._textBorderColor,
+                              ),
                             ),
                           ),
-                        ),
-                        Transform.scale(
-                          scaleY: widget._isWhiteText ? 1 : 1.23,
-                          alignment: Alignment.bottomCenter,
-                          child: BouncingText(
-                            text: widget._text,
-                            bounceUp: widget._bounceUp,
-                            textStyle: TextStyle(
-                              fontSize: fontSize,
-                              letterSpacing: 5,
-                              fontFamily: 'packages/fancy_titles/ManiaZoneCard',
-                              decoration: TextDecoration.none,
-                              foreground: Paint()
-                                ..style = PaintingStyle.fill
-                                ..color = widget._textColor,
+                          Transform.scale(
+                            scaleY: widget._isWhiteText ? 1 : 1.23,
+                            alignment: Alignment.bottomCenter,
+                            child: BouncingText(
+                              text: widget._text,
+                              bounceUp: widget._bounceUp,
+                              textStyle: TextStyle(
+                                fontSize: fontSize,
+                                letterSpacing: 5,
+                                fontFamily: 'packages/fancy_titles/ManiaZoneCard',
+                                decoration: TextDecoration.none,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.fill
+                                  ..color = widget._textColor,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

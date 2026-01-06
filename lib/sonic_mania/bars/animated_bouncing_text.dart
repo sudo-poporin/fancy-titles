@@ -24,13 +24,17 @@ class BouncingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: _textStyle,
-        children: _createBouncingSpans(
-          text: _text,
-          textStyle: _textStyle,
-          bounceUp: _bounceUp,
+    // RepaintBoundary aísla los repintados del texto animado
+    // evitando que afecten a widgets padres
+    return RepaintBoundary(
+      child: RichText(
+        text: TextSpan(
+          style: _textStyle,
+          children: _createBouncingSpans(
+            text: _text,
+            textStyle: _textStyle,
+            bounceUp: _bounceUp,
+          ),
         ),
       ),
     );
