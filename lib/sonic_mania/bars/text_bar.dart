@@ -197,6 +197,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
   void _slideOut() {
     setState(() => _canShowText = true);
     Future<void>.delayed(const Duration(milliseconds: 3500), () {
+      if (!mounted) return;
       setState(() => _endOffset = widget._stopEndOffset);
       unawaited(_controller.forward());
     });

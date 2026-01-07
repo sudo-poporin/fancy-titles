@@ -98,19 +98,19 @@ class _SparkState extends State<Spark> {
 
   @override
   void initState() {
-    unawaited(
-      Future<void>.delayed(
-        widget.delay,
-        () => setState(() => _fadeOut = false),
-      ).then(
-        (_) => Future<void>.delayed(
-          widget.duration,
-          () => setState(() => _fadeOut = true),
-        ),
-      ),
-    );
-
     super.initState();
+
+    unawaited(
+      Future<void>.delayed(widget.delay, () {
+        if (!mounted) return;
+        setState(() => _fadeOut = false);
+      }).then((_) {
+        return Future<void>.delayed(widget.duration, () {
+          if (!mounted) return;
+          setState(() => _fadeOut = true);
+        });
+      }),
+    );
   }
 
   @override
@@ -136,7 +136,7 @@ class _SparkState extends State<Spark> {
           child: _fadeOut
               ? const SizedBox.shrink()
               : CachedBlurPainter(
-                  painter: FirstCrossPainter(),
+                  painter: const FirstCrossPainter(),
                   size: Size(screenSize.width, screenSize.height),
                   sigmaX: 15,
                   sigmaY: 15,
@@ -195,7 +195,7 @@ class _SparkState extends State<Spark> {
                       ),
                     ),
                     CachedBlurPainter(
-                      painter: SecondCrossPainter(),
+                      painter: const SecondCrossPainter(),
                       size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
@@ -322,7 +322,7 @@ class _SparkState extends State<Spark> {
                       ),
                     ),
                     CachedBlurPainter(
-                      painter: ThirdCrossPainter(),
+                      painter: const ThirdCrossPainter(),
                       size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
@@ -415,7 +415,7 @@ class _SparkState extends State<Spark> {
                       ),
                     ),
                     CachedBlurPainter(
-                      painter: FourthCrossRenderer(),
+                      painter: const FourthCrossRenderer(),
                       size: Size(screenSize.width, screenSize.height),
                       sigmaX: 15,
                       sigmaY: 15,
@@ -476,7 +476,7 @@ class _SparkState extends State<Spark> {
                       ),
                     ),
                     CachedBlurPainter(
-                      painter: FifthCrossPainter(),
+                      painter: const FifthCrossPainter(),
                       size: Size(screenSize.width, screenSize.height),
                     ),
                   ],
@@ -499,7 +499,7 @@ class _SparkState extends State<Spark> {
           child: _fadeOut
               ? const SizedBox.shrink()
               : CachedBlurPainter(
-                  painter: SixthCrossPainter(),
+                  painter: const SixthCrossPainter(),
                   size: Size(screenSize.width, screenSize.height),
                   sigmaX: 5,
                   sigmaY: 5,

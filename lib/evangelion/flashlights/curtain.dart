@@ -94,19 +94,19 @@ class _CurtainState extends State<Curtain> {
 
   @override
   void initState() {
-    unawaited(
-      Future<void>.delayed(
-        widget._delay,
-        () => setState(() => _fadeOut = false),
-      ).then(
-        (_) => Future<void>.delayed(
-          widget._duration,
-          () => setState(() => _fadeOut = true),
-        ),
-      ),
-    );
-
     super.initState();
+
+    unawaited(
+      Future<void>.delayed(widget._delay, () {
+        if (!mounted) return;
+        setState(() => _fadeOut = false);
+      }).then((_) {
+        return Future<void>.delayed(widget._duration, () {
+          if (!mounted) return;
+          setState(() => _fadeOut = true);
+        });
+      }),
+    );
   }
 
   @override
@@ -132,7 +132,7 @@ class _CurtainState extends State<Curtain> {
               ? const SizedBox.shrink()
               : RepaintBoundary(
                   child: CustomPaint(
-                    painter: FirstCurtainPainter(),
+                    painter: const FirstCurtainPainter(),
                     size: Size(screenSize.width, screenSize.height),
                   ),
                 ),
@@ -146,7 +146,7 @@ class _CurtainState extends State<Curtain> {
               ? const SizedBox.shrink()
               : RepaintBoundary(
                   child: CustomPaint(
-                    painter: SecondCurtainPainter(),
+                    painter: const SecondCurtainPainter(),
                     size: Size(screenSize.width, screenSize.height),
                   ),
                 ),
@@ -160,7 +160,7 @@ class _CurtainState extends State<Curtain> {
               ? const SizedBox.shrink()
               : RepaintBoundary(
                   child: CustomPaint(
-                    painter: ThirdCurtainPainter(),
+                    painter: const ThirdCurtainPainter(),
                     size: Size(screenSize.width, screenSize.height),
                   ),
                 ),
@@ -174,7 +174,7 @@ class _CurtainState extends State<Curtain> {
               ? const SizedBox.shrink()
               : RepaintBoundary(
                   child: CustomPaint(
-                    painter: FourthCurtainPainter(),
+                    painter: const FourthCurtainPainter(),
                     size: Size(screenSize.width, screenSize.height),
                   ),
                 ),
@@ -195,7 +195,7 @@ class _CurtainState extends State<Curtain> {
               ? const SizedBox.shrink()
               : RepaintBoundary(
                   child: CustomPaint(
-                    painter: FifthCurtainPainter(),
+                    painter: const FifthCurtainPainter(),
                     size: Size(screenSize.width, screenSize.height),
                   ),
                 ),

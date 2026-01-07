@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-/// Fifth Curtain Painter
+/// Painter for the fifth curtain in Evangelion animation.
 class FifthCurtainPainter extends CustomPainter {
+  /// Creates a fifth curtain painter.
+  const FifthCurtainPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     final paintFill = Paint()
@@ -30,7 +33,8 @@ class FifthCurtainPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant FifthCurtainPainter oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }

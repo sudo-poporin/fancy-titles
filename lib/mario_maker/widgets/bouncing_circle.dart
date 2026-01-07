@@ -45,6 +45,41 @@ class _BouncingCircleState extends State<BouncingCircle>
   late final Animation<double> _scaleAnimation;
   late final Animation<double> _imageScaleAnimation;
 
+  // Static TweenSequence to avoid recreation on each widget initialization.
+  // Creates bounce effect:
+  // 1. Scale 1.0 → 0.85 (shrink)
+  // 2. Scale 0.85 → 1.15 (grow bigger)
+  // 3. Scale 1.15 → 0.92 (shrink slightly)
+  // 4. Scale 0.92 → 1.05 (grow slightly)
+  // 5. Scale 1.05 → 1.0 (settle)
+  static final _bounceTweenSequence = TweenSequence<double>([
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1, end: 0.85)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 15,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 0.85, end: 1.15)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 20,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1.15, end: 0.92)
+          .chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 18,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 0.92, end: 1.05)
+          .chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 22,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1.05, end: 1)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 25,
+    ),
+  ]);
+
   @override
   void initState() {
     super.initState();
@@ -61,39 +96,8 @@ class _BouncingCircleState extends State<BouncingCircle>
       duration: widget._imageScaleOutDuration,
     );
 
-    // Create bounce effect using TweenSequence:
-    // 1. Scale 1.0 → 0.85 (shrink)
-    // 2. Scale 0.85 → 1.15 (grow bigger)
-    // 3. Scale 1.15 → 0.92 (shrink slightly)
-    // 4. Scale 0.92 → 1.05 (grow slightly)
-    // 5. Scale 1.05 → 1.0 (settle)
-    _scaleAnimation = TweenSequence<double>([
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1, end: 0.85)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 15,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.85, end: 1.15)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 20,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.15, end: 0.92)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        weight: 18,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.92, end: 1.05)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        weight: 22,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.05, end: 1)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 25,
-      ),
-    ]).animate(_bounceController);
+    // Use static TweenSequence reference
+    _scaleAnimation = _bounceTweenSequence.animate(_bounceController);
 
     // Image scales from 1.0 to 0.0 (disappears)
     _imageScaleAnimation = Tween<double>(

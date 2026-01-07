@@ -46,25 +46,28 @@ class _EvangelionTitleState extends State<EvangelionTitle>
 
   @override
   void initState() {
+    super.initState();
+
     Future.delayed(const Duration(milliseconds: 450), () {
+      if (!mounted) return;
       setState(() {
         _canShowText = true;
       });
     });
 
     Future.delayed(const Duration(milliseconds: 3000), () {
+      if (!mounted) return;
       setState(() {
         _showTransparentBg = true;
       });
     });
 
     Future.delayed(const Duration(milliseconds: 5000), () {
+      if (!mounted) return;
       setState(() {
         _animationCompleted = true;
       });
     });
-
-    super.initState();
   }
 
   @override

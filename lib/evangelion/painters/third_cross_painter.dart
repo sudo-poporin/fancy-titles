@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-///
+/// Painter for the third cross in Evangelion animation.
 class ThirdCrossPainter extends CustomPainter {
+  /// Creates a third cross painter.
+  const ThirdCrossPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     // Layer 1
@@ -51,7 +54,8 @@ class ThirdCrossPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant ThirdCrossPainter oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }

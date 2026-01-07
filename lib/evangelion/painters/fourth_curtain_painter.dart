@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-/// Fourth Curtain Painter
+/// Painter for the fourth curtain in Evangelion animation.
 class FourthCurtainPainter extends CustomPainter {
+  /// Creates a fourth curtain painter.
+  const FourthCurtainPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     final paintFill = Paint()
@@ -41,7 +44,8 @@ class FourthCurtainPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant FourthCurtainPainter oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }

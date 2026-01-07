@@ -59,6 +59,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSecuence() {
     Future.delayed(const Duration(milliseconds: 5000), () {
+      if (!mounted) return;
       setState(() {
         _animationCompleted = true;
       });

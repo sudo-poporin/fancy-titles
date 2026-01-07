@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-///
+/// Painter for the fourth cross in Evangelion animation.
 class FourthCrossRenderer extends CustomPainter {
+  /// Creates a fourth cross painter.
+  const FourthCrossRenderer();
+
   @override
   void paint(Canvas canvas, Size size) {
     // Layer 1
@@ -64,7 +67,8 @@ class FourthCrossRenderer extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant FourthCrossRenderer oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }

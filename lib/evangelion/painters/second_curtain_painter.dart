@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-/// Second Curtain Painter
+/// Painter for the second curtain in Evangelion animation.
 class SecondCurtainPainter extends CustomPainter {
+  /// Creates a second curtain painter.
+  const SecondCurtainPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     final paintFill = Paint()
@@ -32,7 +35,8 @@ class SecondCurtainPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant SecondCurtainPainter oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }

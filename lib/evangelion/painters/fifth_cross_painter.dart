@@ -1,7 +1,10 @@
 import 'package:flutter/rendering.dart';
 
-///
+/// Painter for the fifth cross in Evangelion animation.
 class FifthCrossPainter extends CustomPainter {
+  /// Creates a fifth cross painter.
+  const FifthCrossPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     // Layer 1
@@ -60,7 +63,8 @@ class FifthCrossPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant FifthCrossPainter oldDelegate) {
+    // Path is static, no need to repaint
+    return false;
   }
 }
