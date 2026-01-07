@@ -5,35 +5,102 @@ import 'package:fancy_titles/mario_maker/consts/consts.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Mario Maker style title screen.
+/// Pantalla de título inspirada en Super Mario Maker.
 ///
-/// Displays a bouncing circle with an image that expands to reveal
-/// a yellow background, then shows a title sliding from the top.
+/// Muestra un círculo que rebota con una imagen dentro (efecto jelly),
+/// luego se expande revelando un fondo amarillo, y finalmente muestra
+/// un título que se desliza desde arriba.
 ///
-/// Timeline (4 seconds total):
-/// - 0s-1.2s: Circle bounces (jelly effect)
-/// - 1.2s-1.5s: Image scales out
-/// - 1.2s-2s: Circle expands to reveal yellow background
-/// - 1.4s-1.9s: Title slides in from top
-/// - 3.5s-4s: Title fades out + Iris-out effect (simultaneous)
-/// - 4s: Widget auto-destructs
+/// ## Ejemplo de uso
+///
+/// ```dart
+/// MarioMakerTitle(
+///   title: 'WORLD 1-1',
+///   imagePath: 'assets/mario.gif',
+/// )
+/// ```
+///
+/// ## Timeline de animación (4 segundos por defecto)
+///
+/// | Tiempo    | Evento                                |
+/// |-----------|---------------------------------------|
+/// | 0-1.2s    | Círculo rebota (efecto jelly)         |
+/// | 1.2-1.5s  | Imagen se escala hacia afuera         |
+/// | 1.2-2s    | Círculo se expande (fondo amarillo)   |
+/// | 1.4-1.9s  | Título entra deslizándose             |
+/// | 3.5-4s    | Fade out + Iris-out simultáneos       |
+/// | 4s        | Widget se auto-destruye               |
+///
+/// ## Personalización
+///
+/// - `duration`: Duración total de la animación
+/// - `circleRadius`: Tamaño inicial del círculo
+/// - `bottomMargin`: Posición vertical del círculo
+/// - `titleStyle`: Estilo personalizado para el texto
+/// - `irisOutAlignment`: Punto hacia donde converge el iris-out
+/// - `onAnimationStart`: Callback para sincronizar sonidos
+///
+/// Los tiempos de animación están definidos en [MarioMakerTiming].
+///
+/// Ver también:
+/// - `SonicManiaSplash` para estilo Sonic Mania
+/// - `Persona5Title` para estilo Persona 5
+/// - `EvangelionTitle` para estilo Evangelion
 class MarioMakerTitle extends StatefulWidget {
-  /// Creates a Mario Maker style title animation.
+  /// Crea una pantalla de título estilo Mario Maker.
   ///
-  /// [title] - The text to display after the circle expands
-  /// [imagePath] - Asset path for the image inside the circle (supports GIFs)
-  /// [onAnimationStart] - Optional callback executed when animation starts
-  ///   (useful for playing sounds)
-  /// [duration] - Total animation duration (default: 6 seconds)
-  /// [circleRadius] - Base radius of the circle (default: 80)
-  /// [bottomMargin] - Distance from bottom of screen to circle center
-  ///   (default: 100)
-  /// [titleStyle] - Optional custom style for the title text
-  /// [irisOutAlignment] - Where the iris-out effect contracts to
-  ///   (default: center). Use Alignment constants like Alignment.bottomRight,
-  ///   Alignment.topLeft, etc.
-  /// [irisOutEdgePadding] - Minimum distance from screen edges for iris-out
-  ///   (default: 50)
+  /// [title] texto a mostrar después de que el círculo se expande.
+  ///
+  /// [imagePath] ruta del asset para la imagen dentro del círculo.
+  /// Soporta imágenes estáticas y GIFs animados.
+  ///
+  /// [onAnimationStart] callback opcional ejecutado cuando inicia la animación.
+  /// Útil para sincronizar efectos de sonido.
+  ///
+  /// [duration] duración total de la animación.
+  /// Por defecto es [MarioMakerTiming.defaultTotalDuration] (4 segundos).
+  ///
+  /// [circleRadius] radio base del círculo en píxeles (por defecto: 80).
+  ///
+  /// [bottomMargin] distancia desde el borde inferior de la pantalla hasta
+  /// el centro del círculo (por defecto: 100).
+  ///
+  /// [titleStyle] estilo personalizado para el texto del título.
+  /// Si no se proporciona, usa el estilo por defecto.
+  ///
+  /// [irisOutAlignment] punto hacia donde converge el efecto iris-out.
+  /// Por defecto es `Alignment.center`. Usa constantes como
+  /// `Alignment.bottomRight`, `Alignment.topLeft`, etc.
+  ///
+  /// [irisOutEdgePadding] distancia mínima desde los bordes de la pantalla
+  /// para el efecto iris-out (por defecto: 50).
+  ///
+  /// Ejemplo básico:
+  /// ```dart
+  /// MarioMakerTitle(
+  ///   title: 'NEW LEVEL',
+  ///   imagePath: 'assets/character.png',
+  /// )
+  /// ```
+  ///
+  /// Ejemplo con callback de sonido:
+  /// ```dart
+  /// MarioMakerTitle(
+  ///   title: 'BOSS STAGE',
+  ///   imagePath: 'assets/bowser.gif',
+  ///   onAnimationStart: () => audioPlayer.play('intro.mp3'),
+  /// )
+  /// ```
+  ///
+  /// Ejemplo con iris-out personalizado:
+  /// ```dart
+  /// MarioMakerTitle(
+  ///   title: 'SECRET EXIT',
+  ///   imagePath: 'assets/star.png',
+  ///   irisOutAlignment: Alignment.bottomRight,
+  ///   irisOutEdgePadding: 80,
+  /// )
+  /// ```
   const MarioMakerTitle({
     required String title,
     required String imagePath,

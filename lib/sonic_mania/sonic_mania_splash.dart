@@ -6,9 +6,79 @@ import 'package:fancy_titles/sonic_mania/curtains/clipped_curtain.dart';
 import 'package:fancy_titles/sonic_mania/curtains/curtains.dart';
 import 'package:flutter/material.dart';
 
-/// Pantalla de inicio de Sonic Mania
+/// Pantalla de título inspirada en Sonic Mania.
+///
+/// Muestra barras diagonales animadas con texto que rebota,
+/// inspirado en las pantallas de selección de nivel de Sonic Mania.
+///
+/// ## Ejemplo de uso
+///
+/// ```dart
+/// SonicManiaSplash(
+///   baseText: 'STUDIOPOLIS',
+///   secondaryText: 'ZONE',
+///   lastText: 'ACT1',
+/// )
+/// ```
+///
+/// ## Timeline de animación (5 segundos)
+///
+/// | Tiempo    | Evento                                |
+/// |-----------|---------------------------------------|
+/// | 0-600ms   | Barras se deslizan hacia el centro   |
+/// | 600ms     | Texto aparece con efecto de rebote   |
+/// | 3500ms    | Barras se deslizan hacia afuera      |
+/// | 5000ms    | Widget se auto-destruye              |
+///
+/// ## Restricciones
+///
+/// - `lastText` no puede exceder 4 caracteres
+/// - `baseText` se muestra en MAYÚSCULAS
+/// - `secondaryText` se muestra en MAYÚSCULAS
+/// - `lastText` se muestra en minúsculas
+///
+/// ## Personalización de tiempos
+///
+/// Los tiempos de animación están definidos en [SonicManiaTiming].
+/// Actualmente no es posible personalizarlos por instancia.
+///
+/// Ver también:
+/// - `Persona5Title` para estilo Persona 5
+/// - `EvangelionTitle` para estilo Evangelion
+/// - `MarioMakerTitle` para estilo Mario Maker
 class SonicManiaSplash extends StatefulWidget {
-  /// Constructor de SonicManiaSplash
+  /// Crea una pantalla de título estilo Sonic Mania.
+  ///
+  /// [baseText] es requerido y se muestra en la primera barra (MAYÚSCULAS).
+  ///
+  /// [secondaryText] es opcional y se muestra en la segunda barra (MAYÚSCULAS).
+  /// Cuando está presente, el layout de las barras se ajusta para acomodar
+  /// tres líneas de texto.
+  ///
+  /// [lastText] es opcional y se muestra en la tercera barra (minúsculas).
+  /// Máximo 4 caracteres. Lanza [FlutterError] si excede este límite.
+  ///
+  /// Ejemplo con una línea:
+  /// ```dart
+  /// SonicManiaSplash(baseText: 'TITLE')
+  /// ```
+  ///
+  /// Ejemplo con dos líneas:
+  /// ```dart
+  /// SonicManiaSplash(
+  ///   baseText: 'GREEN HILL',
+  ///   secondaryText: 'ZONE',
+  /// )
+  /// ```
+  ///
+  /// Ejemplo completo:
+  /// ```dart
+  /// SonicManiaSplash(
+  ///   baseText: 'CHEMICAL PLANT',
+  ///   secondaryText: 'ZONE',
+  ///   lastText: 'ACT2',
+  /// )
+  /// ```
   SonicManiaSplash({
     required String baseText,
     String? secondaryText,
@@ -22,13 +92,8 @@ class SonicManiaSplash extends StatefulWidget {
     }
   }
 
-  /// Primera línea de texto
   final String _baseText;
-
-  /// Segunda línea de texto
   final String? _secondaryText;
-
-  /// Tercera línea de texto (máximo 4 caracteres)
   final String? _lastText;
 
   @override

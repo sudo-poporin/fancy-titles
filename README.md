@@ -333,6 +333,29 @@ flutter run
 
 ---
 
+## Constantes de Timing ⏱️
+
+Todas las constantes de timing de animación están centralizadas en `animation_timings.dart`:
+
+```dart
+import 'package:fancy_titles/fancy_titles.dart';
+
+// Usar constantes de timing en tu código
+final duration = SonicManiaTiming.totalDuration;    // 5 segundos
+final delay = Persona5Timing.initialDelay;          // 125ms
+final fadeTime = EvangelionTiming.backgroundFadeTime; // 3 segundos
+final bounce = MarioMakerTiming.bounceDuration;     // 1.2 segundos
+```
+
+Clases disponibles:
+
+- `SonicManiaTiming` - Tiempos de SonicManiaSplash
+- `Persona5Timing` - Tiempos de Persona5Title
+- `EvangelionTiming` - Tiempos de EvangelionTitle
+- `MarioMakerTiming` - Tiempos de MarioMakerTitle
+
+---
+
 ## Próximas Características 🚀
 
 - Clase contenedora para las pantallas de inicio

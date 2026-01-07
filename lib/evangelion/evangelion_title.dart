@@ -4,11 +4,98 @@ import 'package:fancy_titles/evangelion/flashlights/curtain.dart';
 import 'package:fancy_titles/evangelion/flashlights/spark.dart';
 import 'package:flutter/material.dart';
 
-/// Evangelion Title
+/// Pantalla de título inspirada en Neon Genesis Evangelion.
+///
+/// Muestra un título con el estilo visual icónico de Evangelion,
+/// incluyendo la tipografía característica, destellos de luz (sparks)
+/// y cortinas animadas que revelan el texto progresivamente.
+///
+/// ## Ejemplo de uso
+///
+/// ```dart
+/// EvangelionTitle(
+///   firstText: 'NEON',
+///   secondText: 'GENESIS',
+///   thirdText: 'EVANGELION',
+///   fourthText: 'EPISODE:1',
+///   fifthText: 'ANGEL ATTACK',
+/// )
+/// ```
+///
+/// ## Timeline de animación (5 segundos)
+///
+/// | Tiempo    | Evento                                |
+/// |-----------|---------------------------------------|
+/// | 0-450ms   | Fondo negro, preparación              |
+/// | 450ms     | Texto aparece                         |
+/// | 500-2500ms| Secuencia de sparks (destellos)       |
+/// | 500-2500ms| Cortinas se deslizan revelando cruces |
+/// | 3000ms    | Fondo se vuelve transparente          |
+/// | 5000ms    | Widget se auto-destruye               |
+///
+/// ## Estructura del texto
+///
+/// El widget muestra 5 líneas de texto con diferentes tamaños:
+/// - Líneas 1-2: Títulos cortos con fuente EVA Matisse Classic
+/// - Línea 3: Título largo/principal con fuente EVA Matisse Classic
+/// - Líneas 4-5: Subtítulos con fuente Arial
+///
+/// ## Valores por defecto
+///
+/// Si no se proporcionan textos, se usan los valores clásicos:
+/// - firstText: 'NEON'
+/// - secondText: 'GENESIS'
+/// - thirdText: 'EVANGELION'
+/// - fourthText: 'EPISODE:1'
+/// - fifthText: 'ANGEL ATTACK'
+///
+/// ## Responsive
+///
+/// El widget ajusta automáticamente el tamaño de fuente basándose en
+/// el tamaño de pantalla y orientación del dispositivo.
+///
+/// Los tiempos de animación están definidos en [EvangelionTiming].
+///
+/// Ver también:
+/// - `SonicManiaSplash` para estilo Sonic Mania
+/// - `Persona5Title` para estilo Persona 5
+/// - `MarioMakerTitle` para estilo Mario Maker
 class EvangelionTitle extends StatefulWidget {
-  /// Shows an Evangelion styled title
+  /// Crea una pantalla de título estilo Evangelion.
   ///
-  /// The title is shown in the Evangelion font style
+  /// Todos los parámetros de texto son opcionales y tienen valores
+  /// por defecto que replican el título clásico de la serie.
+  ///
+  /// [firstText] primera línea del título (por defecto: 'NEON').
+  /// Se muestra con fuente EVA Matisse Classic.
+  ///
+  /// [secondText] segunda línea del título (por defecto: 'GENESIS').
+  /// Se muestra con fuente EVA Matisse Classic.
+  ///
+  /// [thirdText] línea principal/más grande (por defecto: 'EVANGELION').
+  /// Se muestra con fuente EVA Matisse Classic en tamaño mayor.
+  ///
+  /// [fourthText] primera línea del subtítulo (por defecto: 'EPISODE:1').
+  /// Se muestra con fuente Arial.
+  ///
+  /// [fifthText] segunda línea del subtítulo (por defecto: 'ANGEL ATTACK').
+  /// Se muestra con fuente Arial, alineado a la derecha.
+  ///
+  /// Ejemplo con valores por defecto (título clásico):
+  /// ```dart
+  /// const EvangelionTitle()
+  /// ```
+  ///
+  /// Ejemplo personalizado:
+  /// ```dart
+  /// const EvangelionTitle(
+  ///   firstText: 'SHIN',
+  ///   secondText: 'EVANGELION',
+  ///   thirdText: 'MOVIE',
+  ///   fourthText: '3.0+1.0',
+  ///   fifthText: 'THRICE UPON A TIME',
+  /// )
+  /// ```
   const EvangelionTitle({
     String? firstText,
     String? secondText,
