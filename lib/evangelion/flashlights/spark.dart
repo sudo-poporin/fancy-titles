@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -30,53 +31,53 @@ class Spark extends StatefulWidget {
   /// Shows the first flash light of Evangelion title
   const Spark({
     required SparkOrder order,
-    this.duration = const Duration(milliseconds: 50),
+    this.duration = EvangelionTiming.sparkDefaultDuration,
     this.curve = Curves.easeInOut,
-    this.delay = Duration.zero,
+    this.delay = EvangelionTiming.sparkFirstDelay,
     super.key,
   }) : _order = order;
 
   /// Shows the first flash light of Evangelion title
   const Spark.first({super.key})
     : _order = SparkOrder.first,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = Duration.zero;
+      delay = EvangelionTiming.sparkFirstDelay;
 
   /// Shows the second flash light of Evangelion title
   const Spark.second({super.key})
     : _order = SparkOrder.second,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = const Duration(milliseconds: 150);
+      delay = EvangelionTiming.sparkSecondDelay;
 
   /// Shows the third flash light of Evangelion title
   const Spark.third({super.key})
     : _order = SparkOrder.third,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = const Duration(milliseconds: 230);
+      delay = EvangelionTiming.sparkThirdDelay;
 
   /// Shows the fourth flash light of Evangelion title
   const Spark.fourth({super.key})
     : _order = SparkOrder.fourth,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = const Duration(milliseconds: 330);
+      delay = EvangelionTiming.sparkFourthDelay;
 
   /// Shows the fifth flash light of Evangelion title
   const Spark.fifth({super.key})
     : _order = SparkOrder.fifth,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = const Duration(milliseconds: 400);
+      delay = EvangelionTiming.sparkFifthDelay;
 
   /// Shows the sixth flash light of Evangelion title
   const Spark.sixth({super.key})
     : _order = SparkOrder.sixth,
-      duration = const Duration(milliseconds: 75),
+      duration = EvangelionTiming.crossFlashDuration,
       curve = Curves.easeInOut,
-      delay = const Duration(milliseconds: 475);
+      delay = EvangelionTiming.sparkSixthDelay;
 
   final SparkOrder _order;
 

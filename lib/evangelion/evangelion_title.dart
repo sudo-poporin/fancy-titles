@@ -1,3 +1,4 @@
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/const/shadows.dart';
 import 'package:fancy_titles/evangelion/flashlights/curtain.dart';
 import 'package:fancy_titles/evangelion/flashlights/spark.dart';
@@ -48,21 +49,21 @@ class _EvangelionTitleState extends State<EvangelionTitle>
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 450), () {
+    Future.delayed(EvangelionTiming.textAppearDelay, () {
       if (!mounted) return;
       setState(() {
         _canShowText = true;
       });
     });
 
-    Future.delayed(const Duration(milliseconds: 3000), () {
+    Future.delayed(EvangelionTiming.backgroundFadeTime, () {
       if (!mounted) return;
       setState(() {
         _showTransparentBg = true;
       });
     });
 
-    Future.delayed(const Duration(milliseconds: 5000), () {
+    Future.delayed(EvangelionTiming.totalDuration, () {
       if (!mounted) return;
       setState(() {
         _animationCompleted = true;
@@ -109,7 +110,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 125),
+      duration: EvangelionTiming.fadeTransition,
       transitionBuilder: (child, animation) =>
           FadeTransition(opacity: animation, child: child),
       child: _animationCompleted
@@ -118,7 +119,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
               fit: StackFit.expand,
               children: [
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 275),
+                  duration: EvangelionTiming.containerTransition,
                   color: _showTransparentBg
                       ? Colors.transparent
                       : const Color(0xFF040404),

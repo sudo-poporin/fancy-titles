@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/clippers/circle_mask_clipper.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class ContractingCircleMask extends StatefulWidget {
     Alignment alignment = Alignment.center,
     double edgePadding = 50,
     Duration delay = Duration.zero,
-    Duration duration = const Duration(milliseconds: 500),
+    Duration duration = MarioMakerTiming.contractDuration,
     Curve curve = Curves.easeInCubic,
     super.key,
   })  : _child = child,

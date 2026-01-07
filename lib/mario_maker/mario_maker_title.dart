@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/consts/consts.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class MarioMakerTitle extends StatefulWidget {
     required String title,
     required String imagePath,
     VoidCallback? onAnimationStart,
-    Duration duration = const Duration(seconds: 4),
+    Duration duration = MarioMakerTiming.defaultTotalDuration,
     double circleRadius = 80,
     double bottomMargin = 100,
     TextStyle? titleStyle,
@@ -73,11 +74,11 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   bool _animationCompleted = false;
   bool _imagePrecached = false;
 
-  static const _irisOutDuration = Duration(milliseconds: 500);
-  static const _titleEntryDelay = Duration(milliseconds: 1400);
-  static const _bounceDuration = Duration(milliseconds: 1200);
-  static const _expandDelay = Duration(milliseconds: 1200);
-  static const _expandDuration = Duration(milliseconds: 800);
+  static const Duration _irisOutDuration = MarioMakerTiming.irisOutDuration;
+  static const Duration _titleEntryDelay = MarioMakerTiming.titleEntryDelay;
+  static const Duration _bounceDuration = MarioMakerTiming.bounceDuration;
+  static const Duration _expandDelay = MarioMakerTiming.expandDelay;
+  static const Duration _expandDuration = MarioMakerTiming.expandDuration;
 
   @override
   void initState() {

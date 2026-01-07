@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,9 @@ class Curtain extends StatefulWidget {
   /// Shows the first flash light of Evangelion title
   const Curtain({
     required CurtainOrder order,
-    Duration duration = const Duration(milliseconds: 50),
+    Duration duration = EvangelionTiming.sparkDefaultDuration,
     Curve curve = Curves.easeInOut,
-    Duration delay = Duration.zero,
+    Duration delay = EvangelionTiming.curtainFirstDelay,
     super.key,
   }) : _delay = delay,
        _curve = curve,
@@ -41,44 +42,44 @@ class Curtain extends StatefulWidget {
   /// Shows the first curtain of Evangelion title
   const Curtain.first({super.key})
     : _order = CurtainOrder.first,
-      _duration = const Duration(milliseconds: 75),
+      _duration = EvangelionTiming.curtainFirstDuration,
       _curve = Curves.easeInOut,
-      _delay = Duration.zero;
+      _delay = EvangelionTiming.curtainFirstDelay;
 
   /// Shows the second curtain of Evangelion title
   const Curtain.second({super.key})
     : _order = CurtainOrder.second,
-      _duration = const Duration(milliseconds: 60),
+      _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
-      _delay = const Duration(milliseconds: 150);
+      _delay = EvangelionTiming.curtainSecondDelay;
 
   /// Shows the third curtain of Evangelion title
   const Curtain.third({super.key})
     : _order = CurtainOrder.third,
-      _duration = const Duration(milliseconds: 60),
+      _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
-      _delay = const Duration(milliseconds: 200);
+      _delay = EvangelionTiming.curtainThirdDelay;
 
   /// Shows the fourth curtain of Evangelion title
   const Curtain.fourth({super.key})
     : _order = CurtainOrder.fourth,
-      _duration = const Duration(milliseconds: 60),
+      _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
-      _delay = const Duration(milliseconds: 320);
+      _delay = EvangelionTiming.curtainFourthDelay;
 
   /// Shows the fifth curtain of Evangelion title
   const Curtain.fifth({super.key})
     : _order = CurtainOrder.fifth,
-      _duration = const Duration(milliseconds: 60),
+      _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
-      _delay = const Duration(milliseconds: 380);
+      _delay = EvangelionTiming.curtainFifthDelay;
 
   /// Shows the sixth curtain of Evangelion title
   const Curtain.sixth({super.key})
     : _order = CurtainOrder.sixth,
-      _duration = const Duration(milliseconds: 60),
+      _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
-      _delay = const Duration(milliseconds: 450);
+      _delay = EvangelionTiming.curtainSixthDelay;
 
   final CurtainOrder _order;
   final Duration _duration;

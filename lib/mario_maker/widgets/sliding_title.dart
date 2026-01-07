@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:flutter/material.dart';
 
 /// A title that slides in from the top and fades out with scale effect.
@@ -16,8 +17,8 @@ class SlidingTitle extends StatefulWidget {
   /// [textStyle] - Optional custom text style
   const SlidingTitle({
     required String text,
-    Duration delay = const Duration(milliseconds: 3500),
-    Duration slideDuration = const Duration(milliseconds: 500),
+    Duration delay = MarioMakerTiming.slideDelayDefault,
+    Duration slideDuration = MarioMakerTiming.slideDuration,
     Duration? exitDelay,
     TextStyle? textStyle,
     super.key,

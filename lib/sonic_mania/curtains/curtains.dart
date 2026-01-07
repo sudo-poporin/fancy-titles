@@ -1,3 +1,4 @@
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:flutter/material.dart';
 
 const Color _blueCurtainColor = Color(0xFF3D62AA);
@@ -22,42 +23,42 @@ class Curtain extends StatefulWidget {
   /// Cortina azul
   const Curtain.blue({
     this.color = _blueCurtainColor,
-    this.delay = Duration.zero,
+    this.delay = SonicManiaTiming.curtainBlueDelay,
     super.key,
   });
 
   /// Cortina naranja
   const Curtain.orange({
     this.color = _orangeCurtainColor,
-    this.delay = const Duration(milliseconds: 150),
+    this.delay = SonicManiaTiming.curtainOrangeDelay,
     super.key,
   });
 
   /// Cortina ámbar
   const Curtain.amber({
     this.color = _amberCurtainColor,
-    this.delay = const Duration(milliseconds: 300),
+    this.delay = SonicManiaTiming.curtainAmberDelay,
     super.key,
   });
 
   /// Cortina verde
   const Curtain.green({
     this.color = _greenCurtainColor,
-    this.delay = const Duration(milliseconds: 450),
+    this.delay = SonicManiaTiming.curtainGreenDelay,
     super.key,
   });
 
   /// Cortina amarilla
   const Curtain.yellow({
     this.color = _yellowCurtainColor,
-    this.delay = const Duration(milliseconds: 600),
+    this.delay = SonicManiaTiming.curtainYellowDelay,
     super.key,
   });
 
   /// Cortina negra
   const Curtain.black({
     this.color = _blackCurtainColor,
-    this.delay = const Duration(milliseconds: 350),
+    this.delay = SonicManiaTiming.curtainBlackDelay,
     super.key,
   });
 
@@ -79,7 +80,7 @@ class _CurtainState extends State<Curtain> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 175),
+      duration: SonicManiaTiming.curtainExpandDuration,
       vsync: this,
     );
     _animation = CurvedAnimation(
@@ -105,7 +106,7 @@ class _CurtainState extends State<Curtain> with TickerProviderStateMixin {
       sizeFactor: _animation,
       child: Center(
         child: AnimatedSize(
-          duration: const Duration(milliseconds: 175),
+          duration: SonicManiaTiming.curtainExpandDuration,
           child: ColoredBox(
             color: widget.color,
             child: const SizedBox.expand(),

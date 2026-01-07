@@ -7,6 +7,10 @@
 /// - Sonic Mania
 library;
 
+// Core
+export 'core/animation_timings.dart';
+
+// Widgets principales
 export 'evangelion/evangelion_title.dart';
 export 'mario_maker/mario_maker_title.dart';
 export 'persona_5/persona_5_title.dart';

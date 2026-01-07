@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/persona_5/consts/const.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ class Persona5Title extends StatefulWidget {
     required String text,
     String? imagePath,
     bool withImageBlendMode = false,
-    Duration delay = const Duration(milliseconds: 125),
-    Duration duration = const Duration(milliseconds: 3400),
+    Duration delay = Persona5Timing.initialDelay,
+    Duration duration = Persona5Timing.mainDuration,
     super.key,
   }) : _text = text,
        _imagePath = imagePath,
@@ -56,7 +57,7 @@ class _Persona5TitleState extends State<Persona5Title>
 
     unawaited(
       Future<void>.delayed(
-        const Duration(milliseconds: 250),
+        Persona5Timing.textAppearDelay,
         () => setState(() => _showText = true),
       ).then(
         (_) => Future<void>.delayed(
@@ -87,7 +88,7 @@ class _Persona5TitleState extends State<Persona5Title>
 
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSecuence() {
-    Future.delayed(const Duration(milliseconds: 4000), () {
+    Future.delayed(Persona5Timing.totalDuration, () {
       setState(() {
         _animationCompleted = true;
       });
@@ -106,7 +107,7 @@ class _Persona5TitleState extends State<Persona5Title>
 
     return AnimatedSwitcher(
       duration: Duration.zero,
-      reverseDuration: const Duration(milliseconds: 225),
+      reverseDuration: Persona5Timing.fadeTransitionReverse,
       transitionBuilder: (child, animation) {
         return FadeTransition(opacity: animation, child: child);
       },
@@ -117,8 +118,8 @@ class _Persona5TitleState extends State<Persona5Title>
               children: [
                 const SizedBox.expand(child: ColoredBox(color: redColor)),
                 AnimatedSwitcher(
-                  reverseDuration: const Duration(milliseconds: 325),
-                  duration: const Duration(milliseconds: 325),
+                  reverseDuration: Persona5Timing.circleTransitionDuration,
+                  duration: Persona5Timing.circleTransitionDuration,
                   transitionBuilder: (child, animation) {
                     return FadeTransition(
                       opacity: animation,
@@ -136,7 +137,7 @@ class _Persona5TitleState extends State<Persona5Title>
                       : const BackgroundCircle(),
                 ),
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 225),
+                  duration: Persona5Timing.fadeTransitionReverse,
                   transitionBuilder: (child, animation) {
                     return FadeTransition(
                       opacity: animation,

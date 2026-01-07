@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:flutter/material.dart';
 
 /// Class [BounceVertically]: Bounce animation vertically using sin function.
@@ -54,7 +55,7 @@ class BounceVerticallyState extends State<BounceVertically>
   @override
   void initState() {
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 250),
+      duration: SonicManiaTiming.bounceVerticallyDuration,
       vsync: this,
     );
 
@@ -71,7 +72,7 @@ class BounceVerticallyState extends State<BounceVertically>
 
   /// This method is used to build the animation
   void _buildAnimation(Duration delay) {
-    Future.delayed(const Duration(milliseconds: 250), () {
+    Future.delayed(SonicManiaTiming.bounceVerticallyDelay, () {
       Future.delayed(delay, () {
         if (_disposed) return;
         unawaited(_controller.forward());

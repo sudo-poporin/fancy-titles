@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:fancy_titles/sonic_mania/bars/animated_bouncing_text.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
@@ -141,7 +142,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
     _endOffset = widget._endOffset;
 
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
+      duration: SonicManiaTiming.slideIn,
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
@@ -196,7 +197,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
   /// Desliza la barra fuera de la pantalla
   void _slideOut() {
     setState(() => _canShowText = true);
-    Future<void>.delayed(const Duration(milliseconds: 3500), () {
+    Future<void>.delayed(SonicManiaTiming.slideOutDelay, () {
       if (!mounted) return;
       setState(() => _endOffset = widget._stopEndOffset);
       unawaited(_controller.forward());

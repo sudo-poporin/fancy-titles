@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/clippers/circle_mask_clipper.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +19,8 @@ class ExpandingCircleMask extends StatefulWidget {
   const ExpandingCircleMask({
     required Widget background,
     double initialRadius = 80,
-    Duration delay = const Duration(seconds: 2),
-    Duration expandDuration = const Duration(milliseconds: 1500),
+    Duration delay = MarioMakerTiming.expandDelayDefault,
+    Duration expandDuration = MarioMakerTiming.expandDurationDefault,
     double bottomMargin = 100,
     super.key,
   })  : _background = background,

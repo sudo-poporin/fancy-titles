@@ -1,3 +1,4 @@
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/bars/bars.dart';
 import 'package:fancy_titles/sonic_mania/bars/text_bar.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
@@ -58,7 +59,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
 
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSecuence() {
-    Future.delayed(const Duration(milliseconds: 5000), () {
+    Future.delayed(SonicManiaTiming.totalDuration, () {
       if (!mounted) return;
       setState(() {
         _animationCompleted = true;
@@ -69,7 +70,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 125),
+      duration: SonicManiaTiming.fadeTransition,
       transitionBuilder: (child, animation) =>
           FadeTransition(opacity: animation, child: child),
       child: _animationCompleted
