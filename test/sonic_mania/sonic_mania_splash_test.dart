@@ -53,6 +53,58 @@ void main() {
       });
     });
 
+    group('callbacks', () {
+      test('can be instantiated with onAnimationStart callback', () {
+        var callbackCalled = false;
+        final widget = SonicManiaSplash(
+          baseText: 'TEST',
+          onAnimationStart: () => callbackCalled = true,
+        );
+        expect(widget, isNotNull);
+        expect(callbackCalled, isFalse); // Not called until widget is built
+      });
+
+      test('can be instantiated with onAnimationComplete callback', () {
+        var callbackCalled = false;
+        final widget = SonicManiaSplash(
+          baseText: 'TEST',
+          onAnimationComplete: () => callbackCalled = true,
+        );
+        expect(widget, isNotNull);
+        expect(callbackCalled, isFalse);
+      });
+
+      test('can be instantiated with onPhaseChange callback', () {
+        final phases = <AnimationPhase>[];
+        final widget = SonicManiaSplash(
+          baseText: 'TEST',
+          onPhaseChange: phases.add,
+        );
+        expect(widget, isNotNull);
+        expect(phases, isEmpty); // Not called until widget is built
+      });
+
+      test('can be instantiated with all callbacks', () {
+        var startCalled = false;
+        var completeCalled = false;
+        final phases = <AnimationPhase>[];
+
+        final widget = SonicManiaSplash(
+          baseText: 'STUDIOPOLIS',
+          secondaryText: 'ZONE',
+          lastText: 'ACT1',
+          onAnimationStart: () => startCalled = true,
+          onAnimationComplete: () => completeCalled = true,
+          onPhaseChange: phases.add,
+        );
+
+        expect(widget, isNotNull);
+        expect(startCalled, isFalse);
+        expect(completeCalled, isFalse);
+        expect(phases, isEmpty);
+      });
+    });
+
     // Note: Widget tests for SonicManiaSplash are limited because the widget
     // uses staggered Future.delayed timers that cannot be canceled on dispose.
     // This is a known limitation of the widget architecture.

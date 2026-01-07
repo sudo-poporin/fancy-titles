@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/consts/consts.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
@@ -38,9 +39,29 @@ import 'package:flutter/material.dart';
 /// - `bottomMargin`: Posición vertical del círculo
 /// - `titleStyle`: Estilo personalizado para el texto
 /// - `irisOutAlignment`: Punto hacia donde converge el iris-out
-/// - `onAnimationStart`: Callback para sincronizar sonidos
 ///
 /// Los tiempos de animación están definidos en [MarioMakerTiming].
+///
+/// ## Callbacks de ciclo de vida
+///
+/// El widget proporciona callbacks para sincronizar acciones externas:
+/// - `onAnimationStart`: cuando la animación comienza
+/// - `onAnimationComplete`: cuando la animación termina
+/// - `onPhaseChange`: cuando cambia la fase de animación
+///
+/// ```dart
+/// MarioMakerTitle(
+///   title: 'WORLD 1-1',
+///   imagePath: 'assets/mario.gif',
+///   onAnimationStart: () => audioPlayer.play('drum_roll.mp3'),
+///   onAnimationComplete: () => Navigator.pushReplacement(...),
+///   onPhaseChange: (phase) {
+///     if (phase == AnimationPhase.active) {
+///       audioPlayer.play('reveal.mp3');
+///     }
+///   },
+/// )
+/// ```
 ///
 /// Ver también:
 /// - `SonicManiaSplash` para estilo Sonic Mania
@@ -101,10 +122,23 @@ class MarioMakerTitle extends StatefulWidget {
   ///   irisOutEdgePadding: 80,
   /// )
   /// ```
+  ///
+  /// Ejemplo con callbacks:
+  /// ```dart
+  /// MarioMakerTitle(
+  ///   title: 'NEW LEVEL',
+  ///   imagePath: 'assets/mario.gif',
+  ///   onAnimationStart: () => print('Animación iniciada'),
+  ///   onAnimationComplete: () => print('Animación completada'),
+  ///   onPhaseChange: (phase) => print('Fase: $phase'),
+  /// )
+  /// ```
   const MarioMakerTitle({
     required String title,
     required String imagePath,
     VoidCallback? onAnimationStart,
+    VoidCallback? onAnimationComplete,
+    void Function(AnimationPhase phase)? onPhaseChange,
     Duration duration = MarioMakerTiming.defaultTotalDuration,
     double circleRadius = 80,
     double bottomMargin = 100,
@@ -115,6 +149,8 @@ class MarioMakerTitle extends StatefulWidget {
   })  : _title = title,
         _imagePath = imagePath,
         _onAnimationStart = onAnimationStart,
+        _onAnimationComplete = onAnimationComplete,
+        _onPhaseChange = onPhaseChange,
         _duration = duration,
         _circleRadius = circleRadius,
         _bottomMargin = bottomMargin,
@@ -124,7 +160,16 @@ class MarioMakerTitle extends StatefulWidget {
 
   final String _title;
   final String _imagePath;
+
+  /// Callback ejecutado cuando la animación comienza.
   final VoidCallback? _onAnimationStart;
+
+  /// Callback ejecutado cuando la animación termina completamente.
+  final VoidCallback? _onAnimationComplete;
+
+  /// Callback ejecutado cuando cambia la fase de la animación.
+  final void Function(AnimationPhase phase)? _onPhaseChange;
+
   final Duration _duration;
   final double _circleRadius;
   final double _bottomMargin;
@@ -147,11 +192,16 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   static const Duration _expandDelay = MarioMakerTiming.expandDelay;
   static const Duration _expandDuration = MarioMakerTiming.expandDuration;
 
+  AnimationPhase _currentPhase = AnimationPhase.idle;
+
   @override
   void initState() {
     super.initState();
+
+    // Start animation lifecycle
+    _updatePhase(AnimationPhase.entering);
     _executeCallback();
-    _initAutoDestruction();
+    _initAnimationPhases();
   }
 
   void _executeCallback() {
@@ -162,13 +212,39 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
     }
   }
 
-  void _initAutoDestruction() {
-    // Auto-destruct at end of duration
+  /// Updates the current phase and notifies listeners
+  void _updatePhase(AnimationPhase newPhase) {
+    if (_currentPhase != newPhase) {
+      _currentPhase = newPhase;
+      widget._onPhaseChange?.call(newPhase);
+    }
+  }
+
+  /// Initializes the animation phase sequence
+  void _initAnimationPhases() {
+    // Phase: entering → active (after title appears)
+    unawaited(
+      Future<void>.delayed(_titleEntryDelay, () {
+        if (!mounted) return;
+        _updatePhase(AnimationPhase.active);
+      }),
+    );
+
+    // Phase: active → exiting (when iris-out starts)
+    unawaited(
+      Future<void>.delayed(_irisOutDelay, () {
+        if (!mounted) return;
+        _updatePhase(AnimationPhase.exiting);
+      }),
+    );
+
+    // Phase: exiting → completed (auto-destruction)
     unawaited(
       Future<void>.delayed(widget._duration, () {
-        if (mounted) {
-          setState(() => _animationCompleted = true);
-        }
+        if (!mounted) return;
+        _updatePhase(AnimationPhase.completed);
+        widget._onAnimationComplete?.call();
+        setState(() => _animationCompleted = true);
       }),
     );
   }

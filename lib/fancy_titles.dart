@@ -8,6 +8,7 @@
 library;
 
 // Core
+export 'core/animation_phase.dart';
 export 'core/animation_timings.dart';
 
 // Widgets principales

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/persona_5/consts/const.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
@@ -43,6 +44,24 @@ import 'package:flutter/material.dart';
 ///
 /// - La imagen se precachea automáticamente en `didChangeDependencies`
 /// - En pantallas pequeñas (altura < 600px), el texto se oculta
+///
+/// ## Callbacks de ciclo de vida
+///
+/// El widget proporciona callbacks para sincronizar acciones externas:
+/// - `onAnimationStart`: cuando la animación comienza
+/// - `onAnimationComplete`: cuando la animación termina
+/// - `onPhaseChange`: cuando cambia la fase de animación
+///
+/// ```dart
+/// Persona5Title(
+///   text: 'ALL OUT ATTACK',
+///   onPhaseChange: (phase) {
+///     if (phase == AnimationPhase.active) {
+///       audioPlayer.play('reveal.mp3');
+///     }
+///   },
+/// )
+/// ```
 ///
 /// Ver también:
 /// - `SonicManiaSplash` para estilo Sonic Mania
@@ -88,24 +107,49 @@ class Persona5Title extends StatefulWidget {
   ///   duration: const Duration(seconds: 5),
   /// )
   /// ```
+  ///
+  /// Ejemplo con callbacks:
+  /// ```dart
+  /// Persona5Title(
+  ///   text: 'LOOKING COOL JOKER',
+  ///   onAnimationStart: () => print('Animación iniciada'),
+  ///   onAnimationComplete: () => print('Animación completada'),
+  ///   onPhaseChange: (phase) => print('Fase: $phase'),
+  /// )
+  /// ```
   const Persona5Title({
     required String text,
     String? imagePath,
     bool withImageBlendMode = false,
     Duration delay = Persona5Timing.initialDelay,
     Duration duration = Persona5Timing.mainDuration,
+    VoidCallback? onAnimationStart,
+    VoidCallback? onAnimationComplete,
+    void Function(AnimationPhase phase)? onPhaseChange,
     super.key,
   }) : _text = text,
        _imagePath = imagePath,
        _delay = delay,
        _duration = duration,
-       _withImageBlendMode = withImageBlendMode;
+       _withImageBlendMode = withImageBlendMode,
+       _onAnimationStart = onAnimationStart,
+       _onAnimationComplete = onAnimationComplete,
+       _onPhaseChange = onPhaseChange;
 
   final Duration _delay;
   final Duration _duration;
   final String _text;
   final String? _imagePath;
   final bool _withImageBlendMode;
+
+  /// Callback ejecutado cuando la animación comienza.
+  final VoidCallback? _onAnimationStart;
+
+  /// Callback ejecutado cuando la animación termina completamente.
+  final VoidCallback? _onAnimationComplete;
+
+  /// Callback ejecutado cuando cambia la fase de la animación.
+  final void Function(AnimationPhase phase)? _onPhaseChange;
 
   @override
   State<Persona5Title> createState() => _Persona5TitleState();
@@ -118,19 +162,33 @@ class _Persona5TitleState extends State<Persona5Title>
   bool _showText = false;
   bool _imagePrecached = false;
 
+  AnimationPhase _currentPhase = AnimationPhase.idle;
+
   @override
   void initState() {
+    super.initState();
     _showBackground = true;
     _showText = false;
+
+    // Start animation lifecycle
+    _updatePhase(AnimationPhase.entering);
+    widget._onAnimationStart?.call();
 
     unawaited(
       Future<void>.delayed(
         widget._delay,
-        () => setState(() => _showBackground = false),
+        () {
+          if (!mounted) return;
+          setState(() => _showBackground = false);
+        },
       ).then(
         (_) => Future<void>.delayed(
           widget._duration,
-          () => setState(() => _showBackground = true),
+          () {
+            if (!mounted) return;
+            _updatePhase(AnimationPhase.exiting);
+            setState(() => _showBackground = true);
+          },
         ),
       ),
     );
@@ -138,17 +196,31 @@ class _Persona5TitleState extends State<Persona5Title>
     unawaited(
       Future<void>.delayed(
         Persona5Timing.textAppearDelay,
-        () => setState(() => _showText = true),
+        () {
+          if (!mounted) return;
+          _updatePhase(AnimationPhase.active);
+          setState(() => _showText = true);
+        },
       ).then(
         (_) => Future<void>.delayed(
           widget._duration,
-          () => setState(() => _showText = false),
+          () {
+            if (!mounted) return;
+            setState(() => _showText = false);
+          },
         ),
       ),
     );
 
     _initWidgetAutoDestructionSecuence();
-    super.initState();
+  }
+
+  /// Updates the current phase and notifies listeners
+  void _updatePhase(AnimationPhase newPhase) {
+    if (_currentPhase != newPhase) {
+      _currentPhase = newPhase;
+      widget._onPhaseChange?.call(newPhase);
+    }
   }
 
   @override
@@ -169,6 +241,9 @@ class _Persona5TitleState extends State<Persona5Title>
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSecuence() {
     Future.delayed(Persona5Timing.totalDuration, () {
+      if (!mounted) return;
+      _updatePhase(AnimationPhase.completed);
+      widget._onAnimationComplete?.call();
       setState(() {
         _animationCompleted = true;
       });

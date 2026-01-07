@@ -1,3 +1,4 @@
+import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/const/shadows.dart';
 import 'package:fancy_titles/evangelion/flashlights/curtain.dart';
@@ -56,6 +57,25 @@ import 'package:flutter/material.dart';
 ///
 /// Los tiempos de animación están definidos en [EvangelionTiming].
 ///
+/// ## Callbacks de ciclo de vida
+///
+/// El widget proporciona callbacks para sincronizar acciones externas:
+/// - `onAnimationStart`: cuando la animación comienza
+/// - `onAnimationComplete`: cuando la animación termina
+/// - `onPhaseChange`: cuando cambia la fase de animación
+///
+/// ```dart
+/// EvangelionTitle(
+///   firstText: 'EPISODE:25',
+///   onAnimationComplete: () => Navigator.pushReplacement(...),
+///   onPhaseChange: (phase) {
+///     if (phase == AnimationPhase.active) {
+///       audioPlayer.play('cruel_angel_thesis.mp3');
+///     }
+///   },
+/// )
+/// ```
+///
 /// Ver también:
 /// - `SonicManiaSplash` para estilo Sonic Mania
 /// - `Persona5Title` para estilo Persona 5
@@ -96,24 +116,48 @@ class EvangelionTitle extends StatefulWidget {
   ///   fifthText: 'THRICE UPON A TIME',
   /// )
   /// ```
+  ///
+  /// Ejemplo con callbacks:
+  /// ```dart
+  /// EvangelionTitle(
+  ///   onAnimationStart: () => print('Animación iniciada'),
+  ///   onAnimationComplete: () => print('Animación completada'),
+  ///   onPhaseChange: (phase) => print('Fase: $phase'),
+  /// )
+  /// ```
   const EvangelionTitle({
     String? firstText,
     String? secondText,
     String? thirdText,
     String? fourthText,
     String? fifthText,
+    VoidCallback? onAnimationStart,
+    VoidCallback? onAnimationComplete,
+    void Function(AnimationPhase phase)? onPhaseChange,
     super.key,
   }) : _firstText = firstText ?? 'NEON',
        _secondText = secondText ?? 'GENESIS',
        _thirdText = thirdText ?? 'EVANGELION',
        _fourthText = fourthText ?? 'EPISODE:1',
-       _fifthText = fifthText ?? 'ANGEL ATTACK';
+       _fifthText = fifthText ?? 'ANGEL ATTACK',
+       _onAnimationStart = onAnimationStart,
+       _onAnimationComplete = onAnimationComplete,
+       _onPhaseChange = onPhaseChange;
 
   final String _firstText;
   final String _secondText;
   final String _thirdText;
   final String _fourthText;
   final String _fifthText;
+
+  /// Callback ejecutado cuando la animación comienza.
+  final VoidCallback? _onAnimationStart;
+
+  /// Callback ejecutado cuando la animación termina completamente.
+  final VoidCallback? _onAnimationComplete;
+
+  /// Callback ejecutado cuando cambia la fase de la animación.
+  final void Function(AnimationPhase phase)? _onPhaseChange;
 
   @override
   State<EvangelionTitle> createState() => _EvangelionTitleState();
@@ -132,12 +176,19 @@ class _EvangelionTitleState extends State<EvangelionTitle>
   Size? _cachedScreenSize;
   Orientation? _cachedOrientation;
 
+  AnimationPhase _currentPhase = AnimationPhase.idle;
+
   @override
   void initState() {
     super.initState();
 
+    // Start animation lifecycle
+    _updatePhase(AnimationPhase.entering);
+    widget._onAnimationStart?.call();
+
     Future.delayed(EvangelionTiming.textAppearDelay, () {
       if (!mounted) return;
+      _updatePhase(AnimationPhase.active);
       setState(() {
         _canShowText = true;
       });
@@ -145,6 +196,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
 
     Future.delayed(EvangelionTiming.backgroundFadeTime, () {
       if (!mounted) return;
+      _updatePhase(AnimationPhase.exiting);
       setState(() {
         _showTransparentBg = true;
       });
@@ -152,10 +204,20 @@ class _EvangelionTitleState extends State<EvangelionTitle>
 
     Future.delayed(EvangelionTiming.totalDuration, () {
       if (!mounted) return;
+      _updatePhase(AnimationPhase.completed);
+      widget._onAnimationComplete?.call();
       setState(() {
         _animationCompleted = true;
       });
     });
+  }
+
+  /// Updates the current phase and notifies listeners
+  void _updatePhase(AnimationPhase newPhase) {
+    if (_currentPhase != newPhase) {
+      _currentPhase = newPhase;
+      widget._onPhaseChange?.call(newPhase);
+    }
   }
 
   @override

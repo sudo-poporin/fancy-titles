@@ -1,3 +1,4 @@
+import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/bars/bars.dart';
 import 'package:fancy_titles/sonic_mania/bars/text_bar.dart';
@@ -42,6 +43,26 @@ import 'package:flutter/material.dart';
 /// Los tiempos de animación están definidos en [SonicManiaTiming].
 /// Actualmente no es posible personalizarlos por instancia.
 ///
+/// ## Callbacks de ciclo de vida
+///
+/// El widget proporciona callbacks para sincronizar acciones externas:
+/// - `onAnimationStart`: cuando la animación comienza
+/// - `onAnimationComplete`: cuando la animación termina
+/// - `onPhaseChange`: cuando cambia la fase de animación
+///
+/// ```dart
+/// SonicManiaSplash(
+///   baseText: 'LEVEL 1',
+///   onAnimationStart: () => audioPlayer.play('intro.mp3'),
+///   onAnimationComplete: () => Navigator.pushReplacement(...),
+///   onPhaseChange: (phase) {
+///     if (phase == AnimationPhase.active) {
+///       // Texto visible, reproducir sonido
+///     }
+///   },
+/// )
+/// ```
+///
 /// Ver también:
 /// - `Persona5Title` para estilo Persona 5
 /// - `EvangelionTitle` para estilo Evangelion
@@ -79,14 +100,30 @@ class SonicManiaSplash extends StatefulWidget {
   ///   lastText: 'ACT2',
   /// )
   /// ```
+  ///
+  /// Ejemplo con callbacks:
+  /// ```dart
+  /// SonicManiaSplash(
+  ///   baseText: 'GREEN HILL',
+  ///   onAnimationStart: () => print('Animación iniciada'),
+  ///   onAnimationComplete: () => print('Animación completada'),
+  ///   onPhaseChange: (phase) => print('Fase: $phase'),
+  /// )
+  /// ```
   SonicManiaSplash({
     required String baseText,
     String? secondaryText,
     String? lastText,
+    VoidCallback? onAnimationStart,
+    VoidCallback? onAnimationComplete,
+    void Function(AnimationPhase phase)? onPhaseChange,
     super.key,
   }) : _baseText = baseText,
        _secondaryText = secondaryText,
-       _lastText = lastText {
+       _lastText = lastText,
+       _onAnimationStart = onAnimationStart,
+       _onAnimationComplete = onAnimationComplete,
+       _onPhaseChange = onPhaseChange {
     if (_lastText != null && _lastText.length > 4) {
       throw FlutterError('El tercer texto no puede tener más de 4 caracteres');
     }
@@ -95,6 +132,15 @@ class SonicManiaSplash extends StatefulWidget {
   final String _baseText;
   final String? _secondaryText;
   final String? _lastText;
+
+  /// Callback ejecutado cuando la animación comienza.
+  final VoidCallback? _onAnimationStart;
+
+  /// Callback ejecutado cuando la animación termina completamente.
+  final VoidCallback? _onAnimationComplete;
+
+  /// Callback ejecutado cuando cambia la fase de la animación.
+  final void Function(AnimationPhase phase)? _onPhaseChange;
 
   @override
   State<SonicManiaSplash> createState() => _SonicManiaSplashState();
@@ -109,8 +155,12 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   late double lastTextOriginOffset;
   late double lastTextInvertedValue;
 
+  AnimationPhase _currentPhase = AnimationPhase.idle;
+
   @override
   void initState() {
+    super.initState();
+
     firstTextVerticalOffset = widget._secondaryText != null ? -1.0 : -0.5;
     lastTextVerticalOffset = widget._secondaryText != null ? 0.8 : 0.5;
     lastTextHorizontalOffset = widget._secondaryText != null ? 0.7 : 0.3;
@@ -118,14 +168,40 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
 
     lastTextInvertedValue = widget._secondaryText != null ? 1.0 : -1.0;
 
-    _initWidgetAutoDestructionSecuence();
-    super.initState();
+    // Start animation lifecycle
+    _updatePhase(AnimationPhase.entering);
+    widget._onAnimationStart?.call();
+
+    _initAnimationPhases();
   }
 
-  /// Inicializa la secuencia de autodestrucción del widget
-  void _initWidgetAutoDestructionSecuence() {
+  /// Updates the current phase and notifies listeners
+  void _updatePhase(AnimationPhase newPhase) {
+    if (_currentPhase != newPhase) {
+      _currentPhase = newPhase;
+      widget._onPhaseChange?.call(newPhase);
+    }
+  }
+
+  /// Initializes the animation phase sequence
+  void _initAnimationPhases() {
+    // Phase: entering → active (after slide in completes)
+    Future.delayed(SonicManiaTiming.slideIn, () {
+      if (!mounted) return;
+      _updatePhase(AnimationPhase.active);
+    });
+
+    // Phase: active → exiting (when slide out starts)
+    Future.delayed(SonicManiaTiming.slideOutDelay, () {
+      if (!mounted) return;
+      _updatePhase(AnimationPhase.exiting);
+    });
+
+    // Phase: exiting → completed (auto-destruction)
     Future.delayed(SonicManiaTiming.totalDuration, () {
       if (!mounted) return;
+      _updatePhase(AnimationPhase.completed);
+      widget._onAnimationComplete?.call();
       setState(() {
         _animationCompleted = true;
       });
