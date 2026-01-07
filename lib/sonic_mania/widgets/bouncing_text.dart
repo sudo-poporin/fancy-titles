@@ -1,4 +1,4 @@
-import 'package:fancy_titles/sonic_mania/bars/bounce_vertically.dart';
+import 'package:fancy_titles/sonic_mania/widgets/bounce_vertically.dart';
 import 'package:flutter/material.dart';
 
 /// A Romantic Bouncing Text

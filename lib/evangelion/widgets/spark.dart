@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
-import 'package:fancy_titles/evangelion/widgets/widgets.dart';
+import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
+import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
 import 'package:flutter/material.dart';
 
 /// Order of the flash light

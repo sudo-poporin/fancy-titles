@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
-import 'package:fancy_titles/sonic_mania/bars/animated_bouncing_text.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
+import 'package:fancy_titles/sonic_mania/widgets/bouncing_text.dart';
 import 'package:flutter/material.dart';
 
 const Color _kDefaultBlackColor = Color(0xFF212121);

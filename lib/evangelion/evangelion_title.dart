@@ -1,8 +1,7 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/evangelion/const/shadows.dart';
-import 'package:fancy_titles/evangelion/flashlights/curtain.dart';
-import 'package:fancy_titles/evangelion/flashlights/spark.dart';
+import 'package:fancy_titles/evangelion/constants/constants.dart';
+import 'package:fancy_titles/evangelion/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 /// Pantalla de título inspirada en Neon Genesis Evangelion.

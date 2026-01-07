@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/persona_5/consts/const.dart';
+import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 

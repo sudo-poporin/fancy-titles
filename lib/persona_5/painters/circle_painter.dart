@@ -1,4 +1,4 @@
-import 'package:fancy_titles/persona_5/consts/const.dart';
+import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 

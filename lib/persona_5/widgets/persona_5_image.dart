@@ -1,4 +1,4 @@
-import 'package:fancy_titles/persona_5/consts/const.dart';
+import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 /// Persona 5 Image that shows a hadoken

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/mario_maker/consts/consts.dart';
+import 'package:fancy_titles/mario_maker/constants/constants.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 

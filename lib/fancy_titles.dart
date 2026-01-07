@@ -10,6 +10,7 @@ library;
 // Core
 export 'core/animation_phase.dart';
 export 'core/animation_timings.dart';
+export 'core/base_title_widget.dart';
 
 // Widgets principales
 export 'evangelion/evangelion_title.dart';
