@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +81,7 @@ class ClippedBar extends StatefulWidget {
 }
 
 class _ClippedBarState extends State<ClippedBar>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -88,29 +89,25 @@ class _ClippedBarState extends State<ClippedBar>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this);
     _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
 
     _beginOffset = const Offset(0.5, 1);
 
-    Future<void>.delayed(
-      const Duration(milliseconds: 725),
-      () => _controller.forward().whenComplete(_slideOut),
-    );
-
-    super.initState();
+    delayed(const Duration(milliseconds: 725), () {
+      unawaited(_controller.forward().whenComplete(_slideOut));
+    });
   }
 
   @override
   void dispose() {
-    //cancel all timers
-
     _controller.dispose();
     super.dispose();
   }
 
   void _slideOut() {
-    Future<void>.delayed(widget.delay, () {
+    delayed(widget.delay, () {
       setState(() {
         _beginOffset = const Offset(-0.5, -1);
       });

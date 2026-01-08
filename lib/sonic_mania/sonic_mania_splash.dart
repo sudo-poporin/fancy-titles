@@ -1,5 +1,6 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
 import 'package:fancy_titles/sonic_mania/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +145,7 @@ class SonicManiaSplash extends StatefulWidget {
 }
 
 class _SonicManiaSplashState extends State<SonicManiaSplash>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late bool _animationCompleted = false;
   late double firstTextVerticalOffset;
   late double lastTextVerticalOffset;
@@ -183,20 +184,17 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   /// Initializes the animation phase sequence
   void _initAnimationPhases() {
     // Phase: entering → active (after slide in completes)
-    Future.delayed(SonicManiaTiming.slideIn, () {
-      if (!mounted) return;
+    delayed(SonicManiaTiming.slideIn, () {
       _updatePhase(AnimationPhase.active);
     });
 
     // Phase: active → exiting (when slide out starts)
-    Future.delayed(SonicManiaTiming.slideOutDelay, () {
-      if (!mounted) return;
+    delayed(SonicManiaTiming.slideOutDelay, () {
       _updatePhase(AnimationPhase.exiting);
     });
 
     // Phase: exiting → completed (auto-destruction)
-    Future.delayed(SonicManiaTiming.totalDuration, () {
-      if (!mounted) return;
+    delayed(SonicManiaTiming.totalDuration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() {

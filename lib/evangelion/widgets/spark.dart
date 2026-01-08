@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
@@ -95,24 +94,22 @@ class Spark extends StatefulWidget {
   State<Spark> createState() => _SparkState();
 }
 
-class _SparkState extends State<Spark> {
+class _SparkState extends State<Spark> with CancelableTimersMixin {
   bool _fadeOut = true;
 
   @override
   void initState() {
     super.initState();
 
-    unawaited(
-      Future<void>.delayed(widget.delay, () {
-        if (!mounted) return;
-        setState(() => _fadeOut = false);
-      }).then((_) {
-        return Future<void>.delayed(widget.duration, () {
-          if (!mounted) return;
-          setState(() => _fadeOut = true);
-        });
-      }),
-    );
+    // Show spark after delay
+    delayed(widget.delay, () {
+      setState(() => _fadeOut = false);
+    });
+
+    // Hide spark after delay + duration
+    delayed(widget.delay + widget.duration, () {
+      setState(() => _fadeOut = true);
+    });
   }
 
   @override

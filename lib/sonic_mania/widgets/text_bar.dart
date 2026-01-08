@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
 import 'package:fancy_titles/sonic_mania/widgets/bouncing_text.dart';
@@ -121,7 +122,8 @@ class TextBar extends StatefulWidget {
   State<TextBar> createState() => _TextBarState();
 }
 
-class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
+class _TextBarState extends State<TextBar>
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -197,8 +199,7 @@ class _TextBarState extends State<TextBar> with SingleTickerProviderStateMixin {
   /// Desliza la barra fuera de la pantalla
   void _slideOut() {
     setState(() => _canShowText = true);
-    Future<void>.delayed(SonicManiaTiming.slideOutDelay, () {
-      if (!mounted) return;
+    delayed(SonicManiaTiming.slideOutDelay, () {
       setState(() => _endOffset = widget._stopEndOffset);
       unawaited(_controller.forward());
     });

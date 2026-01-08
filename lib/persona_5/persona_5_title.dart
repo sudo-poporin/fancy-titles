@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +157,7 @@ class Persona5Title extends StatefulWidget {
 }
 
 class _Persona5TitleState extends State<Persona5Title>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late bool _animationCompleted = false;
   bool _showBackground = true;
   bool _showText = false;
@@ -174,45 +175,37 @@ class _Persona5TitleState extends State<Persona5Title>
     _updatePhase(AnimationPhase.entering);
     widget._onAnimationStart?.call();
 
-    unawaited(
-      Future<void>.delayed(
-        widget._delay,
-        () {
-          if (!mounted) return;
-          setState(() => _showBackground = false);
-        },
-      ).then(
-        (_) => Future<void>.delayed(
-          widget._duration,
-          () {
-            if (!mounted) return;
-            _updatePhase(AnimationPhase.exiting);
-            setState(() => _showBackground = true);
-          },
-        ),
-      ),
-    );
+    _initBackgroundAnimationSequence();
+    _initTextAnimationSequence();
+    _initWidgetAutoDestructionSequence();
+  }
 
-    unawaited(
-      Future<void>.delayed(
-        Persona5Timing.textAppearDelay,
-        () {
-          if (!mounted) return;
-          _updatePhase(AnimationPhase.active);
-          setState(() => _showText = true);
-        },
-      ).then(
-        (_) => Future<void>.delayed(
-          widget._duration,
-          () {
-            if (!mounted) return;
-            setState(() => _showText = false);
-          },
-        ),
-      ),
-    );
+  /// Initializes the background visibility sequence
+  void _initBackgroundAnimationSequence() {
+    // Hide background after initial delay
+    delayed(widget._delay, () {
+      setState(() => _showBackground = false);
+    });
 
-    _initWidgetAutoDestructionSecuence();
+    // Show background again after delay + duration (exiting phase)
+    delayed(widget._delay + widget._duration, () {
+      _updatePhase(AnimationPhase.exiting);
+      setState(() => _showBackground = true);
+    });
+  }
+
+  /// Initializes the text visibility sequence
+  void _initTextAnimationSequence() {
+    // Show text after textAppearDelay
+    delayed(Persona5Timing.textAppearDelay, () {
+      _updatePhase(AnimationPhase.active);
+      setState(() => _showText = true);
+    });
+
+    // Hide text after textAppearDelay + duration
+    delayed(Persona5Timing.textAppearDelay + widget._duration, () {
+      setState(() => _showText = false);
+    });
   }
 
   /// Updates the current phase and notifies listeners
@@ -239,9 +232,8 @@ class _Persona5TitleState extends State<Persona5Title>
   }
 
   /// Inicializa la secuencia de autodestrucción del widget
-  void _initWidgetAutoDestructionSecuence() {
-    Future.delayed(Persona5Timing.totalDuration, () {
-      if (!mounted) return;
+  void _initWidgetAutoDestructionSequence() {
+    delayed(Persona5Timing.totalDuration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() {

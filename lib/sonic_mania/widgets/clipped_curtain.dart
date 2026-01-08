@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class ClippedCurtain extends StatefulWidget {
 }
 
 class _ClippedCurtainState extends State<ClippedCurtain>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -55,6 +56,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 325),
       vsync: this,
@@ -63,12 +65,9 @@ class _ClippedCurtainState extends State<ClippedCurtain>
 
     _beginOffset = widget.beginOffset;
 
-    Future<void>.delayed(
-      const Duration(milliseconds: 500),
-      () => _controller.forward().whenComplete(_slideOut),
-    );
-
-    super.initState();
+    delayed(const Duration(milliseconds: 500), () {
+      unawaited(_controller.forward().whenComplete(_slideOut));
+    });
   }
 
   @override
@@ -78,7 +77,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
   }
 
   void _slideOut() {
-    Future<void>.delayed(const Duration(milliseconds: 2500), () {
+    delayed(const Duration(milliseconds: 2500), () {
       setState(() {
         _beginOffset = widget.endOffset;
       });

@@ -1,5 +1,6 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/constants/constants.dart';
 import 'package:fancy_titles/evangelion/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +164,7 @@ class EvangelionTitle extends StatefulWidget {
 }
 
 class _EvangelionTitleState extends State<EvangelionTitle>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   bool _canShowText = false;
   bool _animationCompleted = false;
   bool _showTransparentBg = false;
@@ -185,24 +186,21 @@ class _EvangelionTitleState extends State<EvangelionTitle>
     _updatePhase(AnimationPhase.entering);
     widget._onAnimationStart?.call();
 
-    Future.delayed(EvangelionTiming.textAppearDelay, () {
-      if (!mounted) return;
+    delayed(EvangelionTiming.textAppearDelay, () {
       _updatePhase(AnimationPhase.active);
       setState(() {
         _canShowText = true;
       });
     });
 
-    Future.delayed(EvangelionTiming.backgroundFadeTime, () {
-      if (!mounted) return;
+    delayed(EvangelionTiming.backgroundFadeTime, () {
       _updatePhase(AnimationPhase.exiting);
       setState(() {
         _showTransparentBg = true;
       });
     });
 
-    Future.delayed(EvangelionTiming.totalDuration, () {
-      if (!mounted) return;
+    delayed(EvangelionTiming.totalDuration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() {

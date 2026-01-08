@@ -1,4 +1,5 @@
 import 'package:fancy_titles/fancy_titles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -105,9 +106,114 @@ void main() {
       });
     });
 
-    // Note: Widget tests for SonicManiaSplash are limited because the widget
-    // uses staggered Future.delayed timers that cannot be canceled on dispose.
-    // This is a known limitation of the widget architecture.
-    // Full integration testing is recommended with real devices.
+    group('widget rendering', () {
+      testWidgets('renders with required parameters', (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(baseText: 'TEST'),
+          ),
+        );
+
+        expect(find.byType(SonicManiaSplash), findsOneWidget);
+      });
+
+      testWidgets('renders with all parameters', (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(
+              baseText: 'STUDIOPOLIS',
+              secondaryText: 'ZONE',
+              lastText: 'ACT1',
+            ),
+          ),
+        );
+
+        expect(find.byType(SonicManiaSplash), findsOneWidget);
+      });
+
+    });
+
+    group('animation lifecycle', () {
+      testWidgets('calls onAnimationStart immediately on build',
+          (tester) async {
+        var startCalled = false;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(
+              baseText: 'TEST',
+              onAnimationStart: () => startCalled = true,
+            ),
+          ),
+        );
+
+        expect(startCalled, isTrue);
+      });
+
+      testWidgets('progresses through animation phases', (tester) async {
+        final phases = <AnimationPhase>[];
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(
+              baseText: 'TEST',
+              onPhaseChange: phases.add,
+            ),
+          ),
+        );
+
+        // Initial phase should be entering
+        expect(phases, contains(AnimationPhase.entering));
+
+        // Advance to active phase (after slideIn: 600ms)
+        await tester.pump(SonicManiaTiming.slideIn);
+        expect(phases, contains(AnimationPhase.active));
+
+        // Advance to exiting phase (at slideOutDelay: 3500ms)
+        await tester.pump(
+          SonicManiaTiming.slideOutDelay - SonicManiaTiming.slideIn,
+        );
+        expect(phases, contains(AnimationPhase.exiting));
+      });
+
+      testWidgets('calls onAnimationComplete after totalDuration',
+          (tester) async {
+        var completeCalled = false;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(
+              baseText: 'TEST',
+              onAnimationComplete: () => completeCalled = true,
+            ),
+          ),
+        );
+
+        expect(completeCalled, isFalse);
+
+        // Advance to total duration
+        await tester.pump(SonicManiaTiming.totalDuration);
+
+        expect(completeCalled, isTrue);
+      });
+
+      testWidgets('auto-destructs after totalDuration', (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(baseText: 'TEST'),
+          ),
+        );
+
+        expect(find.byType(SonicManiaSplash), findsOneWidget);
+
+        // Advance past total duration
+        await tester.pump(SonicManiaTiming.totalDuration);
+        await tester.pump(SonicManiaTiming.fadeTransition);
+
+        // Widget should still exist but content should be SizedBox.shrink
+        // due to AnimatedSwitcher
+        expect(find.byType(SonicManiaSplash), findsOneWidget);
+      });
+    });
   });
 }

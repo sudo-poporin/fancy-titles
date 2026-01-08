@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:flutter/material.dart';
 
@@ -90,24 +89,22 @@ class Curtain extends StatefulWidget {
   State<Curtain> createState() => _CurtainState();
 }
 
-class _CurtainState extends State<Curtain> {
+class _CurtainState extends State<Curtain> with CancelableTimersMixin {
   bool _fadeOut = true;
 
   @override
   void initState() {
     super.initState();
 
-    unawaited(
-      Future<void>.delayed(widget._delay, () {
-        if (!mounted) return;
-        setState(() => _fadeOut = false);
-      }).then((_) {
-        return Future<void>.delayed(widget._duration, () {
-          if (!mounted) return;
-          setState(() => _fadeOut = true);
-        });
-      }),
-    );
+    // Show curtain after delay
+    delayed(widget._delay, () {
+      setState(() => _fadeOut = false);
+    });
+
+    // Hide curtain after delay + duration
+    delayed(widget._delay + widget._duration, () {
+      setState(() => _fadeOut = true);
+    });
   }
 
   @override

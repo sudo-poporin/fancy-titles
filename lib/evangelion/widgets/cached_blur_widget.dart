@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -34,7 +35,8 @@ class CachedBlurWidget extends StatefulWidget {
   State<CachedBlurWidget> createState() => _CachedBlurWidgetState();
 }
 
-class _CachedBlurWidgetState extends State<CachedBlurWidget> {
+class _CachedBlurWidgetState extends State<CachedBlurWidget>
+    with CancelableTimersMixin {
   final GlobalKey _boundaryKey = GlobalKey();
   ui.Image? _cachedImage;
   bool _isCapturing = false;
@@ -45,7 +47,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget> {
     super.initState();
     // Capturar después de que el widget se renderice
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      unawaited(_captureToImage());
+      _scheduleCapture();
     });
   }
 
@@ -58,7 +60,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget> {
       _disposeImage();
       _hasTriedCapture = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        unawaited(_captureToImage());
+        _scheduleCapture();
       });
     }
   }
@@ -74,17 +76,23 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget> {
     _cachedImage = null;
   }
 
-  Future<void> _captureToImage() async {
-    if (_isCapturing || !mounted || _hasTriedCapture) return;
-    _isCapturing = true;
+  /// Schedules the capture after a frame delay using cancelable timer
+  void _scheduleCapture() {
+    if (_isCapturing) return;
+    if (_hasTriedCapture) return;
     _hasTriedCapture = true;
 
+    // Use cancelable timer to wait for next frame
+    delayed(const Duration(milliseconds: 16), () {
+      unawaited(_captureToImage());
+    });
+  }
+
+  Future<void> _captureToImage() async {
+    if (_isCapturing || !mounted) return;
+    _isCapturing = true;
+
     try {
-      // Esperar un frame adicional para asegurar que el widget está renderizado
-      await Future<void>.delayed(const Duration(milliseconds: 16));
-
-      if (!mounted) return;
-
       final boundary = _boundaryKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
 

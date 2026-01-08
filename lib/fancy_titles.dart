@@ -11,6 +11,7 @@ library;
 export 'core/animation_phase.dart';
 export 'core/animation_timings.dart';
 export 'core/base_title_widget.dart';
+export 'core/cancelable_timers.dart';
 
 // Widgets principales
 export 'evangelion/evangelion_title.dart';

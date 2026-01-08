@@ -1,4 +1,5 @@
 import 'package:fancy_titles/fancy_titles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -86,7 +87,139 @@ void main() {
       });
     });
 
-    // Note: Widget tests are limited due to Future.delayed timer issues.
-    // Integration testing recommended for full coverage.
+    group('widget rendering', () {
+      testWidgets('renders with required parameters', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Persona5Title(text: 'TEST'),
+          ),
+        );
+
+        expect(find.byType(Persona5Title), findsOneWidget);
+      });
+
+      testWidgets('renders with all parameters', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Persona5Title(
+              text: 'ALL OUT ATTACK',
+              withImageBlendMode: true,
+              delay: Duration(milliseconds: 200),
+              duration: Duration(seconds: 4),
+            ),
+          ),
+        );
+
+        expect(find.byType(Persona5Title), findsOneWidget);
+      });
+
+    });
+
+    group('animation lifecycle', () {
+      testWidgets('calls onAnimationStart immediately on build',
+          (tester) async {
+        var startCalled = false;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              onAnimationStart: () => startCalled = true,
+            ),
+          ),
+        );
+
+        expect(startCalled, isTrue);
+      });
+
+      testWidgets('progresses through animation phases', (tester) async {
+        final phases = <AnimationPhase>[];
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              onPhaseChange: phases.add,
+            ),
+          ),
+        );
+
+        // Initial phase should be entering
+        expect(phases, contains(AnimationPhase.entering));
+
+        // Advance to active phase (after textAppearDelay)
+        await tester.pump(Persona5Timing.textAppearDelay);
+        expect(phases, contains(AnimationPhase.active));
+
+        // Advance to exiting phase (after delay + duration)
+        await tester.pump(
+          Persona5Timing.initialDelay +
+              Persona5Timing.mainDuration -
+              Persona5Timing.textAppearDelay,
+        );
+        expect(phases, contains(AnimationPhase.exiting));
+      });
+
+      testWidgets('calls onAnimationComplete after totalDuration',
+          (tester) async {
+        var completeCalled = false;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              onAnimationComplete: () => completeCalled = true,
+            ),
+          ),
+        );
+
+        expect(completeCalled, isFalse);
+
+        // Advance to total duration
+        await tester.pump(Persona5Timing.totalDuration);
+
+        expect(completeCalled, isTrue);
+      });
+
+      testWidgets('respects custom delay parameter', (tester) async {
+        final phases = <AnimationPhase>[];
+        const customDelay = Duration(milliseconds: 500);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              delay: customDelay,
+              onPhaseChange: phases.add,
+            ),
+          ),
+        );
+
+        // Widget should start entering immediately
+        expect(phases.first, equals(AnimationPhase.entering));
+      });
+
+      testWidgets('respects custom duration parameter', (tester) async {
+        var completeCalled = false;
+        const customDuration = Duration(seconds: 2);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              duration: customDuration,
+              onAnimationComplete: () => completeCalled = true,
+            ),
+          ),
+        );
+
+        expect(completeCalled, isFalse);
+
+        // Advance to total duration
+        await tester.pump(Persona5Timing.totalDuration);
+
+        expect(completeCalled, isTrue);
+      });
+    });
   });
 }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/material.dart';
 
 const Color _blueCurtainColor = Color(0xFF3D62AA);
@@ -72,7 +75,8 @@ class Curtain extends StatefulWidget {
   State<Curtain> createState() => _CurtainState();
 }
 
-class _CurtainState extends State<Curtain> with TickerProviderStateMixin {
+class _CurtainState extends State<Curtain>
+    with TickerProviderStateMixin, CancelableTimersMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -88,10 +92,13 @@ class _CurtainState extends State<Curtain> with TickerProviderStateMixin {
       curve: Curves.fastLinearToSlowEaseIn,
     );
 
-    Future.delayed(
-      widget.delay,
-      () => _controller.forward().whenComplete(() => _controller.reverse()),
-    );
+    delayed(widget.delay, () {
+      unawaited(
+        _controller.forward().whenComplete(() {
+          if (mounted) unawaited(_controller.reverse());
+        }),
+      );
+    });
   }
 
   @override

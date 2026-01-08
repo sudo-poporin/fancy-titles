@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/material.dart';
 
 /// Class [BounceVertically]: Bounce animation vertically using sin function.
@@ -32,7 +33,7 @@ class BounceVertically extends StatefulWidget {
 /// State class,
 /// Controls the animations flow
 class BounceVerticallyState extends State<BounceVertically>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   /// The controller of the animation
   late AnimationController _controller;
 
@@ -42,12 +43,8 @@ class BounceVerticallyState extends State<BounceVertically>
   /// Animation opacity
   late Animation<double> opacity;
 
-  /// If the widget is disposed
-  bool _disposed = false;
-
   @override
   void dispose() {
-    _disposed = true;
     _controller.dispose();
     super.dispose();
   }
@@ -72,14 +69,11 @@ class BounceVerticallyState extends State<BounceVertically>
 
   /// This method is used to build the animation
   void _buildAnimation(Duration delay) {
-    Future.delayed(SonicManiaTiming.bounceVerticallyDelay, () {
-      Future.delayed(delay, () {
-        if (_disposed) return;
-        unawaited(_controller.forward());
-      });
+    // Start animation after bounceVerticallyDelay + custom delay
+    final totalDelay = SonicManiaTiming.bounceVerticallyDelay + delay;
+    delayed(totalDelay, () {
+      unawaited(_controller.forward());
     });
-
-    if (_disposed) return;
   }
 
   @override
