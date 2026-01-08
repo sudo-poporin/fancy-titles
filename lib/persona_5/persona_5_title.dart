@@ -2,8 +2,12 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/cancelable_timers.dart';
+import 'package:fancy_titles/core/fancy_title_controller_scope.dart';
+import 'package:fancy_titles/core/pausable_animation_mixin.dart';
 import 'package:fancy_titles/persona_5/constants/constants.dart';
+import 'package:fancy_titles/persona_5/persona_5_theme.dart';
+import 'package:fancy_titles/persona_5/persona_5_theme_scope.dart';
+import 'package:fancy_titles/persona_5/persona_5_title_controller.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +49,26 @@ import 'package:flutter/material.dart';
 ///
 /// - La imagen se precachea automáticamente en `didChangeDependencies`
 /// - En pantallas pequeñas (altura < 600px), el texto se oculta
+///
+/// ## Control programático
+///
+/// Se puede controlar la animación usando un [Persona5TitleController]:
+///
+/// ```dart
+/// final controller = Persona5TitleController();
+///
+/// Persona5Title(
+///   text: 'TAKE YOUR TIME',
+///   controller: controller,
+/// )
+///
+/// // Pausar/reanudar
+/// controller.pause();
+/// controller.resume();
+///
+/// // Saltar al final
+/// controller.skipToEnd();
+/// ```
 ///
 /// ## Callbacks de ciclo de vida
 ///
@@ -118,12 +142,40 @@ class Persona5Title extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
+  ///
+  /// Ejemplo con controller:
+  /// ```dart
+  /// final controller = Persona5TitleController();
+  ///
+  /// Persona5Title(
+  ///   text: 'TAKE YOUR TIME',
+  ///   controller: controller,
+  /// )
+  ///
+  /// // Luego puedes controlar la animación:
+  /// controller.pause();
+  /// controller.resume();
+  /// controller.skipToEnd();
+  /// ```
+  ///
+  /// Ejemplo con tema personalizado:
+  /// ```dart
+  /// Persona5Title(
+  ///   text: 'TAKE YOUR HEART',
+  ///   theme: Persona5Theme(
+  ///     backgroundColor: Colors.purple,
+  ///     primaryCircleColor: Colors.deepPurple,
+  ///   ),
+  /// )
+  /// ```
   const Persona5Title({
     required String text,
     String? imagePath,
     bool withImageBlendMode = false,
     Duration delay = Persona5Timing.initialDelay,
     Duration duration = Persona5Timing.mainDuration,
+    Persona5TitleController? controller,
+    Persona5Theme? theme,
     VoidCallback? onAnimationStart,
     VoidCallback? onAnimationComplete,
     void Function(AnimationPhase phase)? onPhaseChange,
@@ -133,6 +185,8 @@ class Persona5Title extends StatefulWidget {
        _delay = delay,
        _duration = duration,
        _withImageBlendMode = withImageBlendMode,
+       _controller = controller,
+       _theme = theme,
        _onAnimationStart = onAnimationStart,
        _onAnimationComplete = onAnimationComplete,
        _onPhaseChange = onPhaseChange;
@@ -142,6 +196,13 @@ class Persona5Title extends StatefulWidget {
   final String _text;
   final String? _imagePath;
   final bool _withImageBlendMode;
+
+  /// Controller opcional para control programático de la animación.
+  final Persona5TitleController? _controller;
+
+  /// Tema personalizado para colores.
+  /// Si es null, usa los colores por defecto de Persona 5.
+  final Persona5Theme? _theme;
 
   /// Callback ejecutado cuando la animación comienza.
   final VoidCallback? _onAnimationStart;
@@ -157,7 +218,7 @@ class Persona5Title extends StatefulWidget {
 }
 
 class _Persona5TitleState extends State<Persona5Title>
-    with SingleTickerProviderStateMixin, CancelableTimersMixin {
+    with SingleTickerProviderStateMixin, PausableAnimationMixin {
   late bool _animationCompleted = false;
   bool _showBackground = true;
   bool _showText = false;
@@ -165,11 +226,17 @@ class _Persona5TitleState extends State<Persona5Title>
 
   AnimationPhase _currentPhase = AnimationPhase.idle;
 
+  // Key para forzar rebuild cuando se hace reset
+  Key _contentKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
     _showBackground = true;
     _showText = false;
+
+    // Escuchar cambios del controller
+    widget._controller?.addListener(_onControllerChanged);
 
     // Start animation lifecycle
     _updatePhase(AnimationPhase.entering);
@@ -180,15 +247,62 @@ class _Persona5TitleState extends State<Persona5Title>
     _initWidgetAutoDestructionSequence();
   }
 
+  @override
+  void dispose() {
+    widget._controller?.removeListener(_onControllerChanged);
+    super.dispose();
+  }
+
+  void _onControllerChanged() {
+    final controller = widget._controller;
+    if (controller == null) return;
+
+    // Manejar skipToEnd
+    if (controller.isCompleted && _currentPhase != AnimationPhase.completed) {
+      _handleSkipToEnd();
+    }
+
+    // Manejar reset
+    if (controller.currentPhase == AnimationPhase.idle &&
+        _currentPhase != AnimationPhase.idle) {
+      _handleReset();
+    }
+  }
+
+  void _handleSkipToEnd() {
+    _updatePhase(AnimationPhase.completed);
+    widget._onAnimationComplete?.call();
+    setState(() {
+      _animationCompleted = true;
+    });
+  }
+
+  void _handleReset() {
+    setState(() {
+      _animationCompleted = false;
+      _showBackground = true;
+      _showText = false;
+      _currentPhase = AnimationPhase.idle;
+      _contentKey = UniqueKey(); // Forzar rebuild de widgets hijos
+    });
+
+    // Reiniciar el ciclo de animación
+    _updatePhase(AnimationPhase.entering);
+    widget._onAnimationStart?.call();
+    _initBackgroundAnimationSequence();
+    _initTextAnimationSequence();
+    _initWidgetAutoDestructionSequence();
+  }
+
   /// Initializes the background visibility sequence
   void _initBackgroundAnimationSequence() {
     // Hide background after initial delay
-    delayed(widget._delay, () {
+    delayedPausable(widget._delay, () {
       setState(() => _showBackground = false);
     });
 
     // Show background again after delay + duration (exiting phase)
-    delayed(widget._delay + widget._duration, () {
+    delayedPausable(widget._delay + widget._duration, () {
       _updatePhase(AnimationPhase.exiting);
       setState(() => _showBackground = true);
     });
@@ -197,13 +311,13 @@ class _Persona5TitleState extends State<Persona5Title>
   /// Initializes the text visibility sequence
   void _initTextAnimationSequence() {
     // Show text after textAppearDelay
-    delayed(Persona5Timing.textAppearDelay, () {
+    delayedPausable(Persona5Timing.textAppearDelay, () {
       _updatePhase(AnimationPhase.active);
       setState(() => _showText = true);
     });
 
     // Hide text after textAppearDelay + duration
-    delayed(Persona5Timing.textAppearDelay + widget._duration, () {
+    delayedPausable(Persona5Timing.textAppearDelay + widget._duration, () {
       setState(() => _showText = false);
     });
   }
@@ -212,6 +326,7 @@ class _Persona5TitleState extends State<Persona5Title>
   void _updatePhase(AnimationPhase newPhase) {
     if (_currentPhase != newPhase) {
       _currentPhase = newPhase;
+      widget._controller?.updatePhase(newPhase);
       widget._onPhaseChange?.call(newPhase);
     }
   }
@@ -233,13 +348,18 @@ class _Persona5TitleState extends State<Persona5Title>
 
   /// Inicializa la secuencia de autodestrucción del widget
   void _initWidgetAutoDestructionSequence() {
-    delayed(Persona5Timing.totalDuration, () {
+    delayedPausable(Persona5Timing.totalDuration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() {
         _animationCompleted = true;
       });
     });
+  }
+
+  /// Resuelve el color de fondo usando el theme o el color por defecto.
+  Color _resolveBackgroundColor() {
+    return widget._theme?.backgroundColor ?? redColor;
   }
 
   @override
@@ -251,8 +371,9 @@ class _Persona5TitleState extends State<Persona5Title>
         : height * 0.5;
 
     final canShowText = height > 600;
+    final backgroundColor = _resolveBackgroundColor();
 
-    return AnimatedSwitcher(
+    Widget content = AnimatedSwitcher(
       duration: Duration.zero,
       reverseDuration: Persona5Timing.fadeTransitionReverse,
       transitionBuilder: (child, animation) {
@@ -261,9 +382,10 @@ class _Persona5TitleState extends State<Persona5Title>
       child: _animationCompleted
           ? const SizedBox.shrink()
           : Stack(
+              key: _contentKey,
               alignment: Alignment.center,
               children: [
-                const SizedBox.expand(child: ColoredBox(color: redColor)),
+                SizedBox.expand(child: ColoredBox(color: backgroundColor)),
                 AnimatedSwitcher(
                   reverseDuration: Persona5Timing.circleTransitionDuration,
                   duration: Persona5Timing.circleTransitionDuration,
@@ -334,5 +456,23 @@ class _Persona5TitleState extends State<Persona5Title>
               ],
             ),
     );
+
+    // Envolver con el scope del theme si existe
+    if (widget._theme != null) {
+      content = Persona5ThemeScope(
+        theme: widget._theme!,
+        child: content,
+      );
+    }
+
+    // Envolver con el scope del controller si existe
+    if (widget._controller != null) {
+      content = FancyTitleControllerScope(
+        controller: widget._controller!,
+        child: content,
+      );
+    }
+
+    return content;
   }
 }

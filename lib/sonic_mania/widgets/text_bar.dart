@@ -1,18 +1,31 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/cancelable_timers.dart';
+import 'package:fancy_titles/core/pausable_animation_mixin.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
+import 'package:fancy_titles/sonic_mania/sonic_mania_theme.dart';
+import 'package:fancy_titles/sonic_mania/sonic_mania_theme_scope.dart';
 import 'package:fancy_titles/sonic_mania/widgets/bouncing_text.dart';
 import 'package:flutter/material.dart';
 
-const Color _kDefaultBlackColor = Color(0xFF212121);
-const Color _kDefaultWhiteColor = Color(0xFFF3F3F3);
+/// Tipo de barra de texto para resolver colores del tema.
+enum _TextBarType {
+  /// Barra con fondo negro.
+  black,
 
-/// Barra de texto
+  /// Barra con fondo blanco.
+  white,
+
+  /// Barra con colores personalizados.
+  custom,
+}
+
+/// Barra de texto animada del splash de Sonic Mania.
+///
+/// Los colores pueden ser personalizados usando [SonicManiaTheme].
 class TextBar extends StatefulWidget {
-  /// Barra de texto
+  /// Barra de texto con colores personalizados.
   const TextBar({
     required Color color,
     required String text,
@@ -36,18 +49,23 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _isWhiteText = isWhite;
+       _isWhiteText = isWhite,
+       _textBarType = _TextBarType.custom;
 
-  /// Barra blanca
+  /// Barra con fondo negro y texto blanco.
+  ///
+  /// Los colores pueden ser personalizados con:
+  /// - [SonicManiaTheme.textBarBlackColor] para el fondo
+  /// - [SonicManiaTheme.textOnBlackColor] para el texto
   TextBar.black({
     required String text,
     required Offset beginOffset,
     required Offset endOffset,
     required Offset stopOffset,
     required Offset stopEndOffset,
-    Color color = _kDefaultBlackColor,
-    Color textColor = _kDefaultWhiteColor,
-    Color textBorderColor = _kDefaultBlackColor,
+    Color color = SonicManiaTextBarColors.blackBackground,
+    Color textColor = SonicManiaTextBarColors.whiteText,
+    Color textBorderColor = SonicManiaTextBarColors.blackBackground,
     bool bounceUp = true,
     super.key,
   }) : _bounceUp = bounceUp,
@@ -59,19 +77,24 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _painter = LargeBGDraw(_kDefaultBlackColor),
-       _isWhiteText = false;
+       _painter = LargeBGDraw(SonicManiaTextBarColors.blackBackground),
+       _isWhiteText = false,
+       _textBarType = _TextBarType.black;
 
-  /// Barra negra
+  /// Barra con fondo blanco y texto negro.
+  ///
+  /// Los colores pueden ser personalizados con:
+  /// - [SonicManiaTheme.textBarWhiteColor] para el fondo
+  /// - [SonicManiaTheme.textOnWhiteColor] para el texto
   TextBar.white({
     required String text,
     required Offset beginOffset,
     required Offset endOffset,
     required Offset stopOffset,
     required Offset stopEndOffset,
-    Color color = _kDefaultWhiteColor,
-    Color textColor = _kDefaultBlackColor,
-    Color textBorderColor = _kDefaultWhiteColor,
+    Color color = SonicManiaTextBarColors.whiteBackground,
+    Color textColor = SonicManiaTextBarColors.blackText,
+    Color textBorderColor = SonicManiaTextBarColors.whiteBackground,
     bool bounceUp = false,
     super.key,
   }) : _bounceUp = bounceUp,
@@ -83,8 +106,9 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _painter = SmallBGDraw(_kDefaultWhiteColor),
-       _isWhiteText = true;
+       _painter = SmallBGDraw(SonicManiaTextBarColors.whiteBackground),
+       _isWhiteText = true,
+       _textBarType = _TextBarType.white;
 
   /// Texto de la barra
   final String _text;
@@ -118,12 +142,15 @@ class TextBar extends StatefulWidget {
 
   final bool _isWhiteText;
 
+  /// Tipo interno de barra de texto para resolución de colores del tema.
+  final _TextBarType _textBarType;
+
   @override
   State<TextBar> createState() => _TextBarState();
 }
 
 class _TextBarState extends State<TextBar>
-    with SingleTickerProviderStateMixin, CancelableTimersMixin {
+    with SingleTickerProviderStateMixin, PausableAnimationMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -148,6 +175,7 @@ class _TextBarState extends State<TextBar>
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    registerAnimationController(_controller);
 
     _startAnimation();
 
@@ -199,7 +227,7 @@ class _TextBarState extends State<TextBar>
   /// Desliza la barra fuera de la pantalla
   void _slideOut() {
     setState(() => _canShowText = true);
-    delayed(SonicManiaTiming.slideOutDelay, () {
+    delayedPausable(SonicManiaTiming.slideOutDelay, () {
       setState(() => _endOffset = widget._stopEndOffset);
       unawaited(_controller.forward());
     });
@@ -217,8 +245,48 @@ class _TextBarState extends State<TextBar>
 
   double _calculateStrokeWidth(double fontSize) => fontSize <= 28 ? 4 : 6;
 
+  /// Resuelve el color de fondo de la barra basándose en el tema.
+  Color _resolveBackgroundColor(BuildContext context) {
+    final theme = SonicManiaThemeScope.maybeOf(context);
+    if (theme == null) return widget._color;
+
+    return switch (widget._textBarType) {
+      _TextBarType.black => theme.textBarBlackColor ?? widget._color,
+      _TextBarType.white => theme.textBarWhiteColor ?? widget._color,
+      _TextBarType.custom => widget._color,
+    };
+  }
+
+  /// Resuelve el color del texto basándose en el tema.
+  Color _resolveTextColor(BuildContext context) {
+    final theme = SonicManiaThemeScope.maybeOf(context);
+    if (theme == null) return widget._textColor;
+
+    return switch (widget._textBarType) {
+      _TextBarType.black => theme.textOnBlackColor ?? widget._textColor,
+      _TextBarType.white => theme.textOnWhiteColor ?? widget._textColor,
+      _TextBarType.custom => widget._textColor,
+    };
+  }
+
+  /// Resuelve el color del borde del texto basándose en el tema.
+  Color _resolveBorderColor(BuildContext context) {
+    final theme = SonicManiaThemeScope.maybeOf(context);
+    if (theme == null) return widget._textBorderColor;
+
+    return switch (widget._textBarType) {
+      _TextBarType.black => theme.textBarBlackColor ?? widget._textBorderColor,
+      _TextBarType.white => theme.textBarWhiteColor ?? widget._textBorderColor,
+      _TextBarType.custom => widget._textBorderColor,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = _resolveBackgroundColor(context);
+    final textColor = _resolveTextColor(context);
+    final borderColor = _resolveBorderColor(context);
+
     return HorizontalSlideTransition(
       animation: _animation,
       beginOffset: _beginOffset,
@@ -240,7 +308,7 @@ class _TextBarState extends State<TextBar>
                       minWidth: screenWidth * 0.5,
                       minHeight: fontSize,
                     ),
-                    child: SizedBox(child: ColoredBox(color: widget._color)),
+                    child: SizedBox(child: ColoredBox(color: backgroundColor)),
                   ),
                 );
               },
@@ -277,7 +345,7 @@ class _TextBarState extends State<TextBar>
                                 foreground: Paint()
                                   ..style = PaintingStyle.stroke
                                   ..strokeWidth = strokeWidth
-                                  ..color = widget._textBorderColor,
+                                  ..color = borderColor,
                               ),
                             ),
                           ),
@@ -294,7 +362,7 @@ class _TextBarState extends State<TextBar>
                                 decoration: TextDecoration.none,
                                 foreground: Paint()
                                   ..style = PaintingStyle.fill
-                                  ..color = widget._textColor,
+                                  ..color = textColor,
                               ),
                             ),
                           ),

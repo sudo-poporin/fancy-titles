@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/cancelable_timers.dart';
+import 'package:fancy_titles/core/pausable_animation_mixin.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
+import 'package:fancy_titles/sonic_mania/sonic_mania_theme.dart';
+import 'package:fancy_titles/sonic_mania/sonic_mania_theme_scope.dart';
 import 'package:flutter/material.dart';
 
 /// Cortina clippeada
@@ -49,7 +51,7 @@ class ClippedCurtain extends StatefulWidget {
 }
 
 class _ClippedCurtainState extends State<ClippedCurtain>
-    with SingleTickerProviderStateMixin, CancelableTimersMixin {
+    with SingleTickerProviderStateMixin, PausableAnimationMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -63,10 +65,11 @@ class _ClippedCurtainState extends State<ClippedCurtain>
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.ease);
+    registerAnimationController(_controller);
 
     _beginOffset = widget.beginOffset;
 
-    delayed(SonicManiaTiming.clippedCurtainInitialDelay, () {
+    delayedPausable(SonicManiaTiming.clippedCurtainInitialDelay, () {
       unawaited(_controller.forward().whenComplete(_slideOut));
     });
   }
@@ -78,12 +81,19 @@ class _ClippedCurtainState extends State<ClippedCurtain>
   }
 
   void _slideOut() {
-    delayed(SonicManiaTiming.clippedCurtainSlideOutDelay, () {
+    delayedPausable(SonicManiaTiming.clippedCurtainSlideOutDelay, () {
       setState(() {
         _beginOffset = widget.endOffset;
       });
       unawaited(_controller.reverse());
     });
+  }
+
+  /// Resuelve el color de la cortina clippeada basándose en el tema
+  /// o el color por defecto.
+  Color _resolveColor(BuildContext context) {
+    final theme = SonicManiaThemeScope.maybeOf(context);
+    return theme?.clippedCurtainColor ?? SonicManiaCurtainColors.yellow;
   }
 
   @override
@@ -93,7 +103,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
       beginOffset: _beginOffset,
       child: ClipPath(
         clipper: widget.customClipper,
-        child: const ColoredBox(color: Color(0xFFF7C700)),
+        child: ColoredBox(color: _resolveColor(context)),
       ),
     );
   }

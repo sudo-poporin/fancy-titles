@@ -1,7 +1,11 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/cancelable_timers.dart';
+import 'package:fancy_titles/core/fancy_title_controller_scope.dart';
+import 'package:fancy_titles/core/pausable_animation_mixin.dart';
 import 'package:fancy_titles/mario_maker/constants/constants.dart';
+import 'package:fancy_titles/mario_maker/mario_maker_theme.dart';
+import 'package:fancy_titles/mario_maker/mario_maker_theme_scope.dart';
+import 'package:fancy_titles/mario_maker/mario_maker_title_controller.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +44,27 @@ import 'package:flutter/material.dart';
 /// - `irisOutAlignment`: Punto hacia donde converge el iris-out
 ///
 /// Los tiempos de animación están definidos en [MarioMakerTiming].
+///
+/// ## Control programático
+///
+/// Se puede controlar la animación usando un [MarioMakerTitleController]:
+///
+/// ```dart
+/// final controller = MarioMakerTitleController();
+///
+/// MarioMakerTitle(
+///   title: 'WORLD 1-1',
+///   imagePath: 'assets/mario.gif',
+///   controller: controller,
+/// )
+///
+/// // Pausar/reanudar
+/// controller.pause();
+/// controller.resume();
+///
+/// // Saltar al final
+/// controller.skipToEnd();
+/// ```
 ///
 /// ## Callbacks de ciclo de vida
 ///
@@ -132,9 +157,39 @@ class MarioMakerTitle extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
+  ///
+  /// Ejemplo con controller:
+  /// ```dart
+  /// final controller = MarioMakerTitleController();
+  ///
+  /// MarioMakerTitle(
+  ///   title: 'WORLD 1-1',
+  ///   imagePath: 'assets/mario.gif',
+  ///   controller: controller,
+  /// )
+  ///
+  /// // Luego puedes controlar la animación:
+  /// controller.pause();
+  /// controller.resume();
+  /// controller.skipToEnd();
+  /// ```
+  ///
+  /// Ejemplo con tema personalizado:
+  /// ```dart
+  /// MarioMakerTitle(
+  ///   title: 'WORLD 1-1',
+  ///   imagePath: 'assets/mario.gif',
+  ///   theme: MarioMakerTheme(
+  ///     expandedBackgroundColor: Colors.orange,
+  ///     titleColor: Colors.white,
+  ///   ),
+  /// )
+  /// ```
   const MarioMakerTitle({
     required String title,
     required String imagePath,
+    MarioMakerTitleController? controller,
+    MarioMakerTheme? theme,
     VoidCallback? onAnimationStart,
     VoidCallback? onAnimationComplete,
     void Function(AnimationPhase phase)? onPhaseChange,
@@ -145,20 +200,29 @@ class MarioMakerTitle extends StatefulWidget {
     Alignment irisOutAlignment = Alignment.center,
     double irisOutEdgePadding = 50,
     super.key,
-  })  : _title = title,
-        _imagePath = imagePath,
-        _onAnimationStart = onAnimationStart,
-        _onAnimationComplete = onAnimationComplete,
-        _onPhaseChange = onPhaseChange,
-        _duration = duration,
-        _circleRadius = circleRadius,
-        _bottomMargin = bottomMargin,
-        _titleStyle = titleStyle,
-        _irisOutAlignment = irisOutAlignment,
-        _irisOutEdgePadding = irisOutEdgePadding;
+  }) : _title = title,
+       _imagePath = imagePath,
+       _controller = controller,
+       _theme = theme,
+       _onAnimationStart = onAnimationStart,
+       _onAnimationComplete = onAnimationComplete,
+       _onPhaseChange = onPhaseChange,
+       _duration = duration,
+       _circleRadius = circleRadius,
+       _bottomMargin = bottomMargin,
+       _titleStyle = titleStyle,
+       _irisOutAlignment = irisOutAlignment,
+       _irisOutEdgePadding = irisOutEdgePadding;
 
   final String _title;
   final String _imagePath;
+
+  /// Controller opcional para control programático de la animación.
+  final MarioMakerTitleController? _controller;
+
+  /// Tema personalizado para colores.
+  /// Si es null, usa los colores por defecto de Mario Maker.
+  final MarioMakerTheme? _theme;
 
   /// Callback ejecutado cuando la animación comienza.
   final VoidCallback? _onAnimationStart;
@@ -181,7 +245,7 @@ class MarioMakerTitle extends StatefulWidget {
 }
 
 class _MarioMakerTitleState extends State<MarioMakerTitle>
-    with SingleTickerProviderStateMixin, CancelableTimersMixin {
+    with SingleTickerProviderStateMixin, PausableAnimationMixin {
   bool _animationCompleted = false;
   bool _imagePrecached = false;
 
@@ -193,11 +257,60 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
 
   AnimationPhase _currentPhase = AnimationPhase.idle;
 
+  // Key para forzar rebuild cuando se hace reset
+  Key _contentKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
 
+    // Escuchar cambios del controller
+    widget._controller?.addListener(_onControllerChanged);
+
     // Start animation lifecycle
+    _updatePhase(AnimationPhase.entering);
+    _executeCallback();
+    _initAnimationPhases();
+  }
+
+  @override
+  void dispose() {
+    widget._controller?.removeListener(_onControllerChanged);
+    super.dispose();
+  }
+
+  void _onControllerChanged() {
+    final controller = widget._controller;
+    if (controller == null) return;
+
+    // Manejar skipToEnd
+    if (controller.isCompleted && _currentPhase != AnimationPhase.completed) {
+      _handleSkipToEnd();
+    }
+
+    // Manejar reset
+    if (controller.currentPhase == AnimationPhase.idle &&
+        _currentPhase != AnimationPhase.idle) {
+      _handleReset();
+    }
+  }
+
+  void _handleSkipToEnd() {
+    _updatePhase(AnimationPhase.completed);
+    widget._onAnimationComplete?.call();
+    setState(() {
+      _animationCompleted = true;
+    });
+  }
+
+  void _handleReset() {
+    setState(() {
+      _animationCompleted = false;
+      _currentPhase = AnimationPhase.idle;
+      _contentKey = UniqueKey(); // Forzar rebuild de widgets hijos
+    });
+
+    // Reiniciar el ciclo de animación
     _updatePhase(AnimationPhase.entering);
     _executeCallback();
     _initAnimationPhases();
@@ -215,6 +328,7 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   void _updatePhase(AnimationPhase newPhase) {
     if (_currentPhase != newPhase) {
       _currentPhase = newPhase;
+      widget._controller?.updatePhase(newPhase);
       widget._onPhaseChange?.call(newPhase);
     }
   }
@@ -222,17 +336,17 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   /// Initializes the animation phase sequence
   void _initAnimationPhases() {
     // Phase: entering → active (after title appears)
-    delayed(_titleEntryDelay, () {
+    delayedPausable(_titleEntryDelay, () {
       _updatePhase(AnimationPhase.active);
     });
 
     // Phase: active → exiting (when iris-out starts)
-    delayed(_irisOutDelay, () {
+    delayedPausable(_irisOutDelay, () {
       _updatePhase(AnimationPhase.exiting);
     });
 
     // Phase: exiting → completed (auto-destruction)
-    delayed(widget._duration, () {
+    delayedPausable(widget._duration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() => _animationCompleted = true);
@@ -256,20 +370,46 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
     if (!_imagePrecached) {
       _imagePrecached = true;
       // Fire-and-forget: precaching doesn't need await, result is not used.
+      // Errors are ignored since precaching is optional - the image will
+      // still load when first displayed (just without pre-warming the cache).
       // ignore: discarded_futures
-      precacheImage(AssetImage(widget._imagePath), context);
+      precacheImage(
+        AssetImage(widget._imagePath),
+        context,
+        onError: (_, _) {}, // Silently ignore precache errors
+      );
     }
+  }
+
+  /// Resuelve el color de fondo usando el theme o el color por defecto.
+  Color _resolveBackgroundColor() {
+    return widget._theme?.backgroundColor ?? marioMakerBlack;
+  }
+
+  /// Resuelve el color de fondo expandido usando el theme o el color
+  /// por defecto.
+  Color _resolveExpandedBackgroundColor() {
+    return widget._theme?.expandedBackgroundColor ?? marioMakerYellow;
+  }
+
+  /// Resuelve el color del círculo usando el theme o el color por defecto.
+  Color _resolveCircleColor() {
+    return widget._theme?.circleColor ?? MarioMakerColors.circleBackground;
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final backgroundColor = _resolveBackgroundColor();
+    final expandedBackgroundColor = _resolveExpandedBackgroundColor();
+    final circleColor = _resolveCircleColor();
 
     if (_animationCompleted) {
       return const SizedBox.shrink();
     }
 
-    return ContractingCircleMask(
+    Widget content = ContractingCircleMask(
+      key: _contentKey,
       delay: _irisOutDelay,
       alignment: widget._irisOutAlignment,
       edgePadding: widget._irisOutEdgePadding,
@@ -277,8 +417,8 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
         child: Stack(
           children: [
             // Black background (initial state)
-            const SizedBox.expand(
-              child: ColoredBox(color: marioMakerBlack),
+            SizedBox.expand(
+              child: ColoredBox(color: backgroundColor),
             ),
 
             // Expanding circle mask that reveals yellow background
@@ -287,8 +427,8 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
               bottomMargin: widget._bottomMargin,
               delay: _expandDelay,
               expandDuration: _expandDuration,
-              background: const SizedBox.expand(
-                child: ColoredBox(color: marioMakerYellow),
+              background: SizedBox.expand(
+                child: ColoredBox(color: expandedBackgroundColor),
               ),
             ),
 
@@ -298,6 +438,7 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
               left: (screenSize.width / 2) - widget._circleRadius,
               child: BouncingCircle(
                 circleRadius: widget._circleRadius,
+                circleColor: circleColor,
                 bounceDuration: _bounceDuration,
                 child: MarioMakerImage(
                   imagePath: widget._imagePath,
@@ -317,5 +458,23 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
         ),
       ),
     );
+
+    // Envolver con el scope del theme si existe
+    if (widget._theme != null) {
+      content = MarioMakerThemeScope(
+        theme: widget._theme!,
+        child: content,
+      );
+    }
+
+    // Envolver con el scope del controller si existe
+    if (widget._controller != null) {
+      content = FancyTitleControllerScope(
+        controller: widget._controller!,
+        child: content,
+      );
+    }
+
+    return content;
   }
 }

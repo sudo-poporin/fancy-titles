@@ -1,4 +1,5 @@
-import 'package:fancy_titles/persona_5/constants/constants.dart';
+import 'package:fancy_titles/persona_5/persona_5_theme.dart';
+import 'package:fancy_titles/persona_5/persona_5_theme_scope.dart';
 import 'package:flutter/material.dart';
 
 /// Widget que muestra texto con el estilo visual de Persona 5.
@@ -36,6 +37,10 @@ class Persona5Text extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Persona5ThemeScope.maybeOf(context);
+    final strokeColor = theme?.textStrokeColor ?? Persona5Colors.white;
+    final fillColor = theme?.textFillColor ?? Persona5Colors.textFill;
+
     return Transform(
       alignment: Alignment.center,
       transform: Matrix4.rotationZ(-0.15),
@@ -53,7 +58,7 @@ class Persona5Text extends StatelessWidget {
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
                   ..strokeWidth = 6
-                  ..color = whiteColor,
+                  ..color = strokeColor,
               ),
             ),
           ),
@@ -61,11 +66,11 @@ class Persona5Text extends StatelessWidget {
             child: Text(
               _text,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 40,
                 height: 1.4,
                 decoration: TextDecoration.none,
-                color: blackColor,
+                color: fillColor,
                 fontFamily: 'packages/fancy_titles/Persona',
               ),
             ),

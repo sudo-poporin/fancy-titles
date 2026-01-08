@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/mario_maker/mario_maker_theme.dart';
+import 'package:fancy_titles/mario_maker/mario_maker_theme_scope.dart';
 import 'package:flutter/material.dart';
 
 /// A title that slides in from the top and fades out with scale effect.
@@ -131,6 +133,12 @@ class _SlidingTitleState extends State<SlidingTitle>
     super.dispose();
   }
 
+  /// Resuelve el color del título usando el theme o el color por defecto.
+  Color _resolveTitleColor(BuildContext context) {
+    final theme = MarioMakerThemeScope.maybeOf(context);
+    return theme?.titleColor ?? MarioMakerColors.titleText;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_shouldShow) {
@@ -138,12 +146,13 @@ class _SlidingTitleState extends State<SlidingTitle>
     }
 
     final screenWidth = MediaQuery.sizeOf(context).width;
+    final titleColor = _resolveTitleColor(context);
     final defaultTextStyle = TextStyle(
       fontFamily: 'BouCollege',
       package: 'fancy_titles',
       fontSize: screenWidth * 0.1,
       fontWeight: FontWeight.bold,
-      color: Colors.black,
+      color: titleColor,
       decoration: TextDecoration.none,
     );
 
