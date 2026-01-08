@@ -356,9 +356,47 @@ Clases disponibles:
 
 ---
 
+## Callbacks Disponibles 🔔
+
+Todos los widgets principales soportan callbacks para controlar el ciclo de vida
+de las animaciones:
+
+| Callback | Widgets | Descripción |
+|----------|---------|-------------|
+| `onAnimationStart` | Todos | Se ejecuta cuando inicia la animación |
+| `onAnimationComplete` | Todos | Se ejecuta cuando finaliza la animación |
+
+### Ejemplo de Uso
+
+```dart
+SonicManiaSplash(
+  baseText: 'LEVEL',
+  onAnimationStart: () => audioPlayer.play('intro.mp3'),
+  onAnimationComplete: () => Navigator.pushNamed(context, '/home'),
+)
+```
+
+```dart
+MarioMakerTitle(
+  title: 'COURSE WORLD',
+  imagePath: 'assets/images/mario.gif',
+  onAnimationStart: () {
+    // Reproducir sonido de inicio
+    audioPlayer.play('mario_appear.mp3');
+  },
+  onAnimationComplete: () {
+    // Navegar a la siguiente pantalla
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => HomeScreen()),
+    );
+  },
+)
+```
+
+---
+
 ## Próximas Características 🚀
 
 - Clase contenedora para las pantallas de inicio
 - Más pantallas de inicio personalizadas
 - Parámetros de personalización de colores
-- Callbacks de finalización de animación

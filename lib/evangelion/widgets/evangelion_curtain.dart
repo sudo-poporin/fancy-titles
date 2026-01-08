@@ -3,30 +3,76 @@ import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:flutter/material.dart';
 
-/// Order of the curtain
+/// Define el orden de aparicion de las cortinas en la animacion de Evangelion.
+///
+/// Cada valor corresponde a una cortina especifica en la secuencia de
+/// animacion, donde cada cortina tiene un painter y timing diferente.
+///
+/// Ver tambien:
+/// - [Curtain] widget que usa este enum
+/// - `EvangelionTitle` widget principal de la animacion
 enum CurtainOrder {
-  /// First curtain
+  /// Primera cortina: fondo negro solido con fade in/out.
   first,
 
-  /// Second curtain
+  /// Segunda cortina: usa [FirstCurtainPainter] con scale transition.
   second,
 
-  /// Third curtain
+  /// Tercera cortina: usa [SecondCurtainPainter] con scale transition.
   third,
 
-  /// Fourth curtain
+  /// Cuarta cortina: usa [ThirdCurtainPainter] con scale transition.
   fourth,
 
-  /// Fifth curtain
+  /// Quinta cortina: usa [FourthCurtainPainter] con scale transition.
   fifth,
 
-  /// Sixth curtain
+  /// Sexta cortina: usa [FifthCurtainPainter] con scale especial (0.5 a 1).
   sixth,
 }
 
-/// Shows the curtains of Evangelion title
+/// Widget que muestra las cortinas animadas de la secuencia de Evangelion.
+///
+/// Cada cortina es un efecto visual que aparece y desaparece con diferentes
+/// animaciones (fade, scale) segun su orden en la secuencia. Las cortinas
+/// son parte del efecto de transicion caracteristico de los titulos de
+/// episodio de Neon Genesis Evangelion.
+///
+/// Usa constructores nombrados para cada cortina predefinida:
+/// - [Curtain.first] - Fondo negro con fade
+/// - [Curtain.second] a [Curtain.sixth] - Shapes con scale transitions
+///
+/// El widget maneja automaticamente sus propios timers usando
+/// `CancelableTimersMixin` para aparecer despues del `delay` y desaparecer
+/// despues de `duration`.
+///
+/// Se utiliza internamente en `EvangelionTitle` para crear la secuencia
+/// de cortinas animadas.
+///
+/// ## Ejemplo
+///
+/// ```dart
+/// Stack(
+///   children: [
+///     Curtain.first(),
+///     Curtain.second(),
+///     Curtain.third(),
+///     // ...
+///   ],
+/// )
+/// ```
+///
+/// Ver tambien:
+/// - `EvangelionTitle` widget principal que usa este componente
+/// - [CurtainOrder] enum con los ordenes disponibles
+/// - [EvangelionTiming] constantes de timing para las cortinas
 class Curtain extends StatefulWidget {
-  /// Shows the first flash light of Evangelion title
+  /// Crea una cortina con orden, duracion, curva y delay personalizados.
+  ///
+  /// [order] determina que painter y animacion usar.
+  /// [duration] tiempo que dura visible la cortina.
+  /// [delay] tiempo antes de que aparezca la cortina.
+  /// [curve] curva de la animacion.
   const Curtain({
     required CurtainOrder order,
     Duration duration = EvangelionTiming.sparkDefaultDuration,

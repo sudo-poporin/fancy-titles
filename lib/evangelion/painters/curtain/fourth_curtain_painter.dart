@@ -1,20 +1,33 @@
 import 'package:flutter/rendering.dart';
 
 /// Painter for the fourth curtain in Evangelion animation.
+///
+/// Uses static path caching to improve performance by avoiding
+/// repeated Path object creation on each paint call.
 class FourthCurtainPainter extends CustomPainter {
   /// Creates a fourth curtain painter.
   const FourthCurtainPainter();
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paintFill = Paint()
-      ..color = const Color(0xFF000000)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
+  // Static cache for path and size
+  static Path? _cachedPath;
+  static Size? _cachedSize;
 
-    final path = Path()
+  // Pre-created paint objects (fully static)
+  static final _paintFill = Paint()
+    ..color = const Color(0xFF000000)
+    ..style = PaintingStyle.fill
+    ..strokeCap = StrokeCap.butt
+    ..strokeJoin = StrokeJoin.miter;
+
+  static final _paintStroke = Paint()
+    ..color = const Color(0xFF000000)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 0
+    ..strokeCap = StrokeCap.butt
+    ..strokeJoin = StrokeJoin.miter;
+
+  static Path _buildPath(Size size) {
+    return Path()
       ..moveTo(size.width * 0.2875000, size.height * 0.6400000)
       ..lineTo(size.width * 0.5491667, size.height * 0.3385714)
       ..lineTo(size.width * 0.6591667, size.height * 0.5142857)
@@ -30,17 +43,19 @@ class FourthCurtainPainter extends CustomPainter {
       ..lineTo(size.width * 0.3816667, size.height * 1.0228571)
       ..lineTo(size.width * 0.0533333, size.height * 1.0400000)
       ..lineTo(size.width * 0.3291667, size.height * 0.8171429);
+  }
 
-    canvas.drawPath(path, paintFill);
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Rebuild cache if size changed
+    if (_cachedPath == null || _cachedSize != size) {
+      _cachedSize = size;
+      _cachedPath = _buildPath(size);
+    }
 
-    final paintStroke = Paint()
-      ..color = const Color(0xFF000000)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
-
-    canvas.drawPath(path, paintStroke);
+    canvas
+      ..drawPath(_cachedPath!, _paintFill)
+      ..drawPath(_cachedPath!, _paintStroke);
   }
 
   @override

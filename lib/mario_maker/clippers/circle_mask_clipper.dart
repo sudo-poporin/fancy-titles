@@ -1,28 +1,44 @@
 import 'package:flutter/material.dart';
 
-/// A custom clipper that creates a circular mask.
+/// Clipper que crea una máscara circular para la animación Mario Maker.
 ///
-/// Used to clip content to a circular shape that can expand
-/// to reveal the background.
+/// Recorta el contenido en forma de círculo que puede expandirse
+/// para revelar el fondo durante la transición.
+///
+/// El círculo se define por su [radius] y [center], permitiendo
+/// animaciones de expansión desde cualquier punto de la pantalla.
 class CircleMaskClipper extends CustomClipper<Path> {
-  /// Creates a circle mask clipper.
+  /// Crea un clipper de máscara circular.
   ///
-  /// [radius] - The radius of the circular mask
-  /// [center] - The center point of the circle
+  /// [radius] - El radio de la máscara circular
+  /// [center] - El punto central del círculo
   CircleMaskClipper({
     required this.radius,
     required this.center,
   });
 
-  /// The radius of the circular mask
+  /// El radio de la máscara circular
   final double radius;
 
-  /// The center point of the circle
+  /// El punto central del círculo
   final Offset center;
+
+  // Cache estático del path por parámetros
+  static Path? _cachedPath;
+  static double? _cachedRadius;
+  static Offset? _cachedCenter;
 
   @override
   Path getClip(Size size) {
-    return Path()..addOval(Rect.fromCircle(center: center, radius: radius));
+    if (_cachedPath == null ||
+        _cachedRadius != radius ||
+        _cachedCenter != center) {
+      _cachedRadius = radius;
+      _cachedCenter = center;
+      _cachedPath = Path()
+        ..addOval(Rect.fromCircle(center: center, radius: radius));
+    }
+    return _cachedPath!;
   }
 
   @override

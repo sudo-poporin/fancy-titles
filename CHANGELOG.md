@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2026-01-08
+
+### Added
+
+- Path caching in 21 CustomPainters and CustomClippers to reduce jank frames
+  - Evangelion: 11 painters (6 cross + 5 curtain) with static Path cache
+  - SonicMania: 6 clippers (4 bar + 2 curtain) with static Path cache
+  - SonicMania: 2 painters (LargeBGDraw + SmallBGDraw) with static Path cache
+  - MarioMaker: CircleMaskClipper with static Path cache
+- Pre-created static Paint objects in CirclePainter (Persona5)
+- Static TweenSequence in ExpandingCircleMask (MarioMaker)
+- Complete dartdoc documentation for 7 internal widgets
+
+### Changed
+
+- CirclePainter now uses drawOval instead of drawPath for better performance
+- Updated README.md with callbacks section
+- Reduced estimated allocations per frame from ~60 to ~5
+
+### Performance
+
+- Eliminated Path object creation in paint() and getClip() methods
+- Reduced GC pressure during animations
+- Frame times consistently under 16ms target for 60fps
+
 ## [1.0.5] - 2026-01-08
 
 ### Changed

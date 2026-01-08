@@ -1,22 +1,33 @@
 import 'package:flutter/rendering.dart';
 
 /// Painter for the fourth cross in Evangelion animation.
+///
+/// Uses static path caching to improve performance by avoiding
+/// repeated Path object creation on each paint call.
 class FourthCrossRenderer extends CustomPainter {
   /// Creates a fourth cross painter.
   const FourthCrossRenderer();
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Layer 1
+  // Static cache for path and size
+  static Path? _cachedPath;
+  static Size? _cachedSize;
 
-    final paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
+  // Pre-created fill paint (immutable)
+  static final _paintFill = Paint()
+    ..color = const Color.fromARGB(255, 255, 255, 255)
+    ..style = PaintingStyle.fill
+    ..strokeCap = StrokeCap.butt
+    ..strokeJoin = StrokeJoin.miter;
 
-    final path_0 = Path()
+  // Base stroke paint (shader updated when size changes)
+  static final _paintStroke = Paint()
+    ..color = const Color(0x352195F3)
+    ..style = PaintingStyle.stroke
+    ..strokeCap = StrokeCap.round
+    ..strokeJoin = StrokeJoin.miter;
+
+  static Path _buildPath(Size size) {
+    return Path()
       ..moveTo(size.width * 0.3565917, size.height * 0.5499429)
       ..lineTo(size.width * 0.4045167, size.height * 0.5256143)
       ..lineTo(size.width * 0.4535500, size.height * 0.4841429)
@@ -47,23 +58,26 @@ class FourthCrossRenderer extends CustomPainter {
       ..lineTo(size.width * 0.2680083, size.height * 0.5321857)
       ..lineTo(size.width * 0.0025000, size.height * 1.0271429)
       ..lineTo(size.width * 0.1472000, size.height * 1.0278000);
+  }
 
-    canvas.drawPath(path_0, paintFill0);
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Rebuild cache if size changed
+    if (_cachedPath == null || _cachedSize != size) {
+      _cachedSize = size;
+      _cachedPath = _buildPath(size);
 
-    // Layer 1
+      // Update stroke width and shader that depend on size
+      _paintStroke
+        ..strokeWidth = size.width * 0.02
+        ..shader = const LinearGradient(
+          colors: [Color(0xFF2196F3), Color(0xFF00BCD4)],
+        ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+    }
 
-    final paintStroke0 = Paint()
-      ..color = const Color(0x352195F3)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.02
-      ..strokeCap = StrokeCap.round
-      ..shader = const LinearGradient(
-        colors: [Color(0xFF2196F3), Color(0xFF00BCD4)],
-        stops: [0.0, 1.0],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
-      ..strokeJoin = StrokeJoin.miter;
-
-    canvas.drawPath(path_0, paintStroke0);
+    canvas
+      ..drawPath(_cachedPath!, _paintFill)
+      ..drawPath(_cachedPath!, _paintStroke);
   }
 
   @override

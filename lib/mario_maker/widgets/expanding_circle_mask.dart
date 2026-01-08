@@ -47,6 +47,35 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
   late Animation<double> _bounceAnimation;
   bool _shouldExpand = false;
 
+  // TweenSequence estático para evitar recreación en cada instancia
+  static final _bounceTweenSequence = TweenSequence<double>([
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1, end: 0.85)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 15,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 0.85, end: 1.15)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 20,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1.15, end: 0.92)
+          .chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 18,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 0.92, end: 1.05)
+          .chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 22,
+    ),
+    TweenSequenceItem(
+      tween: Tween<double>(begin: 1.05, end: 1)
+          .chain(CurveTween(curve: Curves.easeOut)),
+      weight: 25,
+    ),
+  ]);
+
   @override
   void initState() {
     super.initState();
@@ -63,34 +92,8 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
       duration: widget._delay,
     );
 
-    // Bounce effect using TweenSequence
-    _bounceAnimation = TweenSequence<double>([
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1, end: 0.85)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 15,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.85, end: 1.15)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 20,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.15, end: 0.92)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        weight: 18,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.92, end: 1.05)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        weight: 22,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.05, end: 1)
-            .chain(CurveTween(curve: Curves.easeOut)),
-        weight: 25,
-      ),
-    ]).animate(_bounceController);
+    // Bounce effect using static TweenSequence
+    _bounceAnimation = _bounceTweenSequence.animate(_bounceController);
 
     _startAnimations();
   }

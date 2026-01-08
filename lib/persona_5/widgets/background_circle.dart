@@ -1,10 +1,38 @@
 import 'package:fancy_titles/persona_5/painters/circle_painter.dart';
 import 'package:flutter/material.dart';
 
-/// This widget displays a background circle with a specific color and size.
+/// Widget que muestra los circulos concentricos del fondo de Persona 5.
+///
+/// Renderiza multiples circulos concentricos alternando entre rojo y negro,
+/// creando el efecto visual de espiral/vortice caracteristico de los menus
+/// de Persona 5.
+///
+/// Los circulos se dibujan usando [CirclePainter] con valores de inflacion
+/// predefinidos que van desde 1200 hasta -200 pixeles, creando 15 circulos
+/// concentricos.
+///
+/// El widget esta envuelto en un [RepaintBoundary] para aislar los repintados
+/// y mejorar el rendimiento.
+///
+/// Se utiliza internamente en `Persona5Title` como capa de fondo detras
+/// del texto y la imagen.
+///
+/// ## Ejemplo
+///
+/// ```dart
+/// Stack(
+///   children: [
+///     BackgroundCircle(),
+///     // Otros widgets encima...
+///   ],
+/// )
+/// ```
+///
+/// Ver tambien:
+/// - [CirclePainter] el painter que dibuja los circulos
+/// - `Persona5Title` widget principal que usa este componente
 class BackgroundCircle extends StatelessWidget {
-  /// Creates a [BackgroundCircle] with the specified inflation state,
-  /// delta, and color based on evenness.
+  /// Crea el fondo de circulos concentricos estilo Persona 5.
   const BackgroundCircle({super.key});
 
   @override
