@@ -94,7 +94,15 @@ void main() {
       });
     });
 
-    // Note: Widget tests are limited due to Future.delayed timer issues.
-    // Integration testing recommended for full coverage.
+    // Note: Widget rendering and animation lifecycle tests are complex to
+    // implement due to child widgets (BouncingCircle, SlidingTitle, etc.)
+    // having their own timers and using precacheImage which fails in tests.
+    //
+    // The core timer cancellation behavior is thoroughly tested in
+    // test/core/cancelable_timers_test.dart. MarioMakerTitle uses
+    // CancelableTimersMixin for safe timer management.
+    //
+    // See test/mario_maker/widgets/bouncing_circle_test.dart for lifecycle
+    // tests of the child widgets.
   });
 }

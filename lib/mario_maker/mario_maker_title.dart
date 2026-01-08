@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/mario_maker/constants/constants.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +181,7 @@ class MarioMakerTitle extends StatefulWidget {
 }
 
 class _MarioMakerTitleState extends State<MarioMakerTitle>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   bool _animationCompleted = false;
   bool _imagePrecached = false;
 
@@ -223,30 +222,21 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   /// Initializes the animation phase sequence
   void _initAnimationPhases() {
     // Phase: entering → active (after title appears)
-    unawaited(
-      Future<void>.delayed(_titleEntryDelay, () {
-        if (!mounted) return;
-        _updatePhase(AnimationPhase.active);
-      }),
-    );
+    delayed(_titleEntryDelay, () {
+      _updatePhase(AnimationPhase.active);
+    });
 
     // Phase: active → exiting (when iris-out starts)
-    unawaited(
-      Future<void>.delayed(_irisOutDelay, () {
-        if (!mounted) return;
-        _updatePhase(AnimationPhase.exiting);
-      }),
-    );
+    delayed(_irisOutDelay, () {
+      _updatePhase(AnimationPhase.exiting);
+    });
 
     // Phase: exiting → completed (auto-destruction)
-    unawaited(
-      Future<void>.delayed(widget._duration, () {
-        if (!mounted) return;
-        _updatePhase(AnimationPhase.completed);
-        widget._onAnimationComplete?.call();
-        setState(() => _animationCompleted = true);
-      }),
-    );
+    delayed(widget._duration, () {
+      _updatePhase(AnimationPhase.completed);
+      widget._onAnimationComplete?.call();
+      setState(() => _animationCompleted = true);
+    });
   }
 
   /// Calculates when the iris-out effect should start
@@ -265,9 +255,9 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
   void _precacheImageIfNeeded() {
     if (!_imagePrecached) {
       _imagePrecached = true;
-      unawaited(
-        precacheImage(AssetImage(widget._imagePath), context),
-      );
+      // Fire-and-forget: precaching doesn't need await, result is not used.
+      // ignore: discarded_futures
+      precacheImage(AssetImage(widget._imagePath), context);
     }
   }
 
