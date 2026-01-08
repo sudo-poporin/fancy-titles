@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -83,7 +84,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
     _hasTriedCapture = true;
 
     // Use cancelable timer to wait for next frame
-    delayed(const Duration(milliseconds: 16), () {
+    delayed(EvangelionTiming.blurCacheDelay, () {
       unawaited(_captureToImage());
     });
   }

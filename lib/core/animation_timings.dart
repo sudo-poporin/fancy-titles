@@ -225,6 +225,16 @@ abstract final class EvangelionTiming {
 
   /// Delay de la sexta cortina.
   static const curtainSixthDelay = Duration(milliseconds: 450);
+
+  // ---------------------------------------------------------------------------
+  // Cache (Renderizado con blur)
+  // ---------------------------------------------------------------------------
+
+  /// Delay para programar la captura de imagen con blur.
+  ///
+  /// Aproximadamente 1 frame a 60fps para sincronización con el ciclo
+  /// de renderizado.
+  static const blurCacheDelay = Duration(milliseconds: 16);
 }
 
 // =============================================================================
@@ -285,4 +295,16 @@ abstract final class MarioMakerTiming {
 
   /// Duración del efecto de contracción del círculo (iris).
   static const contractDuration = Duration(milliseconds: 500);
+
+  // ---------------------------------------------------------------------------
+  // Bouncing Circle (valores por defecto del widget)
+  // ---------------------------------------------------------------------------
+
+  /// Duración por defecto del rebote en BouncingCircle.
+  ///
+  /// Se usa cuando no se especifica un valor personalizado.
+  static const bounceDurationDefault = Duration(seconds: 2);
+
+  /// Duración del scale-out de la imagen después del rebote.
+  static const imageScaleOutDuration = Duration(milliseconds: 300);
 }

@@ -107,6 +107,127 @@ void main() {
         );
       });
     });
+
+    group('clipped bar timings (OPT-005)', () {
+      test('clippedBarInitialDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarInitialDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarDefaultDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarDefaultDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarDefaultDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarDefaultDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarRedDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarRedDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarRedDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarRedDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarOrangeDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarOrangeDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarOrangeDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarOrangeDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarBlueDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarBlueDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarBlueDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarBlueDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarGreenDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarGreenDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedBarGreenDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedBarGreenDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clipped bar delays form a valid sequence', () {
+        // Red and orange slide out before blue and green
+        expect(
+          SonicManiaTiming.clippedBarOrangeDelay,
+          lessThan(SonicManiaTiming.clippedBarRedDelay),
+        );
+        expect(
+          SonicManiaTiming.clippedBarRedDelay,
+          lessThanOrEqualTo(SonicManiaTiming.clippedBarGreenDelay),
+        );
+      });
+    });
+
+    group('clipped curtain timings (OPT-005)', () {
+      test('clippedCurtainDuration has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedCurtainDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedCurtainInitialDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedCurtainInitialDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedCurtainSlideOutDelay has positive duration', () {
+        expect(
+          SonicManiaTiming.clippedCurtainSlideOutDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('clippedCurtainSlideOutDelay is greater than initialDelay', () {
+        expect(
+          SonicManiaTiming.clippedCurtainSlideOutDelay,
+          greaterThan(SonicManiaTiming.clippedCurtainInitialDelay),
+        );
+      });
+    });
   });
 
   group('Persona5Timing', () {
@@ -300,6 +421,22 @@ void main() {
         );
       });
     });
+
+    group('blur cache timings (OPT-005)', () {
+      test('blurCacheDelay has positive duration', () {
+        expect(
+          EvangelionTiming.blurCacheDelay.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('blurCacheDelay equals 16ms (approximately 1 frame at 60fps)', () {
+        expect(
+          EvangelionTiming.blurCacheDelay,
+          equals(const Duration(milliseconds: 16)),
+        );
+      });
+    });
   });
 
   group('MarioMakerTiming', () {
@@ -445,6 +582,43 @@ void main() {
         expect(
           MarioMakerTiming.slideDuration,
           equals(const Duration(milliseconds: 500)),
+        );
+      });
+    });
+
+    group('bouncing circle defaults (OPT-005)', () {
+      test('bounceDurationDefault has positive duration', () {
+        expect(
+          MarioMakerTiming.bounceDurationDefault.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('bounceDurationDefault equals 2 seconds', () {
+        expect(
+          MarioMakerTiming.bounceDurationDefault,
+          equals(const Duration(seconds: 2)),
+        );
+      });
+
+      test('imageScaleOutDuration has positive duration', () {
+        expect(
+          MarioMakerTiming.imageScaleOutDuration.inMilliseconds,
+          greaterThan(0),
+        );
+      });
+
+      test('imageScaleOutDuration equals 300ms', () {
+        expect(
+          MarioMakerTiming.imageScaleOutDuration,
+          equals(const Duration(milliseconds: 300)),
+        );
+      });
+
+      test('imageScaleOutDuration is less than bounceDurationDefault', () {
+        expect(
+          MarioMakerTiming.imageScaleOutDuration,
+          lessThan(MarioMakerTiming.bounceDurationDefault),
         );
       });
     });

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:flutter/material.dart';
 
 /// A circle that bounces (scales up and down) during animation.
@@ -19,8 +20,8 @@ class BouncingCircle extends StatefulWidget {
     required Widget child,
     required double circleRadius,
     Color circleColor = Colors.transparent,
-    Duration bounceDuration = const Duration(seconds: 2),
-    Duration imageScaleOutDuration = const Duration(milliseconds: 300),
+    Duration bounceDuration = MarioMakerTiming.bounceDurationDefault,
+    Duration imageScaleOutDuration = MarioMakerTiming.imageScaleOutDuration,
     super.key,
   })  : _child = child,
         _circleRadius = circleRadius,
