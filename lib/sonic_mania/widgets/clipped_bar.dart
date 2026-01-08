@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,9 @@ class ClippedBar extends StatefulWidget {
   const ClippedBar({
     required this.color,
     required this.customClipper,
-    this.duration = const Duration(milliseconds: 325),
+    this.duration = SonicManiaTiming.clippedBarDefaultDuration,
     this.curve = Curves.easeInOut,
-    this.delay = const Duration(milliseconds: 2400),
+    this.delay = SonicManiaTiming.clippedBarDefaultDelay,
     super.key,
   });
 
@@ -25,9 +26,9 @@ class ClippedBar extends StatefulWidget {
   const ClippedBar.red({
     required this.customClipper,
     this.color = _redBarColor,
-    this.duration = const Duration(milliseconds: 150),
+    this.duration = SonicManiaTiming.clippedBarRedDuration,
     this.curve = Curves.easeInOut,
-    this.delay = const Duration(milliseconds: 2200),
+    this.delay = SonicManiaTiming.clippedBarRedDelay,
     super.key,
   });
 
@@ -35,9 +36,9 @@ class ClippedBar extends StatefulWidget {
   const ClippedBar.orange({
     required this.customClipper,
     this.color = _orangeBarColor,
-    this.duration = const Duration(milliseconds: 150),
+    this.duration = SonicManiaTiming.clippedBarOrangeDuration,
     this.curve = Curves.easeInOut,
-    this.delay = const Duration(milliseconds: 2000),
+    this.delay = SonicManiaTiming.clippedBarOrangeDelay,
     super.key,
   });
 
@@ -45,9 +46,9 @@ class ClippedBar extends StatefulWidget {
   const ClippedBar.blue({
     required this.customClipper,
     this.color = _blueBarColor,
-    this.duration = const Duration(milliseconds: 375),
+    this.duration = SonicManiaTiming.clippedBarBlueDuration,
     this.curve = Curves.easeInOut,
-    this.delay = const Duration(milliseconds: 2400),
+    this.delay = SonicManiaTiming.clippedBarBlueDelay,
     super.key,
   });
 
@@ -55,9 +56,9 @@ class ClippedBar extends StatefulWidget {
   const ClippedBar.green({
     required this.customClipper,
     this.color = _greenBarColor,
-    this.duration = const Duration(milliseconds: 200),
+    this.duration = SonicManiaTiming.clippedBarGreenDuration,
     this.curve = Curves.easeInOut,
-    this.delay = const Duration(milliseconds: 2200),
+    this.delay = SonicManiaTiming.clippedBarGreenDelay,
     super.key,
   });
 
@@ -95,7 +96,7 @@ class _ClippedBarState extends State<ClippedBar>
 
     _beginOffset = const Offset(0.5, 1);
 
-    delayed(const Duration(milliseconds: 725), () {
+    delayed(SonicManiaTiming.clippedBarInitialDelay, () {
       unawaited(_controller.forward().whenComplete(_slideOut));
     });
   }

@@ -60,6 +60,56 @@ abstract final class SonicManiaTiming {
 
   /// Delay inicial antes del rebote.
   static const bounceVerticallyDelay = Duration(milliseconds: 250);
+
+  // ---------------------------------------------------------------------------
+  // Clipped Bars (Barras recortadas diagonales)
+  // ---------------------------------------------------------------------------
+
+  /// Delay inicial antes de que las barras recortadas aparezcan.
+  static const clippedBarInitialDelay = Duration(milliseconds: 725);
+
+  /// Duración por defecto de la animación de barras recortadas.
+  static const clippedBarDefaultDuration = Duration(milliseconds: 325);
+
+  /// Delay por defecto antes del slide out de barras recortadas.
+  static const clippedBarDefaultDelay = Duration(milliseconds: 2400);
+
+  /// Duración de la barra roja.
+  static const clippedBarRedDuration = Duration(milliseconds: 150);
+
+  /// Delay de la barra roja.
+  static const clippedBarRedDelay = Duration(milliseconds: 2200);
+
+  /// Duración de la barra naranja.
+  static const clippedBarOrangeDuration = Duration(milliseconds: 150);
+
+  /// Delay de la barra naranja.
+  static const clippedBarOrangeDelay = Duration(milliseconds: 2000);
+
+  /// Duración de la barra azul.
+  static const clippedBarBlueDuration = Duration(milliseconds: 375);
+
+  /// Delay de la barra azul.
+  static const clippedBarBlueDelay = Duration(milliseconds: 2400);
+
+  /// Duración de la barra verde.
+  static const clippedBarGreenDuration = Duration(milliseconds: 200);
+
+  /// Delay de la barra verde.
+  static const clippedBarGreenDelay = Duration(milliseconds: 2200);
+
+  // ---------------------------------------------------------------------------
+  // Clipped Curtains (Cortinas recortadas)
+  // ---------------------------------------------------------------------------
+
+  /// Duración de la animación de cortinas recortadas.
+  static const clippedCurtainDuration = Duration(milliseconds: 325);
+
+  /// Delay inicial antes de que las cortinas recortadas aparezcan.
+  static const clippedCurtainInitialDelay = Duration(milliseconds: 500);
+
+  /// Delay antes del slide out de las cortinas recortadas.
+  static const clippedCurtainSlideOutDelay = Duration(milliseconds: 2500);
 }
 
 // =============================================================================

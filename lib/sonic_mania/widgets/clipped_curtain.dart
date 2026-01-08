@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
 import 'package:flutter/material.dart';
@@ -58,14 +59,14 @@ class _ClippedCurtainState extends State<ClippedCurtain>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 325),
+      duration: SonicManiaTiming.clippedCurtainDuration,
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.ease);
 
     _beginOffset = widget.beginOffset;
 
-    delayed(const Duration(milliseconds: 500), () {
+    delayed(SonicManiaTiming.clippedCurtainInitialDelay, () {
       unawaited(_controller.forward().whenComplete(_slideOut));
     });
   }
@@ -77,7 +78,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
   }
 
   void _slideOut() {
-    delayed(const Duration(milliseconds: 2500), () {
+    delayed(SonicManiaTiming.clippedCurtainSlideOutDelay, () {
       setState(() {
         _beginOffset = widget.endOffset;
       });
