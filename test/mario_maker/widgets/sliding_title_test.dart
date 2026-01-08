@@ -72,7 +72,6 @@ void main() {
           const SlidingTitle(
             text: 'TEST',
             delay: Duration(seconds: 1),
-            slideDuration: Duration(milliseconds: 500),
             exitDelay: Duration(seconds: 3),
             textStyle: TextStyle(fontSize: 24),
           ),
@@ -98,11 +97,14 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('initially shows empty container before delay',
-          (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(seconds: 10),
-        ));
+      testWidgets('initially shows empty container before delay', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         // Before delay passes, should show SizedBox.shrink
         expect(find.byType(SizedBox), findsWidgets);
@@ -111,9 +113,11 @@ void main() {
       });
 
       testWidgets('shows text after delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 50),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(milliseconds: 50),
+          ),
+        );
 
         // Advance past delay
         await tester.pump(const Duration(milliseconds: 100));
@@ -126,10 +130,12 @@ void main() {
       testWidgets('applies custom text style', (tester) async {
         const customStyle = TextStyle(fontSize: 48, color: Colors.red);
 
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          textStyle: customStyle,
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            textStyle: customStyle,
+          ),
+        );
 
         // Advance to show text
         await tester.pump(const Duration(milliseconds: 50));
@@ -166,9 +172,7 @@ void main() {
 
     group('animation', () {
       testWidgets('starts slide animation after delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 100),
-        ));
+        await tester.pumpWidget(buildTestWidget());
 
         // Before delay
         await tester.pump(const Duration(milliseconds: 50));
@@ -193,12 +197,15 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('completes entry animation after slideDuration',
-          (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          slideDuration: const Duration(milliseconds: 200),
-        ));
+      testWidgets('completes entry animation after slideDuration', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            slideDuration: const Duration(milliseconds: 200),
+          ),
+        );
 
         // Show text
         await tester.pump(const Duration(milliseconds: 50));
@@ -214,11 +221,13 @@ void main() {
       });
 
       testWidgets('starts exit animation after exitDelay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          slideDuration: const Duration(milliseconds: 50),
-          exitDelay: const Duration(milliseconds: 200),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            slideDuration: const Duration(milliseconds: 50),
+            exitDelay: const Duration(milliseconds: 200),
+          ),
+        );
 
         // Show text
         await tester.pump(const Duration(milliseconds: 50));
@@ -237,10 +246,12 @@ void main() {
       });
 
       testWidgets('uses FadeTransition during exit', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          exitDelay: const Duration(milliseconds: 100),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            exitDelay: const Duration(milliseconds: 100),
+          ),
+        );
 
         // Show text and wait for exit
         await tester.pump(const Duration(milliseconds: 50));
@@ -253,10 +264,12 @@ void main() {
       });
 
       testWidgets('uses ScaleTransition during exit', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          exitDelay: const Duration(milliseconds: 100),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            exitDelay: const Duration(milliseconds: 100),
+          ),
+        );
 
         // Show text and wait for exit
         await tester.pump(const Duration(milliseconds: 50));
@@ -284,9 +297,11 @@ void main() {
       });
 
       testWidgets('handles dispose before delay completes', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         // Dispose before delay
         await disposeAndSettle(tester);
@@ -296,10 +311,12 @@ void main() {
       });
 
       testWidgets('handles dispose during entry animation', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          slideDuration: const Duration(seconds: 1),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            slideDuration: const Duration(seconds: 1),
+          ),
+        );
 
         // Show text
         await tester.pump(const Duration(milliseconds: 50));
@@ -314,10 +331,12 @@ void main() {
       });
 
       testWidgets('handles dispose during exit animation', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          exitDelay: const Duration(milliseconds: 100),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            exitDelay: const Duration(milliseconds: 100),
+          ),
+        );
 
         // Show text and start exit
         await tester.pump(const Duration(milliseconds: 50));
@@ -336,10 +355,12 @@ void main() {
 
     group('edge cases', () {
       testWidgets('handles empty text', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: '',
-          delay: Duration.zero,
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: '',
+            delay: Duration.zero,
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();
@@ -349,10 +370,12 @@ void main() {
       });
 
       testWidgets('handles long text', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: 'THIS IS A VERY LONG TITLE THAT MIGHT OVERFLOW',
-          delay: Duration.zero,
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: 'THIS IS A VERY LONG TITLE THAT MIGHT OVERFLOW',
+            delay: Duration.zero,
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();
@@ -362,9 +385,11 @@ void main() {
       });
 
       testWidgets('handles very short delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(microseconds: 1),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(microseconds: 1),
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 10));
         await tester.pump();
@@ -374,10 +399,12 @@ void main() {
       });
 
       testWidgets('handles very short slideDuration', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-          slideDuration: const Duration(milliseconds: 1),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+            slideDuration: const Duration(milliseconds: 1),
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();
@@ -387,9 +414,11 @@ void main() {
       });
 
       testWidgets('handles no exitDelay (null)', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: Duration.zero,
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: Duration.zero,
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();
@@ -406,15 +435,19 @@ void main() {
         const widget = SlidingTitle(text: 'TEST');
         // Just verify it compiles with default values
         expect(widget, isNotNull);
-        expect(MarioMakerTiming.slideDelayDefault,
-            equals(const Duration(milliseconds: 3500)));
+        expect(
+          MarioMakerTiming.slideDelayDefault,
+          equals(const Duration(milliseconds: 3500)),
+        );
       });
 
       test('uses MarioMakerTiming.slideDuration as default slideDuration', () {
         const widget = SlidingTitle(text: 'TEST');
         expect(widget, isNotNull);
-        expect(MarioMakerTiming.slideDuration,
-            equals(const Duration(milliseconds: 500)));
+        expect(
+          MarioMakerTiming.slideDuration,
+          equals(const Duration(milliseconds: 500)),
+        );
       });
     });
   });

@@ -83,12 +83,14 @@ void main() {
       });
 
       testWidgets('renders background widget', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          background: const ColoredBox(
-            key: Key('background'),
-            color: Colors.blue,
+        await tester.pumpWidget(
+          buildTestWidget(
+            background: const ColoredBox(
+              key: Key('background'),
+              color: Colors.blue,
+            ),
           ),
-        ));
+        );
 
         expect(find.byKey(const Key('background')), findsOneWidget);
         await disposeAndSettle(tester);
@@ -116,9 +118,11 @@ void main() {
 
     group('animation phases', () {
       testWidgets('starts in bounce phase immediately', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         // Should be in bounce phase (using ClipPath)
         expect(find.byType(ClipPath), findsOneWidget);
@@ -126,9 +130,11 @@ void main() {
       });
 
       testWidgets('bounce animation runs during delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 500),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(milliseconds: 500),
+          ),
+        );
 
         // Advance through bounce phase
         await tester.pump(const Duration(milliseconds: 100));
@@ -140,9 +146,7 @@ void main() {
       });
 
       testWidgets('transitions to expand phase after delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 100),
-        ));
+        await tester.pumpWidget(buildTestWidget());
 
         // Before delay
         await tester.pump(const Duration(milliseconds: 50));
@@ -156,10 +160,11 @@ void main() {
       });
 
       testWidgets('expand animation runs after delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 100),
-          expandDuration: const Duration(milliseconds: 500),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            expandDuration: const Duration(milliseconds: 500),
+          ),
+        );
 
         // Wait for delay
         await tester.pump(const Duration(milliseconds: 150));
@@ -174,12 +179,14 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('completes expand animation after expandDuration',
-          (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 50),
-          expandDuration: const Duration(milliseconds: 200),
-        ));
+      testWidgets('completes expand animation after expandDuration', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(milliseconds: 50),
+          ),
+        );
 
         // Wait for delay
         await tester.pump(const Duration(milliseconds: 100));
@@ -207,9 +214,11 @@ void main() {
       });
 
       testWidgets('handles dispose during bounce phase', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         // Start bounce animation
         await tester.pump(const Duration(milliseconds: 100));
@@ -222,10 +231,12 @@ void main() {
       });
 
       testWidgets('handles dispose during expand phase', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 50),
-          expandDuration: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(milliseconds: 50),
+            expandDuration: const Duration(seconds: 10),
+          ),
+        );
 
         // Wait for delay and start expand
         await tester.pump(const Duration(milliseconds: 100));
@@ -242,9 +253,11 @@ void main() {
       });
 
       testWidgets('handles dispose before delay completes', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         // Dispose immediately
         await disposeAndSettle(tester);
@@ -256,10 +269,12 @@ void main() {
 
     group('sizing', () {
       testWidgets('uses initialRadius for initial circle size', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          initialRadius: 100,
-          delay: const Duration(seconds: 10),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            initialRadius: 100,
+            delay: const Duration(seconds: 10),
+          ),
+        );
 
         expect(find.byType(ExpandingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
@@ -286,9 +301,11 @@ void main() {
 
     group('edge cases', () {
       testWidgets('handles very short delay', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(microseconds: 1),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(microseconds: 1),
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 10));
         await tester.pump();
@@ -298,10 +315,12 @@ void main() {
       });
 
       testWidgets('handles very short expandDuration', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          delay: const Duration(milliseconds: 10),
-          expandDuration: const Duration(milliseconds: 1),
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            delay: const Duration(milliseconds: 10),
+            expandDuration: const Duration(milliseconds: 1),
+          ),
+        );
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();
@@ -311,15 +330,17 @@ void main() {
       });
 
       testWidgets('handles complex background widget', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          background: const Stack(
-            key: Key('complexBackground'),
-            children: [
-              ColoredBox(color: Colors.yellow),
-              Center(child: Text('CENTER')),
-            ],
+        await tester.pumpWidget(
+          buildTestWidget(
+            background: const Stack(
+              key: Key('complexBackground'),
+              children: [
+                ColoredBox(color: Colors.yellow),
+                Center(child: Text('CENTER')),
+              ],
+            ),
           ),
-        ));
+        );
 
         expect(find.byType(ExpandingCircleMask), findsOneWidget);
         expect(find.byKey(const Key('complexBackground')), findsOneWidget);
@@ -339,19 +360,25 @@ void main() {
           background: ColoredBox(color: Colors.yellow),
         );
         expect(widget, isNotNull);
-        expect(MarioMakerTiming.expandDelayDefault,
-            equals(const Duration(seconds: 2)));
+        expect(
+          MarioMakerTiming.expandDelayDefault,
+          equals(const Duration(seconds: 2)),
+        );
       });
 
-      test('uses MarioMakerTiming.expandDurationDefault as default duration',
-          () {
-        const widget = ExpandingCircleMask(
-          background: ColoredBox(color: Colors.yellow),
-        );
-        expect(widget, isNotNull);
-        expect(MarioMakerTiming.expandDurationDefault,
-            equals(const Duration(milliseconds: 1500)));
-      });
+      test(
+        'uses MarioMakerTiming.expandDurationDefault as default duration',
+        () {
+          const widget = ExpandingCircleMask(
+            background: ColoredBox(color: Colors.yellow),
+          );
+          expect(widget, isNotNull);
+          expect(
+            MarioMakerTiming.expandDurationDefault,
+            equals(const Duration(milliseconds: 1500)),
+          );
+        },
+      );
     });
   });
 }
