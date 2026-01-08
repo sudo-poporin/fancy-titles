@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/pausable_animation_mixin.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/material.dart';
 
 /// Class [BounceVertically]: Bounce animation vertically using sin function.
@@ -33,7 +33,7 @@ class BounceVertically extends StatefulWidget {
 /// State class,
 /// Controls the animations flow
 class BounceVerticallyState extends State<BounceVertically>
-    with SingleTickerProviderStateMixin, PausableAnimationMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   /// The controller of the animation
   late AnimationController _controller;
 
@@ -57,7 +57,6 @@ class BounceVerticallyState extends State<BounceVertically>
     );
 
     _animation = CurvedAnimation(parent: _controller, curve: Curves.linear);
-    registerAnimationController(_controller);
 
     opacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _controller, curve: const Interval(0, 0.4)),
@@ -72,7 +71,7 @@ class BounceVerticallyState extends State<BounceVertically>
   void _buildAnimation(Duration delay) {
     // Start animation after bounceVerticallyDelay + custom delay
     final totalDelay = SonicManiaTiming.bounceVerticallyDelay + delay;
-    delayedPausable(totalDelay, () {
+    delayed(totalDelay, () {
       unawaited(_controller.forward());
     });
   }

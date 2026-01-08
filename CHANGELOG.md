@@ -5,42 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2026-01-08
-
-### Added
-
-- **Animation Controllers** for programmatic control of animations:
-  - `SonicManiaSplashController` - Control SonicManiaSplash animations
-  - `Persona5TitleController` - Control Persona5Title animations
-  - `EvangelionTitleController` - Control EvangelionTitle animations
-  - `MarioMakerTitleController` - Control MarioMakerTitle animations
-  - Methods: `pause()`, `resume()`, `skipToEnd()`, `reset()`
-  - Properties: `currentPhase`, `isPaused`, `isCompleted`
-- **Theme System** for complete color customization:
-  - `SonicManiaTheme` with `SonicManiaBarColors`, `SonicManiaCurtainColors`, `SonicManiaTextBarColors`
-  - `Persona5Theme` with `Persona5CircleColors`, `Persona5TextColors`
-  - `EvangelionTheme` with `EvangelionTextColors`, `EvangelionCurtainColors`
-  - `MarioMakerTheme` with `MarioMakerBackgroundColors`
-- Core infrastructure:
-  - `FancyTitleController` base class with `ChangeNotifier`
-  - `FancyTitleControllerScope` for propagating controller state
-  - `PausableAnimationMixin` with `PausableTimer` for pause/resume support
-  - Theme scope widgets for each module
-- 150 new tests for controllers and themes (912 total tests)
-
-### Changed
-
-- All main widgets now accept optional `controller` parameter
-- All main widgets now accept optional `theme` parameter
-- Updated README.md with comprehensive Controllers and Themes documentation
-- Internal widgets modified to support theme color resolution
-
-### Performance
-
-- No performance regressions; maintains <16ms frame times
-- Controllers use efficient `ChangeNotifier` pattern
-- Themes use `InheritedWidget` for optimal rebuilds
-
 ## [1.0.6] - 2026-01-08
 
 ### Added

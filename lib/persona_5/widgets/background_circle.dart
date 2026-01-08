@@ -1,6 +1,4 @@
 import 'package:fancy_titles/persona_5/painters/circle_painter.dart';
-import 'package:fancy_titles/persona_5/persona_5_theme.dart';
-import 'package:fancy_titles/persona_5/persona_5_theme_scope.dart';
 import 'package:flutter/material.dart';
 
 /// Widget que muestra los circulos concentricos del fondo de Persona 5.
@@ -37,39 +35,30 @@ class BackgroundCircle extends StatelessWidget {
   /// Crea el fondo de circulos concentricos estilo Persona 5.
   const BackgroundCircle({super.key});
 
-  /// Valores de inflación para los círculos concéntricos.
-  static const _inflatedValues = [
-    1200,
-    1100,
-    1000,
-    900,
-    800,
-    700,
-    600,
-    500,
-    400,
-    300,
-    200,
-    100,
-    0,
-    -100,
-    -200,
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final theme = Persona5ThemeScope.maybeOf(context);
-    final primaryColor = theme?.primaryCircleColor ?? Persona5Colors.red;
-    final secondaryColor = theme?.secondaryCircleColor ?? Persona5Colors.black;
-
     // RepaintBoundary aísla los repintados de los círculos concéntricos
-    return RepaintBoundary(
+    return const RepaintBoundary(
       child: SizedBox.expand(
         child: CustomPaint(
           painter: CirclePainter(
-            inflatedValues: _inflatedValues,
-            primaryColor: primaryColor,
-            secondaryColor: secondaryColor,
+            inflatedValues: [
+              1200,
+              1100,
+              1000,
+              900,
+              800,
+              700,
+              600,
+              500,
+              400,
+              300,
+              200,
+              100,
+              0,
+              -100,
+              -200,
+            ],
           ),
         ),
       ),

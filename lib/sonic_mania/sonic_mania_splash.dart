@@ -1,11 +1,7 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/fancy_title_controller_scope.dart';
-import 'package:fancy_titles/core/pausable_animation_mixin.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
-import 'package:fancy_titles/sonic_mania/sonic_mania_splash_controller.dart';
-import 'package:fancy_titles/sonic_mania/sonic_mania_theme.dart';
-import 'package:fancy_titles/sonic_mania/sonic_mania_theme_scope.dart';
 import 'package:fancy_titles/sonic_mania/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -45,26 +41,6 @@ import 'package:flutter/material.dart';
 /// Los tiempos de animación están definidos en [SonicManiaTiming].
 /// Actualmente no es posible personalizarlos por instancia.
 ///
-/// ## Control programático
-///
-/// Se puede controlar la animación usando un [SonicManiaSplashController]:
-///
-/// ```dart
-/// final controller = SonicManiaSplashController();
-///
-/// SonicManiaSplash(
-///   baseText: 'LEVEL 1',
-///   controller: controller,
-/// )
-///
-/// // Pausar/reanudar
-/// controller.pause();
-/// controller.resume();
-///
-/// // Saltar al final
-/// controller.skipToEnd();
-/// ```
-///
 /// ## Callbacks de ciclo de vida
 ///
 /// El widget proporciona callbacks para sincronizar acciones externas:
@@ -85,21 +61,6 @@ import 'package:flutter/material.dart';
 /// )
 /// ```
 ///
-/// ## Personalización de colores
-///
-/// Se puede personalizar los colores usando [SonicManiaTheme]:
-///
-/// ```dart
-/// SonicManiaSplash(
-///   baseText: 'LEVEL 1',
-///   theme: SonicManiaTheme(
-///     redBarColor: Colors.purple,
-///     orangeBarColor: Colors.pink,
-///     blueCurtainColor: Colors.indigo,
-///   ),
-/// )
-/// ```
-///
 /// Ver también:
 /// - `Persona5Title` para estilo Persona 5
 /// - `EvangelionTitle` para estilo Evangelion
@@ -115,11 +76,6 @@ class SonicManiaSplash extends StatefulWidget {
   ///
   /// [lastText] es opcional y se muestra en la tercera barra (minúsculas).
   /// Máximo 4 caracteres. Lanza [FlutterError] si excede este límite.
-  ///
-  /// [controller] es opcional y permite control programático de la animación.
-  ///
-  /// [theme] es opcional y permite personalizar los colores del widget.
-  /// Si es `null`, se usan los colores por defecto de Sonic Mania.
   ///
   /// Ejemplo con una línea:
   /// ```dart
@@ -143,37 +99,19 @@ class SonicManiaSplash extends StatefulWidget {
   /// )
   /// ```
   ///
-  /// Ejemplo con controller:
-  /// ```dart
-  /// final controller = SonicManiaSplashController();
-  ///
-  /// SonicManiaSplash(
-  ///   baseText: 'GREEN HILL',
-  ///   controller: controller,
-  /// )
-  ///
-  /// // Luego puedes controlar la animación:
-  /// controller.pause();
-  /// controller.resume();
-  /// controller.skipToEnd();
-  /// ```
-  ///
-  /// Ejemplo con tema personalizado:
+  /// Ejemplo con callbacks:
   /// ```dart
   /// SonicManiaSplash(
   ///   baseText: 'GREEN HILL',
-  ///   theme: SonicManiaTheme(
-  ///     redBarColor: Colors.purple,
-  ///     blueCurtainColor: Colors.indigo,
-  ///   ),
+  ///   onAnimationStart: () => print('Animación iniciada'),
+  ///   onAnimationComplete: () => print('Animación completada'),
+  ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
   SonicManiaSplash({
     required String baseText,
     String? secondaryText,
     String? lastText,
-    SonicManiaSplashController? controller,
-    SonicManiaTheme? theme,
     VoidCallback? onAnimationStart,
     VoidCallback? onAnimationComplete,
     void Function(AnimationPhase phase)? onPhaseChange,
@@ -181,8 +119,6 @@ class SonicManiaSplash extends StatefulWidget {
   }) : _baseText = baseText,
        _secondaryText = secondaryText,
        _lastText = lastText,
-       _controller = controller,
-       _theme = theme,
        _onAnimationStart = onAnimationStart,
        _onAnimationComplete = onAnimationComplete,
        _onPhaseChange = onPhaseChange {
@@ -194,12 +130,6 @@ class SonicManiaSplash extends StatefulWidget {
   final String _baseText;
   final String? _secondaryText;
   final String? _lastText;
-
-  /// Controller opcional para control programático de la animación.
-  final SonicManiaSplashController? _controller;
-
-  /// Tema opcional para personalización de colores.
-  final SonicManiaTheme? _theme;
 
   /// Callback ejecutado cuando la animación comienza.
   final VoidCallback? _onAnimationStart;
@@ -215,7 +145,7 @@ class SonicManiaSplash extends StatefulWidget {
 }
 
 class _SonicManiaSplashState extends State<SonicManiaSplash>
-    with SingleTickerProviderStateMixin, PausableAnimationMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late bool _animationCompleted = false;
   late double firstTextVerticalOffset;
   late double lastTextVerticalOffset;
@@ -224,9 +154,6 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   late double lastTextInvertedValue;
 
   AnimationPhase _currentPhase = AnimationPhase.idle;
-
-  // Key para forzar rebuild cuando se hace reset
-  Key _contentKey = UniqueKey();
 
   @override
   void initState() {
@@ -239,9 +166,6 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
 
     lastTextInvertedValue = widget._secondaryText != null ? 1.0 : -1.0;
 
-    // Escuchar cambios del controller
-    widget._controller?.addListener(_onControllerChanged);
-
     // Start animation lifecycle
     _updatePhase(AnimationPhase.entering);
     widget._onAnimationStart?.call();
@@ -249,54 +173,10 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
     _initAnimationPhases();
   }
 
-  @override
-  void dispose() {
-    widget._controller?.removeListener(_onControllerChanged);
-    super.dispose();
-  }
-
-  void _onControllerChanged() {
-    final controller = widget._controller;
-    if (controller == null) return;
-
-    // Manejar skipToEnd
-    if (controller.isCompleted && _currentPhase != AnimationPhase.completed) {
-      _handleSkipToEnd();
-    }
-
-    // Manejar reset
-    if (controller.currentPhase == AnimationPhase.idle &&
-        _currentPhase != AnimationPhase.idle) {
-      _handleReset();
-    }
-  }
-
-  void _handleSkipToEnd() {
-    _updatePhase(AnimationPhase.completed);
-    widget._onAnimationComplete?.call();
-    setState(() {
-      _animationCompleted = true;
-    });
-  }
-
-  void _handleReset() {
-    setState(() {
-      _animationCompleted = false;
-      _currentPhase = AnimationPhase.idle;
-      _contentKey = UniqueKey(); // Forzar rebuild de widgets hijos
-    });
-
-    // Reiniciar el ciclo de animación
-    _updatePhase(AnimationPhase.entering);
-    widget._onAnimationStart?.call();
-    _initAnimationPhases();
-  }
-
   /// Updates the current phase and notifies listeners
   void _updatePhase(AnimationPhase newPhase) {
     if (_currentPhase != newPhase) {
       _currentPhase = newPhase;
-      widget._controller?.updatePhase(newPhase);
       widget._onPhaseChange?.call(newPhase);
     }
   }
@@ -304,17 +184,17 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
   /// Initializes the animation phase sequence
   void _initAnimationPhases() {
     // Phase: entering → active (after slide in completes)
-    delayedPausable(SonicManiaTiming.slideIn, () {
+    delayed(SonicManiaTiming.slideIn, () {
       _updatePhase(AnimationPhase.active);
     });
 
     // Phase: active → exiting (when slide out starts)
-    delayedPausable(SonicManiaTiming.slideOutDelay, () {
+    delayed(SonicManiaTiming.slideOutDelay, () {
       _updatePhase(AnimationPhase.exiting);
     });
 
     // Phase: exiting → completed (auto-destruction)
-    delayedPausable(SonicManiaTiming.totalDuration, () {
+    delayed(SonicManiaTiming.totalDuration, () {
       _updatePhase(AnimationPhase.completed);
       widget._onAnimationComplete?.call();
       setState(() {
@@ -325,14 +205,13 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
 
   @override
   Widget build(BuildContext context) {
-    Widget content = AnimatedSwitcher(
+    return AnimatedSwitcher(
       duration: SonicManiaTiming.fadeTransition,
       transitionBuilder: (child, animation) =>
           FadeTransition(opacity: animation, child: child),
       child: _animationCompleted
           ? const SizedBox.shrink()
           : ColoredBox(
-              key: _contentKey,
               color: Colors.transparent,
               child: Stack(
                 alignment: Alignment.center,
@@ -398,23 +277,5 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
               ),
             ),
     );
-
-    // Envolver con el scope del tema si existe
-    if (widget._theme != null) {
-      content = SonicManiaThemeScope(
-        theme: widget._theme!,
-        child: content,
-      );
-    }
-
-    // Envolver con el scope del controller si existe
-    if (widget._controller != null) {
-      content = FancyTitleControllerScope(
-        controller: widget._controller!,
-        child: content,
-      );
-    }
-
-    return content;
   }
 }

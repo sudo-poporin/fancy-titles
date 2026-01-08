@@ -112,12 +112,12 @@ void main() {
 
         expect(find.byType(Persona5Title), findsOneWidget);
       });
+
     });
 
     group('animation lifecycle', () {
-      testWidgets('calls onAnimationStart immediately on build', (
-        tester,
-      ) async {
+      testWidgets('calls onAnimationStart immediately on build',
+          (tester) async {
         var startCalled = false;
 
         await tester.pumpWidget(
@@ -160,9 +160,8 @@ void main() {
         expect(phases, contains(AnimationPhase.exiting));
       });
 
-      testWidgets('calls onAnimationComplete after totalDuration', (
-        tester,
-      ) async {
+      testWidgets('calls onAnimationComplete after totalDuration',
+          (tester) async {
         var completeCalled = false;
 
         await tester.pumpWidget(

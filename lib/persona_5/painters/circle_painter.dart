@@ -1,11 +1,11 @@
-import 'package:fancy_titles/persona_5/persona_5_theme.dart';
+import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 
 /// Painter que dibuja círculos concéntricos para la animación Persona 5.
 ///
 /// Este painter crea un efecto de círculos expandidos alternando entre
-/// dos colores, característico de las transiciones del juego Persona 5.
+/// rojo y negro, característico de las transiciones del juego Persona 5.
 ///
 /// Los círculos se dibujan desde el exterior hacia el interior,
 /// creando un efecto visual de ondas concéntricas.
@@ -15,23 +15,14 @@ class CirclePainter extends CustomPainter {
   ///
   /// [inflatedValues] lista de valores que determinan el radio adicional
   /// de cada círculo concéntrico.
-  /// [primaryColor] color de los círculos pares (por defecto rojo).
-  /// [secondaryColor] color de los círculos impares (por defecto negro).
-  CirclePainter({
-    required List<int> inflatedValues,
-    Color primaryColor = Persona5Colors.red,
-    Color secondaryColor = Persona5Colors.black,
-  })  : _inflatedValues = inflatedValues,
-        _primaryPaint = Paint()..color = primaryColor,
-        _secondaryPaint = Paint()..color = secondaryColor,
-        _primaryColor = primaryColor,
-        _secondaryColor = secondaryColor;
+  const CirclePainter({required List<int> inflatedValues})
+    : _inflatedValues = inflatedValues;
 
   final List<int> _inflatedValues;
-  final Paint _primaryPaint;
-  final Paint _secondaryPaint;
-  final Color _primaryColor;
-  final Color _secondaryColor;
+
+  // Paint objects pre-creados (inmutables)
+  static final _redPaint = Paint()..color = redColor;
+  static final _blackPaint = Paint()..color = blackColor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -44,16 +35,14 @@ class CirclePainter extends CustomPainter {
       final radius = baseRadius + _inflatedValues[i];
       canvas.drawOval(
         Rect.fromCircle(center: center, radius: radius),
-        i.isEven ? _primaryPaint : _secondaryPaint,
+        i.isEven ? _redPaint : _blackPaint,
       );
     }
   }
 
   @override
   bool shouldRepaint(covariant CirclePainter oldDelegate) {
-    // Solo repintar si los valores o colores cambian
-    return !listEquals(_inflatedValues, oldDelegate._inflatedValues) ||
-        _primaryColor != oldDelegate._primaryColor ||
-        _secondaryColor != oldDelegate._secondaryColor;
+    // Solo repintar si los valores cambian
+    return !listEquals(_inflatedValues, oldDelegate._inflatedValues);
   }
 }

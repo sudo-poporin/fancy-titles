@@ -1,38 +1,18 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:fancy_titles/core/pausable_animation_mixin.dart';
+import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
-import 'package:fancy_titles/sonic_mania/sonic_mania_theme.dart';
-import 'package:fancy_titles/sonic_mania/sonic_mania_theme_scope.dart';
 import 'package:flutter/material.dart';
 
-/// Tipo de barra para resolver colores del tema.
-enum _ClippedBarType {
-  /// Barra roja.
-  red,
+const Color _redBarColor = Color(0xFFD15529);
+const Color _orangeBarColor = Color(0xFFFB9B0F);
+const Color _blueBarColor = Color(0xFF456EBD);
+const Color _greenBarColor = Color(0xFF4E9B89);
 
-  /// Barra naranja.
-  orange,
-
-  /// Barra azul.
-  blue,
-
-  /// Barra verde.
-  green,
-
-  /// Barra con color personalizado.
-  custom,
-}
-
-/// Barra diagonal animada del splash de Sonic Mania.
-///
-/// Las barras se deslizan diagonalmente desde fuera de la pantalla
-/// hacia el centro, y luego salen en dirección opuesta.
-///
-/// Los colores pueden ser personalizados usando [SonicManiaTheme].
+/// Barra azul del splash de Sonic Mania
 class ClippedBar extends StatefulWidget {
-  /// Barra diagonal con color personalizado.
+  /// Barra azul del splash de Sonic Mania
   const ClippedBar({
     required this.color,
     required this.customClipper,
@@ -40,58 +20,47 @@ class ClippedBar extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.delay = SonicManiaTiming.clippedBarDefaultDelay,
     super.key,
-  }) : _barType = _ClippedBarType.custom;
+  });
 
-  /// Barra roja.
-  ///
-  /// El color puede ser personalizado con [SonicManiaTheme.redBarColor].
+  /// Barra roja
   const ClippedBar.red({
     required this.customClipper,
-    this.color = SonicManiaBarColors.red,
+    this.color = _redBarColor,
     this.duration = SonicManiaTiming.clippedBarRedDuration,
     this.curve = Curves.easeInOut,
     this.delay = SonicManiaTiming.clippedBarRedDelay,
     super.key,
-  }) : _barType = _ClippedBarType.red;
+  });
 
-  /// Barra naranja.
-  ///
-  /// El color puede ser personalizado con [SonicManiaTheme.orangeBarColor].
+  /// Barra naranja
   const ClippedBar.orange({
     required this.customClipper,
-    this.color = SonicManiaBarColors.orange,
+    this.color = _orangeBarColor,
     this.duration = SonicManiaTiming.clippedBarOrangeDuration,
     this.curve = Curves.easeInOut,
     this.delay = SonicManiaTiming.clippedBarOrangeDelay,
     super.key,
-  }) : _barType = _ClippedBarType.orange;
+  });
 
-  /// Barra azul.
-  ///
-  /// El color puede ser personalizado con [SonicManiaTheme.blueBarColor].
+  /// Barra azul
   const ClippedBar.blue({
     required this.customClipper,
-    this.color = SonicManiaBarColors.blue,
+    this.color = _blueBarColor,
     this.duration = SonicManiaTiming.clippedBarBlueDuration,
     this.curve = Curves.easeInOut,
     this.delay = SonicManiaTiming.clippedBarBlueDelay,
     super.key,
-  }) : _barType = _ClippedBarType.blue;
+  });
 
-  /// Barra verde.
-  ///
-  /// El color puede ser personalizado con [SonicManiaTheme.greenBarColor].
+  /// Barra verde
   const ClippedBar.green({
     required this.customClipper,
-    this.color = SonicManiaBarColors.green,
+    this.color = _greenBarColor,
     this.duration = SonicManiaTiming.clippedBarGreenDuration,
     this.curve = Curves.easeInOut,
     this.delay = SonicManiaTiming.clippedBarGreenDelay,
     super.key,
-  }) : _barType = _ClippedBarType.green;
-
-  /// Tipo interno de barra para resolución de colores del tema.
-  final _ClippedBarType _barType;
+  });
 
   /// Barra clippeada personalizada
   final CustomClipper<Path> customClipper;
@@ -113,7 +82,7 @@ class ClippedBar extends StatefulWidget {
 }
 
 class _ClippedBarState extends State<ClippedBar>
-    with SingleTickerProviderStateMixin, PausableAnimationMixin {
+    with SingleTickerProviderStateMixin, CancelableTimersMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -124,11 +93,10 @@ class _ClippedBarState extends State<ClippedBar>
     super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this);
     _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
-    registerAnimationController(_controller);
 
     _beginOffset = const Offset(0.5, 1);
 
-    delayedPausable(SonicManiaTiming.clippedBarInitialDelay, () {
+    delayed(SonicManiaTiming.clippedBarInitialDelay, () {
       unawaited(_controller.forward().whenComplete(_slideOut));
     });
   }
@@ -140,26 +108,12 @@ class _ClippedBarState extends State<ClippedBar>
   }
 
   void _slideOut() {
-    delayedPausable(widget.delay, () {
+    delayed(widget.delay, () {
       setState(() {
         _beginOffset = const Offset(-0.5, -1);
       });
       unawaited(_controller.reverse());
     });
-  }
-
-  /// Resuelve el color de la barra basándose en el tema o el color por defecto.
-  Color _resolveColor(BuildContext context) {
-    final theme = SonicManiaThemeScope.maybeOf(context);
-    if (theme == null) return widget.color;
-
-    return switch (widget._barType) {
-      _ClippedBarType.red => theme.redBarColor ?? widget.color,
-      _ClippedBarType.orange => theme.orangeBarColor ?? widget.color,
-      _ClippedBarType.blue => theme.blueBarColor ?? widget.color,
-      _ClippedBarType.green => theme.greenBarColor ?? widget.color,
-      _ClippedBarType.custom => widget.color,
-    };
   }
 
   @override
@@ -169,7 +123,7 @@ class _ClippedBarState extends State<ClippedBar>
       beginOffset: _beginOffset,
       child: ClipPath(
         clipper: widget.customClipper,
-        child: ColoredBox(color: _resolveColor(context)),
+        child: ColoredBox(color: widget.color),
       ),
     );
   }
