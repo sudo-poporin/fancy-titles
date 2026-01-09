@@ -75,11 +75,11 @@ Inspirado en las pantallas de niveles de **Sonic Mania**. Incluye cortinas de co
 
 #### Parámetros de SonicManiaSplash
 
-| Parámetro | Tipo | Requerido | Descripción |
-|-----------|------|-----------|-------------|
-| `baseText` | `String` | ✅ | Primera línea de texto (se muestra en mayúsculas) |
-| `secondaryText` | `String?` | ❌ | Segunda línea de texto opcional (se muestra en mayúsculas) |
-| `lastText` | `String?` | ❌ | Tercera línea de texto, **máximo 4 caracteres** (se muestra en minúsculas) |
+| Parámetro       | Tipo      | Requerido | Descripción                                                              |
+| --------------- | --------- | --------- | ------------------------------------------------------------------------ |
+| `baseText`      | `String`  | ✅        | Primera línea de texto (se muestra en mayúsculas)                        |
+| `secondaryText` | `String?` | ❌        | Segunda línea de texto opcional (se muestra en mayúsculas)               |
+| `lastText`      | `String?` | ❌        | Tercera línea de texto, **máximo 4 caracteres** (se muestra minúsculas)  |
 
 #### Ejemplo de SonicManiaSplash
 
@@ -111,13 +111,13 @@ Inspirado en los títulos de capítulo de **Persona 5**. Incluye fondo rojo vibr
 
 #### Parámetros de Persona5Title
 
-| Parámetro | Tipo | Requerido | Default | Descripción |
-|-----------|------|-----------|---------|-------------|
-| `text` | `String` | ✅ | - | Texto a mostrar (ej: "Takes your heart") |
-| `imagePath` | `String?` | ❌ | `null` | Ruta del asset de imagen (ej: retrato de personaje) |
-| `withImageBlendMode` | `bool` | ❌ | `false` | Habilita modo de mezcla para la imagen |
-| `delay` | `Duration` | ❌ | `125ms` | Retraso antes de iniciar la animación |
-| `duration` | `Duration` | ❌ | `3400ms` | Duración de la animación principal |
+| Parámetro            | Tipo       | Requerido | Default  | Descripción                                          |
+| -------------------- | ---------- | --------- | -------- | ---------------------------------------------------- |
+| `text`               | `String`   | ✅        | -        | Texto a mostrar (ej: "Takes your heart")             |
+| `imagePath`          | `String?`  | ❌        | `null`   | Ruta del asset de imagen (ej: retrato de personaje)  |
+| `withImageBlendMode` | `bool`     | ❌        | `false`  | Habilita modo de mezcla para la imagen               |
+| `delay`              | `Duration` | ❌        | `125ms`  | Retraso antes de iniciar la animación                |
+| `duration`           | `Duration` | ❌        | `3400ms` | Duración de la animación principal                   |
 
 #### Ejemplo Básico
 
@@ -166,13 +166,13 @@ Inspirado en los títulos de episodio de **Neon Genesis Evangelion**. Incluye fo
 
 #### Parámetros de EvangelionTitle
 
-| Parámetro | Tipo | Requerido | Default | Descripción |
-|-----------|------|-----------|---------|-------------|
-| `firstText` | `String?` | ❌ | `'NEON'` | Primera línea de texto |
-| `secondText` | `String?` | ❌ | `'GENESIS'` | Segunda línea de texto |
-| `thirdText` | `String?` | ❌ | `'EVANGELION'` | Tercera línea de texto |
-| `fourthText` | `String?` | ❌ | `'EPISODE:1'` | Cuarta línea de texto (número de episodio) |
-| `fifthText` | `String?` | ❌ | `'ANGEL ATTACK'` | Quinta línea de texto (título del episodio) |
+| Parámetro    | Tipo      | Requerido | Default          | Descripción                                  |
+| ------------ | --------- | --------- | ---------------- | -------------------------------------------- |
+| `firstText`  | `String?` | ❌        | `'NEON'`         | Primera línea de texto                       |
+| `secondText` | `String?` | ❌        | `'GENESIS'`      | Segunda línea de texto                       |
+| `thirdText`  | `String?` | ❌        | `'EVANGELION'`   | Tercera línea de texto                       |
+| `fourthText` | `String?` | ❌        | `'EPISODE:1'`    | Cuarta línea de texto (número de episodio)   |
+| `fifthText`  | `String?` | ❌        | `'ANGEL ATTACK'` | Quinta línea de texto (título del episodio)  |
 
 #### Ejemplo de EvangelionTitle
 
@@ -207,17 +207,17 @@ Inspirado en las pantallas de título de **Super Mario Maker**. Incluye un círc
 
 #### Parámetros de MarioMakerTitle
 
-| Parámetro | Tipo | Requerido | Default | Descripción |
-|-----------|------|-----------|---------|-------------|
-| `title` | `String` | ✅ | - | Texto a mostrar después de la expansión del círculo |
-| `imagePath` | `String` | ✅ | - | Ruta del asset de imagen (soporta GIFs) |
-| `onAnimationStart` | `VoidCallback?` | ❌ | `null` | Callback ejecutado al iniciar la animación (útil para sonidos) |
-| `duration` | `Duration` | ❌ | `4s` | Duración total de la animación |
-| `circleRadius` | `double` | ❌ | `80` | Radio base del círculo |
-| `bottomMargin` | `double` | ❌ | `100` | Distancia desde el fondo de la pantalla al centro del círculo |
-| `titleStyle` | `TextStyle?` | ❌ | `null` | Estilo personalizado para el texto del título |
-| `irisOutAlignment` | `Alignment` | ❌ | `center` | Hacia dónde contrae el efecto iris-out |
-| `irisOutEdgePadding` | `double` | ❌ | `50` | Distancia mínima desde los bordes para el iris-out |
+| Parámetro            | Tipo            | Requerido | Default  | Descripción                                               |
+| -------------------- | --------------- | --------- | -------- | --------------------------------------------------------- |
+| `title`              | `String`        | ✅        | -        | Texto a mostrar después de la expansión del círculo       |
+| `imagePath`          | `String`        | ✅        | -        | Ruta del asset de imagen (soporta GIFs)                   |
+| `onAnimationStart`   | `VoidCallback?` | ❌        | `null`   | Callback al iniciar la animación (útil para sonidos)      |
+| `duration`           | `Duration`      | ❌        | `4s`     | Duración total de la animación                            |
+| `circleRadius`       | `double`        | ❌        | `80`     | Radio base del círculo                                    |
+| `bottomMargin`       | `double`        | ❌        | `100`    | Distancia desde el fondo al centro del círculo            |
+| `titleStyle`         | `TextStyle?`    | ❌        | `null`   | Estilo personalizado para el texto del título             |
+| `irisOutAlignment`   | `Alignment`     | ❌        | `center` | Hacia dónde contrae el efecto iris-out                    |
+| `irisOutEdgePadding` | `double`        | ❌        | `50`     | Distancia mínima desde los bordes para el iris-out        |
 
 #### Ejemplo Básico
 
@@ -265,22 +265,22 @@ MarioMakerTitle(
 
 ### Resumen de Widgets
 
-| Widget | Inspiración | Duración | Parámetros Requeridos |
-|--------|-------------|----------|----------------------|
-| `SonicManiaSplash` | Sonic Mania | 5s | `baseText` |
-| `Persona5Title` | Persona 5 | 4s | `text` |
-| `EvangelionTitle` | Neon Genesis Evangelion | 5s | Ninguno (todos opcionales) |
-| `MarioMakerTitle` | Super Mario Maker | 4s | `title`, `imagePath` |
+| Widget             | Inspiración             | Duración | Parámetros Requeridos      |
+| ------------------ | ----------------------- | -------- | -------------------------- |
+| `SonicManiaSplash` | Sonic Mania             | 5s       | `baseText`                 |
+| `Persona5Title`    | Persona 5               | 4s       | `text`                     |
+| `EvangelionTitle`  | Neon Genesis Evangelion | 5s       | Ninguno (todos opcionales) |
+| `MarioMakerTitle`  | Super Mario Maker       | 4s       | `title`, `imagePath`       |
 
 ### Fuentes Incluidas
 
 El paquete incluye las siguientes fuentes personalizadas que se usan automáticamente:
 
-| Fuente | Usado en | Descripción |
-|--------|----------|-------------|
-| `ManiaZoneCard` | SonicManiaSplash | Tipografía estilo Sonic Mania |
-| `Persona` | Persona5Title | Tipografía estilo menú de Persona 5 |
-| `EVAMatisseClassic` | EvangelionTitle | Tipografía característica de Evangelion |
+| Fuente              | Usado en         | Descripción                             |
+| ------------------- | ---------------- | --------------------------------------- |
+| `ManiaZoneCard`     | SonicManiaSplash | Tipografía estilo Sonic Mania           |
+| `Persona`           | Persona5Title    | Tipografía estilo menú de Persona 5     |
+| `EVAMatisseClassic` | EvangelionTitle  | Tipografía característica de Evangelion |
 
 ---
 
@@ -378,11 +378,11 @@ flutter test test/performance/jank_test.dart
 
 El benchmark suite valida que todos los widgets cumplan:
 
-| Métrica | Target | Descripción |
-|---------|--------|-------------|
-| Jank % | < 1% | Frames que exceden 16ms |
-| Avg frame time | < 16ms | Promedio para 60fps |
-| Initial render | < 150ms | Tiempo de primer render |
+| Métrica        | Target   | Descripción               |
+| -------------- | -------- | ------------------------- |
+| Jank %         | < 1%     | Frames que exceden 16ms   |
+| Avg frame time | < 16ms   | Promedio para 60fps       |
+| Initial render | < 150ms  | Tiempo de primer render   |
 
 Para más detalles, ver [`benchmark/README.md`](benchmark/README.md).
 
@@ -416,10 +416,11 @@ Clases disponibles:
 Todos los widgets principales soportan callbacks para controlar el ciclo de vida
 de las animaciones:
 
-| Callback | Widgets | Descripción |
-|----------|---------|-------------|
-| `onAnimationStart` | Todos | Se ejecuta cuando inicia la animación |
-| `onAnimationComplete` | Todos | Se ejecuta cuando finaliza la animación |
+| Callback              | Widgets | Descripción                                       |
+| --------------------- | ------- | ------------------------------------------------- |
+| `onAnimationStart`    | Todos   | Se ejecuta cuando inicia la animación             |
+| `onAnimationComplete` | Todos   | Se ejecuta cuando finaliza la animación           |
+| `onPhaseChange`       | Todos   | Se ejecuta en cada cambio de fase de la animación |
 
 ### Ejemplo de Uso
 
@@ -448,10 +449,70 @@ MarioMakerTitle(
 )
 ```
 
+### Ejemplo con onPhaseChange
+
+El callback `onPhaseChange` permite sincronizar efectos externos con fases
+específicas de la animación:
+
+```dart
+SonicManiaSplash(
+  baseText: 'LEVEL',
+  secondaryText: 'ZONE',
+  lastText: 'ACT1',
+  onPhaseChange: (phase) {
+    switch (phase) {
+      case AnimationPhase.entering:
+        // Reproducir sonido de entrada
+        audioPlayer.play('whoosh.mp3');
+        break;
+      case AnimationPhase.active:
+        // Contenido visible - reproducir música de fondo
+        audioPlayer.play('level_music.mp3');
+        break;
+      case AnimationPhase.exiting:
+        // Preparar la transición
+        audioPlayer.fadeOut();
+        break;
+      case AnimationPhase.completed:
+        // Navegar a la siguiente pantalla
+        Navigator.pushNamed(context, '/game');
+        break;
+      default:
+        break;
+    }
+  },
+)
+```
+
+### AnimationPhase Enum
+
+El enum `AnimationPhase` define las fases disponibles en todos los widgets:
+
+| Fase        | Descripción                                  |
+| ----------- | -------------------------------------------- |
+| `idle`      | Estado inicial, antes de iniciar             |
+| `entering`  | Elementos animándose hacia la vista          |
+| `active`    | Contenido principal visible y estable        |
+| `exiting`   | Elementos animándose hacia afuera            |
+| `completed` | Animación completada, widget listo a remover |
+
 ---
 
-## Próximas Características 🚀
+## Estado del Proyecto 📊
 
-- Clase contenedora para las pantallas de inicio
-- Más pantallas de inicio personalizadas
-- Parámetros de personalización de colores
+El paquete `fancy_titles` está en estado **estable** (v1.0.7) con:
+
+- 4 widgets de splash screen completamente funcionales
+- 97%+ de cobertura de tests (781+ tests)
+- Suite de benchmarks de performance
+- 4 integration tests de performance
+- 0 lint warnings
+
+### Contribuciones Bienvenidas
+
+- Nuevos splash screens inspirados en otros videojuegos/animes
+- Mejoras de performance
+- Traducciones de documentación
+- Reportes de bugs
+
+Para contribuir, abre un issue o pull request en el repositorio.
