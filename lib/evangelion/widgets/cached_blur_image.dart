@@ -36,12 +36,14 @@ class CachedBlurPainter extends StatefulWidget {
 class _CachedBlurPainterState extends State<CachedBlurPainter> {
   ui.Image? _cachedImage;
   bool _isRendering = false;
+  bool _disposed = false;
 
   @override
   void initState() {
     super.initState();
     // Renderizar en el siguiente frame para asegurar que el widget está montado
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_disposed) return; // Guard: no ejecutar si ya fue disposed
       unawaited(_renderToImage());
     });
   }
@@ -60,6 +62,7 @@ class _CachedBlurPainterState extends State<CachedBlurPainter> {
 
   @override
   void dispose() {
+    _disposed = true; // Marcar antes de disponer para cancelar callbacks
     _disposeImage();
     super.dispose();
   }
@@ -70,7 +73,7 @@ class _CachedBlurPainterState extends State<CachedBlurPainter> {
   }
 
   Future<void> _renderToImage() async {
-    if (_isRendering || !mounted) return;
+    if (_isRendering || _disposed) return;
     _isRendering = true;
 
     try {
@@ -99,12 +102,13 @@ class _CachedBlurPainterState extends State<CachedBlurPainter> {
         widget.size.height.toInt(),
       );
 
-      if (mounted) {
+      // Verificar después del await - el widget puede haber sido disposed
+      if (!_disposed) {
         setState(() {
           _cachedImage = image;
         });
       } else {
-        image.dispose();
+        image.dispose(); // Limpiar si ya fue disposed
       }
     } finally {
       _isRendering = false;

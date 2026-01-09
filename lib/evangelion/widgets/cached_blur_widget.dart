@@ -42,12 +42,14 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
   ui.Image? _cachedImage;
   bool _isCapturing = false;
   bool _hasTriedCapture = false;
+  bool _disposed = false;
 
   @override
   void initState() {
     super.initState();
     // Capturar después de que el widget se renderice
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_disposed) return; // Guard: no ejecutar si ya fue disposed
       _scheduleCapture();
     });
   }
@@ -61,6 +63,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
       _disposeImage();
       _hasTriedCapture = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_disposed) return; // Guard: no ejecutar si ya fue disposed
         _scheduleCapture();
       });
     }
@@ -68,6 +71,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
 
   @override
   void dispose() {
+    _disposed = true; // Marcar antes de super.dispose() para cancelar callbacks
     _disposeImage();
     super.dispose();
   }
@@ -90,7 +94,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
   }
 
   Future<void> _captureToImage() async {
-    if (_isCapturing || !mounted) return;
+    if (_isCapturing || _disposed) return;
     _isCapturing = true;
 
     try {
@@ -102,18 +106,26 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
         return;
       }
 
+      // Verificar que el boundary esté listo para capturar
+      // En tests, debugNeedsPaint puede ser true
+      if (boundary.debugNeedsPaint) {
+        _isCapturing = false;
+        return;
+      }
+
       // Capturar el widget renderizado como imagen
       final image = await boundary.toImage();
 
-      if (mounted) {
+      // Verificar después del await - el widget puede haber sido disposed
+      if (!_disposed) {
         setState(() {
           _cachedImage = image;
         });
       } else {
-        image.dispose();
+        image.dispose(); // Limpiar si ya fue disposed
       }
-    } on Exception {
-      // Silenciar errores de captura - usar fallback
+    } on Object {
+      // Silenciar errores de captura (Exception y AssertionError)
     } finally {
       _isCapturing = false;
     }

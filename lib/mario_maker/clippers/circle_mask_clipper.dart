@@ -45,4 +45,20 @@ class CircleMaskClipper extends CustomClipper<Path> {
   bool shouldReclip(CircleMaskClipper oldClipper) {
     return radius != oldClipper.radius || center != oldClipper.center;
   }
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached radius (used in performance tests).
+  static double? get debugCachedRadius => _cachedRadius;
+
+  /// Debug getter for cached center (used in performance tests).
+  static Offset? get debugCachedCenter => _cachedCenter;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedRadius = null;
+    _cachedCenter = null;
+  }
 }

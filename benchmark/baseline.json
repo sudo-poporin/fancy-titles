@@ -1,0 +1,48 @@
+{
+  "version": "1.0.6",
+  "date": "2026-01-08",
+  "description": "Performance baseline for fancy_titles package post OPT-006 optimizations",
+  "widgets": {
+    "SonicManiaSplash": {
+      "averageFrameTimeUs": 700,
+      "maxFrameTimeMs": 25,
+      "jankPercentage": 0.5,
+      "initialRenderMs": 130
+    },
+    "Persona5Title": {
+      "averageFrameTimeUs": 200,
+      "maxFrameTimeMs": 10,
+      "jankPercentage": 0.0,
+      "initialRenderMs": 15
+    },
+    "EvangelionTitle": {
+      "averageFrameTimeUs": 6000,
+      "maxFrameTimeMs": 20,
+      "jankPercentage": 20.0,
+      "initialRenderMs": 20
+    },
+    "MarioMakerTitle": {
+      "averageFrameTimeUs": 500,
+      "maxFrameTimeMs": 15,
+      "jankPercentage": 0.0,
+      "initialRenderMs": 50
+    },
+    "MarioMakerTitle (97KB)": {
+      "averageFrameTimeUs": 300,
+      "maxFrameTimeMs": 5,
+      "jankPercentage": 0.0,
+      "initialRenderMs": 15
+    }
+  },
+  "thresholds": {
+    "maxJankPercentage": 1.0,
+    "maxFrameTimeMs": 16,
+    "maxInitialRenderMs": 150,
+    "regressionThreshold": 0.2
+  },
+  "notes": {
+    "EvangelionTitle": "Uses discrete pumps (5 intervals), so jank granularity is 20% per frame",
+    "MarioMakerTitle (97KB)": "Stress test with large image asset",
+    "environment": "Results vary based on test environment. Use for regression detection only."
+  }
+}

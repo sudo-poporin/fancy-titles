@@ -43,6 +43,18 @@ class OrangeBarClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }
 
 /// Clipper para la barra verde en la animacion Sonic Mania.
@@ -87,6 +99,18 @@ class GreenBarClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }
 
 /// Clipper para la barra roja en la animacion Sonic Mania.
@@ -131,6 +155,18 @@ class RedBarClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }
 
 /// Clipper para la barra azul en la animacion Sonic Mania.
@@ -175,4 +211,16 @@ class BlueBarClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }

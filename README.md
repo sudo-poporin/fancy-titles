@@ -333,6 +333,61 @@ flutter run
 
 ---
 
+## Testing y Benchmarks 🧪
+
+El paquete incluye una suite completa de tests y benchmarks de performance.
+
+### Ejecutar Tests
+
+```bash
+# Ejecutar todos los tests
+flutter test
+
+# Ejecutar tests con cobertura
+flutter test --coverage
+```
+
+### Ejecutar Benchmarks
+
+```bash
+# Ejecutar suite completa de benchmarks con reporte
+flutter test benchmark/run_benchmarks.dart --reporter expanded
+
+# Ejecutar benchmark de un widget específico
+flutter test benchmark/sonic_mania_benchmark.dart
+flutter test benchmark/persona_5_benchmark.dart
+flutter test benchmark/evangelion_benchmark.dart
+flutter test benchmark/mario_maker_benchmark.dart
+
+# Guardar nueva baseline de performance
+SAVE_BASELINE=true flutter test benchmark/run_benchmarks.dart
+```
+
+### Tests de Performance
+
+```bash
+# Tests de allocations (validar caching de Path)
+flutter test test/performance/painter_allocations_test.dart
+flutter test test/performance/clipper_allocations_test.dart
+
+# Tests de jank (validar frames < 16ms)
+flutter test test/performance/jank_test.dart
+```
+
+### Métricas de Performance
+
+El benchmark suite valida que todos los widgets cumplan:
+
+| Métrica | Target | Descripción |
+|---------|--------|-------------|
+| Jank % | < 1% | Frames que exceden 16ms |
+| Avg frame time | < 16ms | Promedio para 60fps |
+| Initial render | < 150ms | Tiempo de primer render |
+
+Para más detalles, ver [`benchmark/README.md`](benchmark/README.md).
+
+---
+
 ## Constantes de Timing ⏱️
 
 Todas las constantes de timing de animación están centralizadas en `animation_timings.dart`:

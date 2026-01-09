@@ -44,6 +44,18 @@ class LeftCurtainClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }
 
 /// Clipper para la cortina derecha en la animacion Sonic Mania.
@@ -90,4 +102,16 @@ class RightCurtainClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
+  /// Debug getter for cached path (used in performance tests).
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }

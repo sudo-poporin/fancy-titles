@@ -52,4 +52,18 @@ class FifthCurtainPainter extends CustomPainter {
     // Path is static, no need to repaint
     return false;
   }
+
+  /// Debug getter for cached path (used in performance tests).
+  /// Returns null if no path has been cached yet.
+  static Path? get debugCachedPath => _cachedPath;
+
+  /// Debug getter for cached size (used in performance tests).
+  /// Returns null if no size has been cached yet.
+  static Size? get debugCachedSize => _cachedSize;
+
+  /// Resets the cache (used in performance tests).
+  static void debugResetCache() {
+    _cachedPath = null;
+    _cachedSize = null;
+  }
 }
