@@ -1,0 +1,18 @@
+# Folders to exclude from pub publish
+backups/
+example/
+
+# Build artifacts
+build/
+.dart_tool/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Coverage
+coverage/
+
+# Documentation that's not needed in package
+CHANGELOG_INTERNAL.md
