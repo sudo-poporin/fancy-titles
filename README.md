@@ -441,23 +441,3 @@ El enum `AnimationPhase` define las fases disponibles en todos los widgets:
 | `exiting`   | Elementos animándose hacia afuera            |
 | `completed` | Animación completada, widget listo a remover |
 
----
-
-## Estado del Proyecto 📊
-
-El paquete `fancy_titles` está en estado **estable** (v1.0.7) con:
-
-- 4 widgets de splash screen completamente funcionales
-- 97%+ de cobertura de tests (781+ tests)
-- Suite de benchmarks de performance
-- 4 integration tests de performance
-- 0 lint warnings
-
-### Contribuciones Bienvenidas
-
-- Nuevos splash screens inspirados en otros videojuegos/animes
-- Mejoras de performance
-- Traducciones de documentación
-- Reportes de bugs
-
-Para contribuir, abre un issue o pull request en el repositorio.
