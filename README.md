@@ -440,4 +440,3 @@ El enum `AnimationPhase` define las fases disponibles en todos los widgets:
 | `active`    | Contenido principal visible y estable        |
 | `exiting`   | Elementos animándose hacia afuera            |
 | `completed` | Animación completada, widget listo a remover |
-

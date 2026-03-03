@@ -1,6 +1,6 @@
 name: fancy_titles
 description: "Una serie de splash screens animados para Flutter basados en mis juegos y animes favoritos."
-version: 1.0.8
+version: 1.0.9
 homepage:
 
 environment:
@@ -16,7 +16,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  very_good_analysis: ^10.0.0
+  very_good_analysis: ^10.2.0
 
 flutter:
   generate: true
