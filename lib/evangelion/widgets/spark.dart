@@ -414,7 +414,7 @@ class _SparkState extends State<Spark> with CancelableTimersMixin {
                       ),
                     ),
                     CachedBlurPainter(
-                      painter: const FourthCrossRenderer(),
+                      painter: const FourthCrossPainter(),
                       size: Size(screenSize.width, screenSize.height),
                       sigmaX: 15,
                       sigmaY: 15,

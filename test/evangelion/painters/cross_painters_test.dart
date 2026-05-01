@@ -146,21 +146,21 @@ void main() {
       });
     });
 
-    group('FourthCrossRenderer', () {
+    group('FourthCrossPainter', () {
       test('can be instantiated', () {
-        const painter = FourthCrossRenderer();
+        const painter = FourthCrossPainter();
         expect(painter, isNotNull);
       });
 
       test('shouldRepaint returns false for same type', () {
-        const painter1 = FourthCrossRenderer();
-        const painter2 = FourthCrossRenderer();
+        const painter1 = FourthCrossPainter();
+        const painter2 = FourthCrossPainter();
 
         expect(painter1.shouldRepaint(painter2), isFalse);
       });
 
       test('paints without errors', () {
-        const painter = FourthCrossRenderer();
+        const painter = FourthCrossPainter();
         final recorder = PictureRecorder();
         final canvas = Canvas(recorder);
 
@@ -171,7 +171,7 @@ void main() {
       });
 
       test('paints on various canvas sizes', () {
-        const painter = FourthCrossRenderer();
+        const painter = FourthCrossPainter();
 
         final smallRecorder = PictureRecorder();
         painter.paint(Canvas(smallRecorder), const Size(10, 10));
@@ -183,7 +183,7 @@ void main() {
       });
 
       test('paints on non-square canvas', () {
-        const painter = FourthCrossRenderer();
+        const painter = FourthCrossPainter();
         final recorder = PictureRecorder();
 
         painter.paint(Canvas(recorder), const Size(200, 100));
@@ -290,7 +290,7 @@ void main() {
           FirstCrossPainter(),
           SecondCrossPainter(),
           ThirdCrossPainter(),
-          FourthCrossRenderer(),
+          FourthCrossPainter(),
           FifthCrossPainter(),
           SixthCrossPainter(),
         ];
@@ -305,7 +305,7 @@ void main() {
         const firstPainter = FirstCrossPainter();
         const secondPainter = SecondCrossPainter();
         const thirdPainter = ThirdCrossPainter();
-        const fourthPainter = FourthCrossRenderer();
+        const fourthPainter = FourthCrossPainter();
         const fifthPainter = FifthCrossPainter();
         const sixthPainter = SixthCrossPainter();
 
@@ -316,7 +316,7 @@ void main() {
         );
         expect(thirdPainter.shouldRepaint(const ThirdCrossPainter()), isFalse);
         expect(
-          fourthPainter.shouldRepaint(const FourthCrossRenderer()),
+          fourthPainter.shouldRepaint(const FourthCrossPainter()),
           isFalse,
         );
         expect(fifthPainter.shouldRepaint(const FifthCrossPainter()), isFalse);
@@ -328,7 +328,7 @@ void main() {
           FirstCrossPainter(),
           SecondCrossPainter(),
           ThirdCrossPainter(),
-          FourthCrossRenderer(),
+          FourthCrossPainter(),
           FifthCrossPainter(),
           SixthCrossPainter(),
         ];
@@ -350,7 +350,7 @@ void main() {
           FirstCrossPainter(),
           SecondCrossPainter(),
           ThirdCrossPainter(),
-          FourthCrossRenderer(),
+          FourthCrossPainter(),
           FifthCrossPainter(),
           SixthCrossPainter(),
         ];
