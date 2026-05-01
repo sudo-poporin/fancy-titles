@@ -41,7 +41,7 @@ cd example && flutter run
 
 Each widget follows the same internal structure:
 
-```
+```text
 lib/<widget_name>/
 ├── <widget_name>_title.dart   # Main public widget (extends BaseTitleWidget)
 ├── constants/                 # Colors, sizes, timing references
@@ -63,6 +63,7 @@ The 4 widgets: `SonicManiaSplash`, `Persona5Title`, `EvangelionTitle`, `MarioMak
 ### Test Structure
 
 Tests mirror `lib/` structure:
+
 - **Widget tests** (`test/<widget>/`) - pump widgets, advance timers with `tester.pump(duration)`, verify phases and visual state
 - **Core tests** (`test/core/`) - tests for mixins, base classes, and timing constants
 
