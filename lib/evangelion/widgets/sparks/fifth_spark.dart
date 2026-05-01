@@ -3,7 +3,7 @@ import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
 import 'package:flutter/material.dart';
 
-/// Visual contents for [SparkOrder.fifth]. Internal to spark dispatcher.
+/// Visual contents for `SparkOrder.fifth`. Internal to spark dispatcher.
 class FifthSpark extends StatelessWidget {
   /// Creates the fifth spark visual.
   const FifthSpark({

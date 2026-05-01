@@ -2,7 +2,7 @@ import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:flutter/material.dart';
 
-/// Visual contents for [SparkOrder.sixth]. Internal to spark dispatcher.
+/// Visual contents for `SparkOrder.sixth`. Internal to spark dispatcher.
 class SixthSpark extends StatelessWidget {
   /// Creates the sixth spark visual.
   const SixthSpark({
