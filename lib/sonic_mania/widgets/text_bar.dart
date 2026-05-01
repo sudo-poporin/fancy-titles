@@ -139,6 +139,8 @@ class _TextBarState extends State<TextBar>
 
   @override
   void initState() {
+    super.initState();
+
     _canShowText = false;
     _beginOffset = widget._beginOffset;
     _endOffset = widget._endOffset;
@@ -150,8 +152,6 @@ class _TextBarState extends State<TextBar>
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     _startAnimation();
-
-    super.initState();
   }
 
   @override
