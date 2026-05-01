@@ -158,7 +158,7 @@ class Persona5Title extends StatefulWidget {
 
 class _Persona5TitleState extends State<Persona5Title>
     with SingleTickerProviderStateMixin, CancelableTimersMixin {
-  late bool _animationCompleted = false;
+  bool _animationCompleted = false;
   bool _showBackground = true;
   bool _showText = false;
   bool _imagePrecached = false;
