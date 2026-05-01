@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install dependencies
 flutter pub get
 
-# Run all tests (~780+ tests)
+# Run all tests
 flutter test
 
 # Run a single test file
@@ -21,23 +21,11 @@ flutter test test/sonic_mania/sonic_mania_splash_test.dart
 # Run tests with coverage
 flutter test --coverage
 
-# Run performance/allocation tests only
-flutter test test/performance/
-
-# Run benchmark suite
-flutter test benchmark/run_benchmarks.dart
-
-# Save new performance baseline
-SAVE_BASELINE=true flutter test benchmark/run_benchmarks.dart
-
 # Lint
 dart analyze
 
 # Run example app
 cd example && flutter run
-
-# Integration tests (require a device)
-cd example && flutter test integration_test/evangelion_performance_test.dart -d <device_id>
 ```
 
 ## Architecture
@@ -74,11 +62,9 @@ The 4 widgets: `SonicManiaSplash`, `Persona5Title`, `EvangelionTitle`, `MarioMak
 
 ### Test Structure
 
-Tests mirror `lib/` structure. Categories:
+Tests mirror `lib/` structure:
 - **Widget tests** (`test/<widget>/`) - pump widgets, advance timers with `tester.pump(duration)`, verify phases and visual state
-- **Performance tests** (`test/performance/`) - allocation tracking for painters/clippers, jank detection
-- **Benchmarks** (`benchmark/`) - frame timing, baseline comparison with `baseline.json`
-- **Integration tests** (`example/integration_test/`) - real device performance validation
+- **Core tests** (`test/core/`) - tests for mixins, base classes, and timing constants
 
 ### Fonts
 
