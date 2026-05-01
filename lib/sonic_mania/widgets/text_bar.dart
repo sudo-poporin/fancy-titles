@@ -86,36 +86,16 @@ class TextBar extends StatefulWidget {
        _painter = SmallBGDraw(_kDefaultWhiteColor),
        _isWhiteText = true;
 
-  /// Texto de la barra
   final String _text;
-
-  /// Color de la barra
   final Color _color;
-
-  /// Color del texto
   final Color _textColor;
-
-  /// Color del borde del texto
   final Color _textBorderColor;
-
-  /// Offset de inicio de la animación
   final Offset _beginOffset;
-
-  /// Offset de fin de la animación
   final Offset _endOffset;
-
-  /// Offset del texto detenido
   final Offset _stopOffset;
-
-  /// Offset de fin del texto detenido
   final Offset _stopEndOffset;
-
-  /// Painter de la barra
   final CustomPainter? _painter;
-
-  /// Si el texto debe rebotar
   final bool _bounceUp;
-
   final bool _isWhiteText;
 
   @override
@@ -131,7 +111,6 @@ class _TextBarState extends State<TextBar>
   late Offset _endOffset;
   late bool _canShowText;
 
-  // Valores cacheados para evitar recálculos
   double? _cachedFontSize;
   double? _cachedStrokeWidth;
   Orientation? _cachedOrientation;
@@ -140,7 +119,6 @@ class _TextBarState extends State<TextBar>
   @override
   void initState() {
     super.initState();
-
     _canShowText = false;
     _beginOffset = widget._beginOffset;
     _endOffset = widget._endOffset;
@@ -164,7 +142,6 @@ class _TextBarState extends State<TextBar>
     final orientation = MediaQuery.orientationOf(context);
     final screenSize = MediaQuery.sizeOf(context);
 
-    // Solo recalcular si cambiaron las dependencias
     if (_cachedOrientation != orientation || _cachedScreenSize != screenSize) {
       _cachedOrientation = orientation;
       _cachedScreenSize = screenSize;
@@ -190,13 +167,11 @@ class _TextBarState extends State<TextBar>
     );
   }
 
-  /// Desliza la barra dentro de la pantalla
   void _slideIn() {
     setState(() => _beginOffset = widget._stopOffset);
     unawaited(_controller.reverse());
   }
 
-  /// Desliza la barra fuera de la pantalla
   void _slideOut() {
     setState(() => _canShowText = true);
     delayed(SonicManiaTiming.slideOutDelay, () {
@@ -207,7 +182,6 @@ class _TextBarState extends State<TextBar>
 
   double _calculateSize(BuildContext context, BoxConstraints constraints) {
     final orientation = MediaQuery.orientationOf(context);
-
     if (orientation == Orientation.landscape) {
       return (constraints.maxHeight * 0.05).truncateToDouble();
     } else {
@@ -219,6 +193,11 @@ class _TextBarState extends State<TextBar>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        _cachedScreenSize?.width ?? MediaQuery.sizeOf(context).width;
+    final fontSize = _cachedFontSize ?? 24.0;
+    final strokeWidth = _cachedStrokeWidth ?? 4.0;
+
     return HorizontalSlideTransition(
       animation: _animation,
       beginOffset: _beginOffset,
@@ -226,86 +205,124 @@ class _TextBarState extends State<TextBar>
       child: Stack(
         children: [
           if (!_canShowText)
-            Builder(
-              builder: (context) {
-                // Usar valores cacheados
-                final screenWidth = _cachedScreenSize?.width ??
-                    MediaQuery.sizeOf(context).width;
-                final fontSize = _cachedFontSize ?? 24.0;
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 48),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: screenWidth * 0.5,
-                      minHeight: fontSize,
-                    ),
-                    child: SizedBox(child: ColoredBox(color: widget._color)),
-                  ),
-                );
-              },
+            _PlaceholderBar(
+              color: widget._color,
+              minWidth: screenWidth * 0.5,
+              minHeight: fontSize,
             ),
           if (_canShowText)
-            Builder(
-              builder: (context) {
-                // Usar valores cacheados en lugar de recalcular
-                final fontSize = _cachedFontSize ?? 24.0;
-                final strokeWidth = _cachedStrokeWidth ?? 4.0;
-
-                return CustomPaint(
-                  painter: widget._painter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    // RepaintBoundary aísla repintados del Stack stroke + fill
-                    child: RepaintBoundary(
-                      child: Stack(
-                        children: [
-                          Transform.scale(
-                            scaleY: widget._isWhiteText ? 1 : 1.23,
-                            alignment: Alignment.bottomCenter,
-                            child: BouncingText(
-                              text: widget._text,
-                              bounceUp: widget._bounceUp,
-                              textStyle: TextStyle(
-                                fontSize: fontSize,
-                                letterSpacing: 5,
-                                fontFamily: 'packages/fancy_titles/ManiaZoneCard',
-                                decoration: TextDecoration.none,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = strokeWidth
-                                  ..color = widget._textBorderColor,
-                              ),
-                            ),
-                          ),
-                          Transform.scale(
-                            scaleY: widget._isWhiteText ? 1 : 1.23,
-                            alignment: Alignment.bottomCenter,
-                            child: BouncingText(
-                              text: widget._text,
-                              bounceUp: widget._bounceUp,
-                              textStyle: TextStyle(
-                                fontSize: fontSize,
-                                letterSpacing: 5,
-                                fontFamily: 'packages/fancy_titles/ManiaZoneCard',
-                                decoration: TextDecoration.none,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.fill
-                                  ..color = widget._textColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+            _TextContent(
+              text: widget._text,
+              textColor: widget._textColor,
+              textBorderColor: widget._textBorderColor,
+              fontSize: fontSize,
+              strokeWidth: strokeWidth,
+              painter: widget._painter,
+              bounceUp: widget._bounceUp,
+              isWhiteText: widget._isWhiteText,
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _PlaceholderBar extends StatelessWidget {
+  const _PlaceholderBar({
+    required this.color,
+    required this.minWidth,
+    required this.minHeight,
+  });
+
+  final Color color;
+  final double minWidth;
+  final double minHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 48),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: minWidth,
+          minHeight: minHeight,
+        ),
+        child: ColoredBox(color: color),
+      ),
+    );
+  }
+}
+
+class _TextContent extends StatelessWidget {
+  const _TextContent({
+    required this.text,
+    required this.textColor,
+    required this.textBorderColor,
+    required this.fontSize,
+    required this.strokeWidth,
+    required this.painter,
+    required this.bounceUp,
+    required this.isWhiteText,
+  });
+
+  final String text;
+  final Color textColor;
+  final Color textBorderColor;
+  final double fontSize;
+  final double strokeWidth;
+  final CustomPainter? painter;
+  final bool bounceUp;
+  final bool isWhiteText;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaleY = isWhiteText ? 1.0 : 1.23;
+
+    return CustomPaint(
+      painter: painter,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: RepaintBoundary(
+          child: Stack(
+            children: [
+              Transform.scale(
+                scaleY: scaleY,
+                alignment: Alignment.bottomCenter,
+                child: BouncingText(
+                  text: text,
+                  bounceUp: bounceUp,
+                  textStyle: TextStyle(
+                    fontSize: fontSize,
+                    letterSpacing: 5,
+                    fontFamily: 'packages/fancy_titles/ManiaZoneCard',
+                    decoration: TextDecoration.none,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = strokeWidth
+                      ..color = textBorderColor,
+                  ),
+                ),
+              ),
+              Transform.scale(
+                scaleY: scaleY,
+                alignment: Alignment.bottomCenter,
+                child: BouncingText(
+                  text: text,
+                  bounceUp: bounceUp,
+                  textStyle: TextStyle(
+                    fontSize: fontSize,
+                    letterSpacing: 5,
+                    fontFamily: 'packages/fancy_titles/ManiaZoneCard',
+                    decoration: TextDecoration.none,
+                    foreground: Paint()
+                      ..style = PaintingStyle.fill
+                      ..color = textColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
