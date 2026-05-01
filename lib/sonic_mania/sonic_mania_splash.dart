@@ -146,7 +146,7 @@ class SonicManiaSplash extends StatefulWidget {
 
 class _SonicManiaSplashState extends State<SonicManiaSplash>
     with SingleTickerProviderStateMixin, CancelableTimersMixin {
-  late bool _animationCompleted = false;
+  bool _animationCompleted = false;
   late double firstTextVerticalOffset;
   late double lastTextVerticalOffset;
   late double lastTextHorizontalOffset;
