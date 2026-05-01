@@ -215,5 +215,38 @@ void main() {
         expect(find.byType(SonicManiaSplash), findsOneWidget);
       });
     });
+
+    group('regression: B1 secondaryText uppercase', () {
+      testWidgets('renders secondaryText in uppercase', (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: SonicManiaSplash(
+              baseText: 'BASE',
+              secondaryText: 'zone',
+            ),
+          ),
+        );
+        // Pump past slideIn (forward + reverse) so _canShowText becomes true
+        // and the text is rendered. BouncingText splits the text into one
+        // Text widget per letter, so we assert on uppercase letters.
+        await tester.pump(const Duration(milliseconds: 1300));
+
+        // After the fix, secondaryText 'zone' is rendered as 'ZONE'
+        // (each letter rendered twice: stroke + fill).
+        expect(find.text('Z'), findsWidgets);
+        expect(find.text('O'), findsWidgets);
+        expect(find.text('N'), findsWidgets);
+        expect(find.text('E'), findsWidgets);
+        // The original lowercase letters must NOT be rendered.
+        expect(find.text('z'), findsNothing);
+        expect(find.text('o'), findsNothing);
+        expect(find.text('n'), findsNothing);
+        expect(find.text('e'), findsNothing);
+
+        // Avoid pending timer leaks: pump until the widget auto-destroys.
+        await tester.pump(const Duration(seconds: 5));
+        await tester.pumpAndSettle();
+      });
+    });
   });
 }

@@ -245,7 +245,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
                       ),
                       if (widget._secondaryText != null)
                         TextBar.black(
-                          text: widget._secondaryText!..toUpperCase(),
+                          text: widget._secondaryText!.toUpperCase(),
                           beginOffset: const Offset(10, 0),
                           endOffset: const Offset(-2, 0),
                           stopOffset: const Offset(0.2, 0),
