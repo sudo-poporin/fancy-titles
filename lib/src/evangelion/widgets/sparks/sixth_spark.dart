@@ -1,11 +1,13 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
-/// Visual contents for `SparkOrder.first`. Internal to spark dispatcher.
-class FirstSpark extends StatelessWidget {
-  /// Creates the first spark visual.
-  const FirstSpark({
+/// Visual contents for `SparkOrder.sixth`. Internal to spark dispatcher.
+@internal
+class SixthSpark extends StatelessWidget {
+  /// Creates the sixth spark visual.
+  const SixthSpark({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -29,12 +31,11 @@ class FirstSpark extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: duration,
-      reverseDuration: Duration.zero,
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
             Tween<double>(
-              begin: 0.7,
+              begin: 0.5,
               end: 1,
             ).chain(CurveTween(curve: curve)),
           ),
@@ -44,10 +45,10 @@ class FirstSpark extends StatelessWidget {
       child: fadeOut
           ? const SizedBox.shrink()
           : CachedBlurPainter(
-              painter: const FirstCrossPainter(),
+              painter: const SixthCrossPainter(),
               size: Size(screenSize.width, screenSize.height),
-              sigmaX: 15,
-              sigmaY: 15,
+              sigmaX: 5,
+              sigmaY: 5,
             ),
     );
   }

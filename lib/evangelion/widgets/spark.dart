@@ -1,6 +1,6 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
-import 'package:fancy_titles/evangelion/widgets/sparks/sparks.dart';
+import 'package:fancy_titles/src/evangelion/widgets/sparks/sparks.dart';
 import 'package:flutter/material.dart';
 
 /// Order of the flash light

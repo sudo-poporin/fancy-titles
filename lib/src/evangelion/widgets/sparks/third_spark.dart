@@ -2,8 +2,10 @@ import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.third`. Internal to spark dispatcher.
+@internal
 class ThirdSpark extends StatelessWidget {
   /// Creates the third spark visual.
   const ThirdSpark({
