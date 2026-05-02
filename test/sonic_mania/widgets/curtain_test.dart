@@ -297,5 +297,30 @@ void main() {
         }
       });
     });
+
+    group('non-const constructor usage', () {
+      // These tests use non-const constructors so the constructor bodies
+      // are actually invoked at runtime (instead of being compile-time
+      // const evaluated, which lcov doesn't see).
+      testWidgets('default constructor invoked at runtime', (tester) async {
+        // Use a runtime-computed Color to defeat const evaluation
+        final dynamicColor = Color(0xFF000000 | DateTime.now().microsecond);
+        final curtain = Curtain(
+          color: dynamicColor,
+          delay: const Duration(milliseconds: 10),
+        );
+        await tester.pumpWidget(MaterialApp(home: curtain));
+        expect(find.byType(Curtain), findsOneWidget);
+        await disposeAndSettle(tester);
+      });
+
+      testWidgets('Curtain.black runtime invocation', (tester) async {
+        // Wrap a runtime-computed key to force runtime construction.
+        final curtain = Curtain.black(key: ValueKey(DateTime.now()));
+        await tester.pumpWidget(MaterialApp(home: curtain));
+        expect(find.byType(Curtain), findsOneWidget);
+        await disposeAndSettle(tester);
+      });
+    });
   });
 }
