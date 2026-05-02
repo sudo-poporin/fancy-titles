@@ -267,7 +267,7 @@ void main() {
         await tester.pump(Persona5Timing.totalDuration);
       });
 
-      testWidgets('renders Persona5Text when canShowText is true (height > 600)',
+      testWidgets('renders Persona5Text when canShowText (height > 600)',
           (tester) async {
         // Use a height > 600 to trigger Persona5Text branch.
         tester.view.physicalSize = const Size(800, 1200);

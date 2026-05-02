@@ -191,6 +191,28 @@ void main() {
     });
 
     group('responsive font sizing', () {
+      testWidgets('uses small-screen portrait font scaler', (tester) async {
+        // Force a small screen in portrait orientation (height > width and
+        // shortestSide < 800) to exercise the portrait branch on line 238.
+        tester.view.physicalSize = const Size(400, 700);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() {
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
+        });
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: EvangelionTitle(),
+          ),
+        );
+
+        expect(find.byType(EvangelionTitle), findsOneWidget);
+
+        // Drain timers
+        await tester.pump(EvangelionTiming.totalDuration);
+      });
+
       testWidgets('uses large-screen font scaler (portrait)', (tester) async {
         // Force a large screen (>= 800 shortestSide) in portrait orientation
         // to exercise the else branch in _updateCachedFontSizes.

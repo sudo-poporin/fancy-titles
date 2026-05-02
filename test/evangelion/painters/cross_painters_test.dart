@@ -375,11 +375,12 @@ void main() {
         expect(FirstCrossPainter.debugCachedSize, isNull);
 
         const painter = FirstCrossPainter();
+        const size = Size(100, 100);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(100, 100));
+        painter.paint(Canvas(recorder), size);
 
         expect(FirstCrossPainter.debugCachedPath, isNotNull);
-        expect(FirstCrossPainter.debugCachedSize, equals(const Size(100, 100)));
+        expect(FirstCrossPainter.debugCachedSize, equals(size));
       });
 
       test('SecondCrossPainter caches path and size after paint', () {
@@ -388,11 +389,12 @@ void main() {
         expect(SecondCrossPainter.debugCachedSize, isNull);
 
         const painter = SecondCrossPainter();
+        const size = Size(120, 120);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(120, 120));
+        painter.paint(Canvas(recorder), size);
 
         expect(SecondCrossPainter.debugCachedPath, isNotNull);
-        expect(SecondCrossPainter.debugCachedSize, equals(const Size(120, 120)));
+        expect(SecondCrossPainter.debugCachedSize, equals(size));
       });
 
       test('ThirdCrossPainter caches path and size after paint', () {
@@ -401,11 +403,12 @@ void main() {
         expect(ThirdCrossPainter.debugCachedSize, isNull);
 
         const painter = ThirdCrossPainter();
+        const size = Size(150, 150);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(150, 150));
+        painter.paint(Canvas(recorder), size);
 
         expect(ThirdCrossPainter.debugCachedPath, isNotNull);
-        expect(ThirdCrossPainter.debugCachedSize, equals(const Size(150, 150)));
+        expect(ThirdCrossPainter.debugCachedSize, equals(size));
       });
 
       test('FourthCrossPainter caches path and size after paint', () {
@@ -414,11 +417,12 @@ void main() {
         expect(FourthCrossPainter.debugCachedSize, isNull);
 
         const painter = FourthCrossPainter();
+        const size = Size(180, 180);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(180, 180));
+        painter.paint(Canvas(recorder), size);
 
         expect(FourthCrossPainter.debugCachedPath, isNotNull);
-        expect(FourthCrossPainter.debugCachedSize, equals(const Size(180, 180)));
+        expect(FourthCrossPainter.debugCachedSize, equals(size));
       });
 
       test('FifthCrossPainter caches path and size after paint', () {
@@ -427,11 +431,12 @@ void main() {
         expect(FifthCrossPainter.debugCachedSize, isNull);
 
         const painter = FifthCrossPainter();
+        const size = Size(210, 210);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(210, 210));
+        painter.paint(Canvas(recorder), size);
 
         expect(FifthCrossPainter.debugCachedPath, isNotNull);
-        expect(FifthCrossPainter.debugCachedSize, equals(const Size(210, 210)));
+        expect(FifthCrossPainter.debugCachedSize, equals(size));
       });
 
       test('SixthCrossPainter caches path and size after paint', () {
@@ -440,11 +445,12 @@ void main() {
         expect(SixthCrossPainter.debugCachedSize, isNull);
 
         const painter = SixthCrossPainter();
+        const size = Size(240, 240);
         final recorder = PictureRecorder();
-        painter.paint(Canvas(recorder), const Size(240, 240));
+        painter.paint(Canvas(recorder), size);
 
         expect(SixthCrossPainter.debugCachedPath, isNotNull);
-        expect(SixthCrossPainter.debugCachedSize, equals(const Size(240, 240)));
+        expect(SixthCrossPainter.debugCachedSize, equals(size));
       });
     });
   });
