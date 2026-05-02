@@ -464,8 +464,15 @@ void main() {
             matching: find.byType(Transform),
           ),
         );
-        // Verify the transform is a rotation matrix (non-identity)
-        expect(transform.transform, isNot(equals(Matrix4.identity())));
+
+        final expected = Matrix4.rotationZ(-0.3);
+        for (var i = 0; i < 16; i++) {
+          expect(
+            transform.transform.storage[i],
+            closeTo(expected.storage[i], 1e-9),
+            reason: 'matrix entry $i mismatches rotationZ(-0.3)',
+          );
+        }
       });
     });
   });
