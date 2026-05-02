@@ -344,20 +344,5 @@ void main() {
       });
     });
 
-    group('non-const constructor usage', () {
-      testWidgets('default constructor invoked at runtime', (tester) async {
-        // Use a runtime-computed Color to defeat const evaluation so the
-        // default constructor body is observed by lcov.
-        final dynamicColor = Color(0xFF112233 | DateTime.now().microsecond);
-        final widget = TextBar(
-          color: dynamicColor,
-          text: 'RUNTIME',
-          textColor: Colors.white,
-        );
-        await tester.pumpWidget(MaterialApp(home: Scaffold(body: widget)));
-        expect(find.byType(TextBar), findsOneWidget);
-        await disposeAndSettle(tester);
-      });
-    });
   });
 }

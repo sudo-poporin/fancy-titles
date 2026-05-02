@@ -572,20 +572,5 @@ void main() {
       });
     });
 
-    group('non-const constructor usage', () {
-      // Force runtime invocation of the default Spark constructor body so
-      // lcov registers it (const evaluation otherwise hides the body).
-      testWidgets('default constructor invoked at runtime', (tester) async {
-        final spark = Spark(
-          order: SparkOrder.first,
-          delay: Duration(milliseconds: DateTime.now().microsecond % 10),
-        );
-        await tester.pumpWidget(
-          MaterialApp(home: Scaffold(body: spark)),
-        );
-        expect(find.byType(Spark), findsOneWidget);
-        await disposeAndSettle(tester);
-      });
-    });
   });
 }

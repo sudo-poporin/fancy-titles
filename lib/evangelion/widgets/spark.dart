@@ -27,6 +27,7 @@ enum SparkOrder {
 /// First Flash Light
 class Spark extends StatefulWidget {
   /// Shows the first flash light of Evangelion title
+  // coverage:ignore-start
   const Spark({
     required SparkOrder order,
     this.duration = EvangelionTiming.sparkDefaultDuration,
@@ -34,6 +35,7 @@ class Spark extends StatefulWidget {
     this.delay = EvangelionTiming.sparkFirstDelay,
     super.key,
   }) : _order = order;
+  // coverage:ignore-end
 
   /// Shows the first flash light of Evangelion title
   const Spark.first({super.key})

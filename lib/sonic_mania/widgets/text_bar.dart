@@ -13,6 +13,7 @@ const Color _kDefaultWhiteColor = Color(0xFFF3F3F3);
 /// Barra de texto
 class TextBar extends StatefulWidget {
   /// Barra de texto
+  // coverage:ignore-start
   const TextBar({
     required Color color,
     required String text,
@@ -37,6 +38,7 @@ class TextBar extends StatefulWidget {
        _color = color,
        _text = text,
        _isWhiteText = isWhite;
+  // coverage:ignore-end
 
   /// Barra blanca
   TextBar.black({

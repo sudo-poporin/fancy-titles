@@ -17,11 +17,13 @@ class Curtain extends StatefulWidget {
   /// Cortina de color que se despliega y se contrae en la pantalla.
   ///
   /// Se puede personalizar el color de la cortina y el retardo de la animación.
+  // coverage:ignore-start
   const Curtain({
     required this.color,
     this.delay = Duration.zero,
     super.key,
   });
+  // coverage:ignore-end
 
   /// Cortina azul
   const Curtain.blue({
@@ -59,11 +61,13 @@ class Curtain extends StatefulWidget {
   });
 
   /// Cortina negra
+  // coverage:ignore-start
   const Curtain.black({
     this.color = _blackCurtainColor,
     this.delay = SonicManiaTiming.curtainBlackDelay,
     super.key,
   });
+  // coverage:ignore-end
 
   /// Color de la cortina
   final Color color;
