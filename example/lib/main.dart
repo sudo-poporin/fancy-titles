@@ -18,30 +18,38 @@ class _MainAppState extends State<MainApp> {
 
   Widget _buildTitle(int index) {
     return switch (index) {
-      0 => const Persona5Title(
+      0 => Persona5Title(
         text: 'Takes your heart',
         imagePath: 'assets/persona-5.png',
+        onAnimationStart: () => debugPrint('Persona 5 animation started!'),
+        onAnimationComplete: () => debugPrint('Persona 5 animation completed!'),
       ),
       1 => SonicManiaSplash(
         baseText: 'FANCY',
         secondaryText: 'EXAMPLE',
         lastText: 'APP',
+        onAnimationStart: () => debugPrint('Sonic Mania animation started!'),
+        onAnimationComplete: () =>
+            debugPrint('Sonic Mania animation completed!'),
       ),
-      2 => const EvangelionTitle(
+      2 => EvangelionTitle(
         firstText: 'FANCY',
         secondText: 'TITLE',
         thirdText: 'APPLICATION',
         fourthText: 'EXAMPLE',
         fifthText: 'APP',
+        onAnimationStart: () => debugPrint('Evangelion animation started!'),
+        onAnimationComplete: () =>
+            debugPrint('Evangelion animation completed!'),
       ),
       3 => MarioMakerTitle(
         title: 'FANCY TITLES\n 1-1',
         imagePath: 'assets/luigi.png', // Replace with mario.png
         circleRadius: 100,
         bottomMargin: 150,
-        onAnimationStart: () {
-          debugPrint('Mario Maker animation started!');
-        },
+        onAnimationStart: () => debugPrint('Mario Maker animation started!'),
+        onAnimationComplete: () =>
+            debugPrint('Mario Maker animation completed!'),
       ),
       _ => const SizedBox.shrink(),
     };

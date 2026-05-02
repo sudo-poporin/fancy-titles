@@ -190,8 +190,13 @@ void main() {
         await tester.pump(const Duration(milliseconds: 725));
         await tester.pump(const Duration(milliseconds: 325));
 
-        // Advance past slide out delay
+        // Pump to flush whenComplete(_slideOut) microtask
+        await tester.pump(const Duration(milliseconds: 50));
+
+        // Advance past slide out delay so the setState/_controller.reverse
+        // body inside _slideOut runs.
         await tester.pump(const Duration(milliseconds: 1000));
+        await tester.pump(const Duration(milliseconds: 325));
 
         expect(find.byType(ClippedBar), findsOneWidget);
 

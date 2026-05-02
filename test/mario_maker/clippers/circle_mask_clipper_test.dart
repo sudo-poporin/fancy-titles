@@ -292,5 +292,23 @@ void main() {
         expect(path, isNotNull);
       });
     });
+
+    group('debug API', () {
+      test('caches path/radius/center after getClip', () {
+        CircleMaskClipper.debugResetCache();
+        expect(CircleMaskClipper.debugCachedPath, isNull);
+        expect(CircleMaskClipper.debugCachedRadius, isNull);
+        expect(CircleMaskClipper.debugCachedCenter, isNull);
+
+        const center = Offset(50, 60);
+        final clipper = CircleMaskClipper(radius: 75, center: center)
+          ..getClip(const Size(200, 200));
+
+        expect(clipper, isNotNull);
+        expect(CircleMaskClipper.debugCachedPath, isNotNull);
+        expect(CircleMaskClipper.debugCachedRadius, equals(75.0));
+        expect(CircleMaskClipper.debugCachedCenter, equals(center));
+      });
+    });
   });
 }

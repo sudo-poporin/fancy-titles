@@ -221,5 +221,78 @@ void main() {
         expect(completeCalled, isTrue);
       });
     });
+
+    group('image precaching', () {
+      testWidgets('precaches image when imagePath is provided',
+          (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Persona5Title(
+              text: 'TEST',
+              imagePath: 'test/fixtures/test_image.png',
+            ),
+          ),
+        );
+
+        expect(find.byType(Persona5Title), findsOneWidget);
+
+        // Drain timers
+        await tester.pump(Persona5Timing.totalDuration);
+      });
+    });
+
+    group('responsive layout', () {
+      testWidgets('uses landscape padding (height * 0.5)', (tester) async {
+        // Force landscape: width > height. shortestSide=600, height=600.
+        tester.view.physicalSize = const Size(1200, 600);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() {
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
+        });
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Persona5Title(text: 'LANDSCAPE'),
+          ),
+        );
+
+        // Pump past textAppearDelay so the canShowText branch is exercised.
+        await tester.pump(Persona5Timing.textAppearDelay);
+        await tester.pump();
+
+        expect(find.byType(Persona5Title), findsOneWidget);
+
+        // Drain timers
+        await tester.pump(Persona5Timing.totalDuration);
+      });
+
+      testWidgets('renders Persona5Text when canShowText (height > 600)',
+          (tester) async {
+        // Use a height > 600 to trigger Persona5Text branch.
+        tester.view.physicalSize = const Size(800, 1200);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() {
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
+        });
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Persona5Title(text: 'SHOW TEXT'),
+          ),
+        );
+
+        // Pump past textAppearDelay so _showText becomes true.
+        await tester.pump(Persona5Timing.textAppearDelay);
+        await tester.pump();
+
+        // The Persona5Text shows two text instances (stroke + fill).
+        expect(find.text('SHOW TEXT'), findsWidgets);
+
+        // Drain timers
+        await tester.pump(Persona5Timing.totalDuration);
+      });
+    });
   });
 }

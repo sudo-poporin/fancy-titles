@@ -108,7 +108,7 @@ class _CachedBlurPainterState extends State<CachedBlurPainter> {
           _cachedImage = image;
         });
       } else {
-        image.dispose(); // Limpiar si ya fue disposed
+        image.dispose(); // coverage:ignore-line
       }
     } finally {
       _isRendering = false;

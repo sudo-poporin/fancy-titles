@@ -146,7 +146,7 @@ class SonicManiaSplash extends StatefulWidget {
 
 class _SonicManiaSplashState extends State<SonicManiaSplash>
     with SingleTickerProviderStateMixin, CancelableTimersMixin {
-  late bool _animationCompleted = false;
+  bool _animationCompleted = false;
   late double firstTextVerticalOffset;
   late double lastTextVerticalOffset;
   late double lastTextHorizontalOffset;
@@ -245,7 +245,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
                       ),
                       if (widget._secondaryText != null)
                         TextBar.black(
-                          text: widget._secondaryText!..toUpperCase(),
+                          text: widget._secondaryText!.toUpperCase(),
                           beginOffset: const Offset(10, 0),
                           endOffset: const Offset(-2, 0),
                           stopOffset: const Offset(0.2, 0),

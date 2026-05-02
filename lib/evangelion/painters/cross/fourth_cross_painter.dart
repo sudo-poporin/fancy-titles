@@ -4,9 +4,9 @@ import 'package:flutter/rendering.dart';
 ///
 /// Uses static path caching to improve performance by avoiding
 /// repeated Path object creation on each paint call.
-class FourthCrossRenderer extends CustomPainter {
+class FourthCrossPainter extends CustomPainter {
   /// Creates a fourth cross painter.
-  const FourthCrossRenderer();
+  const FourthCrossPainter();
 
   // Static cache for path and size
   static Path? _cachedPath;
@@ -81,7 +81,7 @@ class FourthCrossRenderer extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant FourthCrossRenderer oldDelegate) {
+  bool shouldRepaint(covariant FourthCrossPainter oldDelegate) {
     // Path is static, no need to repaint
     return false;
   }

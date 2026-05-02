@@ -339,5 +339,77 @@ void main() {
         expect(picture, isNotNull);
       });
     });
+
+    group('debug API', () {
+      test('FirstCurtainPainter caches path and size after paint', () {
+        FirstCurtainPainter.debugResetCache();
+        expect(FirstCurtainPainter.debugCachedPath, isNull);
+        expect(FirstCurtainPainter.debugCachedSize, isNull);
+
+        const painter = FirstCurtainPainter();
+        const size = Size(100, 100);
+        final recorder = PictureRecorder();
+        painter.paint(Canvas(recorder), size);
+
+        expect(FirstCurtainPainter.debugCachedPath, isNotNull);
+        expect(FirstCurtainPainter.debugCachedSize, equals(size));
+      });
+
+      test('SecondCurtainPainter caches path and size after paint', () {
+        SecondCurtainPainter.debugResetCache();
+        expect(SecondCurtainPainter.debugCachedPath, isNull);
+        expect(SecondCurtainPainter.debugCachedSize, isNull);
+
+        const painter = SecondCurtainPainter();
+        const size = Size(120, 120);
+        final recorder = PictureRecorder();
+        painter.paint(Canvas(recorder), size);
+
+        expect(SecondCurtainPainter.debugCachedPath, isNotNull);
+        expect(SecondCurtainPainter.debugCachedSize, equals(size));
+      });
+
+      test('ThirdCurtainPainter caches path and size after paint', () {
+        ThirdCurtainPainter.debugResetCache();
+        expect(ThirdCurtainPainter.debugCachedPath, isNull);
+        expect(ThirdCurtainPainter.debugCachedSize, isNull);
+
+        const painter = ThirdCurtainPainter();
+        const size = Size(150, 150);
+        final recorder = PictureRecorder();
+        painter.paint(Canvas(recorder), size);
+
+        expect(ThirdCurtainPainter.debugCachedPath, isNotNull);
+        expect(ThirdCurtainPainter.debugCachedSize, equals(size));
+      });
+
+      test('FourthCurtainPainter caches path and size after paint', () {
+        FourthCurtainPainter.debugResetCache();
+        expect(FourthCurtainPainter.debugCachedPath, isNull);
+        expect(FourthCurtainPainter.debugCachedSize, isNull);
+
+        const painter = FourthCurtainPainter();
+        const size = Size(180, 180);
+        final recorder = PictureRecorder();
+        painter.paint(Canvas(recorder), size);
+
+        expect(FourthCurtainPainter.debugCachedPath, isNotNull);
+        expect(FourthCurtainPainter.debugCachedSize, equals(size));
+      });
+
+      test('FifthCurtainPainter caches path and size after paint', () {
+        FifthCurtainPainter.debugResetCache();
+        expect(FifthCurtainPainter.debugCachedPath, isNull);
+        expect(FifthCurtainPainter.debugCachedSize, isNull);
+
+        const painter = FifthCurtainPainter();
+        const size = Size(210, 210);
+        final recorder = PictureRecorder();
+        painter.paint(Canvas(recorder), size);
+
+        expect(FifthCurtainPainter.debugCachedPath, isNotNull);
+        expect(FifthCurtainPainter.debugCachedSize, equals(size));
+      });
+    });
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
@@ -158,7 +156,7 @@ class Persona5Title extends StatefulWidget {
 
 class _Persona5TitleState extends State<Persona5Title>
     with SingleTickerProviderStateMixin, CancelableTimersMixin {
-  late bool _animationCompleted = false;
+  bool _animationCompleted = false;
   bool _showBackground = true;
   bool _showText = false;
   bool _imagePrecached = false;
@@ -225,9 +223,9 @@ class _Persona5TitleState extends State<Persona5Title>
   void _precacheImageIfNeeded() {
     if (!_imagePrecached && widget._imagePath != null) {
       _imagePrecached = true;
-      unawaited(
-        precacheImage(AssetImage(widget._imagePath!), context),
-      );
+      // Fire-and-forget: precaching doesn't need await, result is not used.
+      // ignore: discarded_futures
+      precacheImage(AssetImage(widget._imagePath!), context);
     }
   }
 

@@ -353,5 +353,127 @@ void main() {
         expect(widget, isA<StatelessWidget>());
       });
     });
+
+    group('with non-null imagePath', () {
+      const realImagePath = 'test/fixtures/test_image.png';
+
+      testWidgets('renders Transform.rotate when imagePath is provided',
+          (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Image(
+                imagePath: realImagePath,
+                withImageBlendMode: false,
+              ),
+            ),
+          ),
+        );
+
+        // Transform.rotate should now appear
+        expect(
+          find.descendant(
+            of: find.byType(Persona5Image),
+            matching: find.byType(Transform),
+          ),
+          findsOneWidget,
+        );
+      });
+
+      testWidgets('renders Stack when imagePath is provided', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Image(
+                imagePath: realImagePath,
+                withImageBlendMode: false,
+              ),
+            ),
+          ),
+        );
+
+        expect(
+          find.descendant(
+            of: find.byType(Persona5Image),
+            matching: find.byType(Stack),
+          ),
+          findsOneWidget,
+        );
+      });
+
+      testWidgets('renders one Image when blend mode is false', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Image(
+                imagePath: realImagePath,
+                withImageBlendMode: false,
+              ),
+            ),
+          ),
+        );
+
+        // Without blend mode, only the main 200x200 image is rendered
+        expect(
+          find.descendant(
+            of: find.byType(Persona5Image),
+            matching: find.byType(Image),
+          ),
+          findsOneWidget,
+        );
+      });
+
+      testWidgets('renders two Images when blend mode is true',
+          (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Image(
+                imagePath: realImagePath,
+                withImageBlendMode: true,
+              ),
+            ),
+          ),
+        );
+
+        // With blend mode, halo (250 wide) + main (200x200) image = 2 images
+        expect(
+          find.descendant(
+            of: find.byType(Persona5Image),
+            matching: find.byType(Image),
+          ),
+          findsNWidgets(2),
+        );
+      });
+
+      testWidgets('rotation angle is -0.3 radians', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Image(
+                imagePath: realImagePath,
+                withImageBlendMode: false,
+              ),
+            ),
+          ),
+        );
+
+        final transform = tester.widget<Transform>(
+          find.descendant(
+            of: find.byType(Persona5Image),
+            matching: find.byType(Transform),
+          ),
+        );
+
+        final expected = Matrix4.rotationZ(-0.3);
+        for (var i = 0; i < 16; i++) {
+          expect(
+            transform.transform.storage[i],
+            closeTo(expected.storage[i], 1e-9),
+            reason: 'matrix entry $i mismatches rotationZ(-0.3)',
+          );
+        }
+      });
+    });
   });
 }
