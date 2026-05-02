@@ -37,9 +37,16 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Interno
 
-- Cobertura de tests al 100% (800 tests)
+- Cobertura de tests al 100%
 - Nuevo workflow de GitHub Actions (`.github/workflows/test.yml`) con
   verificación de threshold 100% vía `VeryGoodOpenSource/very_good_coverage@v3`
+- Verificados como falsos positivos durante review:
+  - **S1c**: `EvangelionTitle._canShowText` y `_animationCompleted` ya estaban
+    declarados sin `late` antes de este release.
+  - **S2**: ningún widget de título usa `AnimationPhaseMixin`. Cada uno define
+    su propio `_updatePhase` privado que solo dispara `onPhaseChange`. Las
+    llamadas directas a `onAnimationStart`/`onAnimationComplete` son la
+    única vía de disparo y no se duplican.
 
 ## [1.0.7] - 2026-01-08
 
