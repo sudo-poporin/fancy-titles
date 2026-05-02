@@ -1,5 +1,10 @@
 # Fancy Titles ✨
 
+[![Tests](https://github.com/sudo-poporin/fancy-titles/actions/workflows/test.yml/badge.svg)](https://github.com/sudo-poporin/fancy-titles/actions/workflows/test.yml)
+[![coverage: 100%](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/sudo-poporin/fancy-titles/actions/workflows/test.yml)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?logo=Flutter&logoColor=white)](https://flutter.dev)
+
 Paquete que incluye splash screens personalizados para aplicaciones Flutter y darles un toque especial. Inspirados en mis videojuegos y series favoritas.
 
 Funciona tanto en modo retrato como en modo paisaje.
@@ -440,3 +445,17 @@ El enum `AnimationPhase` define las fases disponibles en todos los widgets:
 | `active`    | Contenido principal visible y estable        |
 | `exiting`   | Elementos animándose hacia afuera            |
 | `completed` | Animación completada, widget listo a remover |
+
+---
+
+## Coverage 📊
+
+El paquete mantiene **100% de cobertura** de tests. El workflow de CI verifica
+el umbral en cada push y pull request.
+
+Generar el reporte de cobertura localmente:
+
+```bash
+flutter test --coverage
+lcov --summary coverage/lcov.info
+```
