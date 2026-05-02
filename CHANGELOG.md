@@ -5,6 +5,42 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.1.0] - 2026-05-01
+
+### Corregido
+
+- `SonicManiaSplash.secondaryText` ahora se muestra correctamente en mayúsculas
+  (bug por uso del operador cascade `..` en lugar de acceso `.`)
+- Orden de inicialización en `TextBar.initState` (`super.initState()` ahora se
+  llama primero, siguiendo convención Flutter)
+
+### Modificado
+
+- Renombrado `FourthCrossRenderer` a `FourthCrossPainter` por consistencia con
+  el resto de cross painters
+- Refactor: `lib/evangelion/widgets/spark.dart` dividido en archivos por orden
+  de spark (`sparks/first_spark.dart` a `sparks/sixth_spark.dart`)
+- Refactor: extraídos los `Builder` inline de `text_bar.dart` a widgets
+  privados `_PlaceholderBar` y `_TextContent`
+- Eliminado `late` redundante en flags de estado de `SonicManiaSplash` y
+  `Persona5Title`
+- Unificado uso de `// ignore: discarded_futures` en `precacheImage` de
+  `Persona5Title` (mismo patrón que `MarioMakerTitle`)
+
+### Eliminado
+
+- Tests de golden (`test/golden/`)
+- Tests de performance/allocations (`test/performance/`)
+- Integration tests del paquete de ejemplo (`example/integration_test/`)
+- Suite de benchmarks (`benchmark/`)
+- Dependencia `integration_test` de `dev_dependencies`
+
+### Interno
+
+- Cobertura de tests al 100% (800 tests)
+- Nuevo workflow de GitHub Actions (`.github/workflows/test.yml`) con
+  verificación de threshold 100% vía `VeryGoodOpenSource/very_good_coverage@v3`
+
 ## [1.0.7] - 2026-01-08
 
 ### Agregado
