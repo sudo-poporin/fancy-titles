@@ -242,4 +242,32 @@ void main() {
       expect(tester.takeException(), isNull);
     });
   });
+
+  group('debug API', () {
+    test('LargeBGDraw caches path and size after paint', () {
+      LargeBGDraw.debugResetCache();
+      expect(LargeBGDraw.debugCachedPath, isNull);
+      expect(LargeBGDraw.debugCachedSize, isNull);
+
+      final painter = LargeBGDraw(const Color(0xFF000000));
+      final recorder = PictureRecorder();
+      painter.paint(Canvas(recorder), const Size(150, 80));
+
+      expect(LargeBGDraw.debugCachedPath, isNotNull);
+      expect(LargeBGDraw.debugCachedSize, equals(const Size(150, 80)));
+    });
+
+    test('SmallBGDraw caches path and size after paint', () {
+      SmallBGDraw.debugResetCache();
+      expect(SmallBGDraw.debugCachedPath, isNull);
+      expect(SmallBGDraw.debugCachedSize, isNull);
+
+      final painter = SmallBGDraw(const Color(0xFFFFFFFF));
+      final recorder = PictureRecorder();
+      painter.paint(Canvas(recorder), const Size(120, 40));
+
+      expect(SmallBGDraw.debugCachedPath, isNotNull);
+      expect(SmallBGDraw.debugCachedSize, equals(const Size(120, 40)));
+    });
+  });
 }

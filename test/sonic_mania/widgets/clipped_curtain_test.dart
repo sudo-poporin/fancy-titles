@@ -186,8 +186,14 @@ void main() {
         await tester.pump(const Duration(milliseconds: 500));
         await tester.pump(const Duration(milliseconds: 325));
 
+        // Pump again to let whenComplete(_slideOut) callback fire
+        await tester.pump();
+
         // Advance past slide out delay (2500ms from source)
         await tester.pump(const Duration(milliseconds: 2500));
+
+        // Pump again to settle the reverse animation triggered inside _slideOut
+        await tester.pump(const Duration(milliseconds: 325));
 
         expect(find.byType(ClippedCurtain), findsOneWidget);
 

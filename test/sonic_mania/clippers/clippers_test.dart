@@ -319,4 +319,72 @@ void main() {
       );
     });
   });
+
+  group('Clippers debug API', () {
+    test('OrangeBarClipper caches path/size after getClip', () {
+      OrangeBarClipper.debugResetCache();
+      expect(OrangeBarClipper.debugCachedPath, isNull);
+      expect(OrangeBarClipper.debugCachedSize, isNull);
+
+      OrangeBarClipper().getClip(const Size(100, 100));
+
+      expect(OrangeBarClipper.debugCachedPath, isNotNull);
+      expect(OrangeBarClipper.debugCachedSize, equals(const Size(100, 100)));
+    });
+
+    test('GreenBarClipper caches path/size after getClip', () {
+      GreenBarClipper.debugResetCache();
+      expect(GreenBarClipper.debugCachedPath, isNull);
+      expect(GreenBarClipper.debugCachedSize, isNull);
+
+      GreenBarClipper().getClip(const Size(120, 120));
+
+      expect(GreenBarClipper.debugCachedPath, isNotNull);
+      expect(GreenBarClipper.debugCachedSize, equals(const Size(120, 120)));
+    });
+
+    test('RedBarClipper caches path/size after getClip', () {
+      RedBarClipper.debugResetCache();
+      expect(RedBarClipper.debugCachedPath, isNull);
+      expect(RedBarClipper.debugCachedSize, isNull);
+
+      RedBarClipper().getClip(const Size(150, 150));
+
+      expect(RedBarClipper.debugCachedPath, isNotNull);
+      expect(RedBarClipper.debugCachedSize, equals(const Size(150, 150)));
+    });
+
+    test('BlueBarClipper caches path/size after getClip', () {
+      BlueBarClipper.debugResetCache();
+      expect(BlueBarClipper.debugCachedPath, isNull);
+      expect(BlueBarClipper.debugCachedSize, isNull);
+
+      BlueBarClipper().getClip(const Size(180, 180));
+
+      expect(BlueBarClipper.debugCachedPath, isNotNull);
+      expect(BlueBarClipper.debugCachedSize, equals(const Size(180, 180)));
+    });
+
+    test('LeftCurtainClipper caches path/size after getClip', () {
+      LeftCurtainClipper.debugResetCache();
+      expect(LeftCurtainClipper.debugCachedPath, isNull);
+      expect(LeftCurtainClipper.debugCachedSize, isNull);
+
+      LeftCurtainClipper().getClip(const Size(210, 210));
+
+      expect(LeftCurtainClipper.debugCachedPath, isNotNull);
+      expect(LeftCurtainClipper.debugCachedSize, equals(const Size(210, 210)));
+    });
+
+    test('RightCurtainClipper caches path/size after getClip', () {
+      RightCurtainClipper.debugResetCache();
+      expect(RightCurtainClipper.debugCachedPath, isNull);
+      expect(RightCurtainClipper.debugCachedSize, isNull);
+
+      RightCurtainClipper().getClip(const Size(240, 240));
+
+      expect(RightCurtainClipper.debugCachedPath, isNotNull);
+      expect(RightCurtainClipper.debugCachedSize, equals(const Size(240, 240)));
+    });
+  });
 }
