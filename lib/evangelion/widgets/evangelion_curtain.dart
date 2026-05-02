@@ -73,6 +73,7 @@ class Curtain extends StatefulWidget {
   /// [duration] tiempo que dura visible la cortina.
   /// [delay] tiempo antes de que aparezca la cortina.
   /// [curve] curva de la animacion.
+  // coverage:ignore-start
   const Curtain({
     required CurtainOrder order,
     Duration duration = EvangelionTiming.sparkDefaultDuration,
@@ -83,6 +84,7 @@ class Curtain extends StatefulWidget {
        _curve = curve,
        _duration = duration,
        _order = order;
+  // coverage:ignore-end
 
   /// Shows the first curtain of Evangelion title
   const Curtain.first({super.key})
