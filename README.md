@@ -18,7 +18,7 @@ dependencies:
   fancy_titles:
     git:
       url: https://github.com/sudo-poporin/fancy-titles
-      ref: main
+      ref: v1.1.0
 ```
 
 ---
