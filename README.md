@@ -445,17 +445,3 @@ El enum `AnimationPhase` define las fases disponibles en todos los widgets:
 | `active`    | Contenido principal visible y estable        |
 | `exiting`   | Elementos animándose hacia afuera            |
 | `completed` | Animación completada, widget listo a remover |
-
----
-
-## Coverage 📊
-
-El paquete mantiene **100% de cobertura** de tests. El workflow de CI verifica
-el umbral en cada push y pull request.
-
-Generar el reporte de cobertura localmente:
-
-```bash
-flutter test --coverage
-lcov --summary coverage/lcov.info
-```
