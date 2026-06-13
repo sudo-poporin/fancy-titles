@@ -9,7 +9,6 @@
 .history
 .svn/
 migrate_working_dir/
-/coverage
 
 # IntelliJ related
 *.iml
@@ -30,6 +29,18 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+coverage/
 
-# Docs
+# Claude related
+.claude/
+CLAUDE.md
+
+# AI agent / tooling artifacts (local only)
+AGENTS.md
+.codegraph/
+graphify-out/
+
+# Docs locales (planes/specs del flujo superpowers) — regla #7
+docs/plans/
+docs/specs/
 docs/optimizations/
