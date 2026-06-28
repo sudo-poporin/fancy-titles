@@ -5,6 +5,16 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.1.1] - 2026-06-28
+
+### Modificado
+
+- Bump de `meta` a `^1.18.0` y `very_good_analysis` a `^10.3.0`.
+
+### Interno
+
+- Limpieza de entrada stale `docs/optimizations/` en `.gitignore`.
+
 ## [1.1.0] - 2026-05-01
 
 ### Corregido
