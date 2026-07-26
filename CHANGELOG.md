@@ -5,6 +5,15 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.1.2] - 2026-07-26
+
+### Interno
+
+- Sincronizado `example/pubspec.lock`, que seguía apuntando a la versión 1.1.0
+  del paquete tras el release 1.1.1.
+- Sin bumps de dependencias: `meta` publica 1.19.0, pero el SDK de Flutter fija
+  el piso resoluble en 1.18.0.
+
 ## [1.1.1] - 2026-06-28
 
 ### Modificado
