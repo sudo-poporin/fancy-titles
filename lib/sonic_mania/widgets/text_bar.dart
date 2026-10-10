@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
+import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
 import 'package:fancy_titles/sonic_mania/widgets/bouncing_text.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +38,12 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _isWhiteText = isWhite;
+       _isWhiteText = isWhite,
+       _slantedBar = false;
   // coverage:ignore-end
 
   /// Barra blanca
-  TextBar.black({
+  const TextBar.black({
     required String text,
     required Offset beginOffset,
     required Offset endOffset,
@@ -61,11 +63,12 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _painter = LargeBGDraw(_kDefaultBlackColor),
-       _isWhiteText = false;
+       _painter = null,
+       _isWhiteText = false,
+       _slantedBar = true;
 
   /// Barra negra
-  TextBar.white({
+  const TextBar.white({
     required String text,
     required Offset beginOffset,
     required Offset endOffset,
@@ -85,8 +88,9 @@ class TextBar extends StatefulWidget {
        _textColor = textColor,
        _color = color,
        _text = text,
-       _painter = SmallBGDraw(_kDefaultWhiteColor),
-       _isWhiteText = true;
+       _painter = null,
+       _isWhiteText = true,
+       _slantedBar = true;
 
   final String _text;
   final Color _color;
@@ -99,6 +103,10 @@ class TextBar extends StatefulWidget {
   final CustomPainter? _painter;
   final bool _bounceUp;
   final bool _isWhiteText;
+
+  // true en .black y .white: el painter lo arma el estado con la pendiente
+  // de la pantalla. En el constructor genérico se usa [_painter] tal cual.
+  final bool _slantedBar;
 
   @override
   State<TextBar> createState() => _TextBarState();
@@ -117,6 +125,7 @@ class _TextBarState extends State<TextBar>
   double? _cachedStrokeWidth;
   Orientation? _cachedOrientation;
   Size? _cachedScreenSize;
+  CustomPainter? _barPainter;
 
   @override
   void initState() {
@@ -154,7 +163,15 @@ class _TextBarState extends State<TextBar>
       );
       _cachedFontSize = _calculateSize(context, constraints);
       _cachedStrokeWidth = _calculateStrokeWidth(_cachedFontSize!);
+      _barPainter = _buildBarPainter(stripeSlope(screenSize));
     }
+  }
+
+  CustomPainter? _buildBarPainter(double slope) {
+    if (!widget._slantedBar) return widget._painter;
+    return widget._isWhiteText
+        ? SmallBGDraw(widget._color, slope: slope)
+        : LargeBGDraw(widget._color, slope: slope);
   }
 
   @override
@@ -219,7 +236,7 @@ class _TextBarState extends State<TextBar>
               textBorderColor: widget._textBorderColor,
               fontSize: fontSize,
               strokeWidth: strokeWidth,
-              painter: widget._painter,
+              painter: _barPainter,
               bounceUp: widget._bounceUp,
               isWhiteText: widget._isWhiteText,
             ),
