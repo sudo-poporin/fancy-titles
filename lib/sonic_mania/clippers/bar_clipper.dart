@@ -7,9 +7,7 @@ import 'package:flutter/rendering.dart';
 /// del aspecto: unos 48° en 16:9 apaisado y unos 74° en 9:16 portrait.
 ///
 /// Las barras de texto la usan para que sus extremos queden paralelos a las
-/// franjas. Ellas la calculan con el tamaño de la pantalla, y las franjas con
-/// el de la caja del splash: si el splash ocupa menos que la pantalla, las dos
-/// pendientes difieren.
+/// franjas, con el mismo [size]: el de la caja del splash.
 ///
 /// Devuelve `0` si el alto es `0`.
 double stripeSlope(Size size) =>

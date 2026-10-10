@@ -211,69 +211,78 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
           FadeTransition(opacity: animation, child: child),
       child: _animationCompleted
           ? const SizedBox.shrink()
-          : ColoredBox(
-              color: Colors.transparent,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      ClippedCurtain.left(customClipper: LeftCurtainClipper()),
-                      ClippedCurtain.right(
-                        customClipper: RightCurtainClipper(),
-                      ),
-                      ClippedBar.orange(customClipper: OrangeBarClipper()),
-                      ClippedBar.red(customClipper: RedBarClipper()),
-                      ClippedBar.green(customClipper: GreenBarClipper()),
-                      ClippedBar.blue(customClipper: BlueBarClipper()),
-                    ],
-                  ),
-                  const Curtain.blue(),
-                  const Curtain.orange(),
-                  const Curtain.amber(),
-                  const Curtain.green(),
-                  const Curtain.yellow(),
-                  Stack(
-                    children: [
-                      TextBar.black(
-                        text: widget._baseText.toUpperCase(),
-                        beginOffset: Offset(-10, firstTextVerticalOffset),
-                        endOffset: Offset(2, firstTextVerticalOffset),
-                        stopOffset: Offset(-0.2, firstTextVerticalOffset),
-                        stopEndOffset: Offset(-10, firstTextVerticalOffset),
-                      ),
-                      if (widget._secondaryText != null)
+          // Las franjas ocupan toda la caja del splash: las barras de texto
+          // reciben ese mismo tamaño para inclinarse con su pendiente.
+          : LayoutBuilder(
+              builder: (context, constraints) => ColoredBox(
+                color: Colors.transparent,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        ClippedCurtain.left(
+                          customClipper: LeftCurtainClipper(),
+                        ),
+                        ClippedCurtain.right(
+                          customClipper: RightCurtainClipper(),
+                        ),
+                        ClippedBar.orange(customClipper: OrangeBarClipper()),
+                        ClippedBar.red(customClipper: RedBarClipper()),
+                        ClippedBar.green(customClipper: GreenBarClipper()),
+                        ClippedBar.blue(customClipper: BlueBarClipper()),
+                      ],
+                    ),
+                    const Curtain.blue(),
+                    const Curtain.orange(),
+                    const Curtain.amber(),
+                    const Curtain.green(),
+                    const Curtain.yellow(),
+                    Stack(
+                      children: [
                         TextBar.black(
-                          text: widget._secondaryText!.toUpperCase(),
-                          beginOffset: const Offset(10, 0),
-                          endOffset: const Offset(-2, 0),
-                          stopOffset: const Offset(0.2, 0),
-                          stopEndOffset: const Offset(10, 0),
+                          text: widget._baseText.toUpperCase(),
+                          beginOffset: Offset(-10, firstTextVerticalOffset),
+                          endOffset: Offset(2, firstTextVerticalOffset),
+                          stopOffset: Offset(-0.2, firstTextVerticalOffset),
+                          stopEndOffset: Offset(-10, firstTextVerticalOffset),
+                          stripeArea: constraints.biggest,
                         ),
-                      if (widget._lastText != null)
-                        TextBar.white(
-                          text: widget._lastText!.toLowerCase(),
-                          beginOffset: Offset(
-                            lastTextOriginOffset,
-                            lastTextVerticalOffset,
+                        if (widget._secondaryText != null)
+                          TextBar.black(
+                            text: widget._secondaryText!.toUpperCase(),
+                            beginOffset: const Offset(10, 0),
+                            endOffset: const Offset(-2, 0),
+                            stopOffset: const Offset(0.2, 0),
+                            stopEndOffset: const Offset(10, 0),
+                            stripeArea: constraints.biggest,
                           ),
-                          endOffset: Offset(
-                            2 * lastTextInvertedValue,
-                            lastTextVerticalOffset,
+                        if (widget._lastText != null)
+                          TextBar.white(
+                            text: widget._lastText!.toLowerCase(),
+                            beginOffset: Offset(
+                              lastTextOriginOffset,
+                              lastTextVerticalOffset,
+                            ),
+                            endOffset: Offset(
+                              2 * lastTextInvertedValue,
+                              lastTextVerticalOffset,
+                            ),
+                            stopOffset: Offset(
+                              lastTextHorizontalOffset,
+                              lastTextVerticalOffset,
+                            ),
+                            stopEndOffset: Offset(
+                              lastTextOriginOffset,
+                              lastTextVerticalOffset,
+                            ),
+                            stripeArea: constraints.biggest,
                           ),
-                          stopOffset: Offset(
-                            lastTextHorizontalOffset,
-                            lastTextVerticalOffset,
-                          ),
-                          stopEndOffset: Offset(
-                            lastTextOriginOffset,
-                            lastTextVerticalOffset,
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
     );

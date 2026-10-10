@@ -10,7 +10,7 @@ class LargeBGDraw extends CustomPainter {
   ///
   /// [color] es el color de relleno del polígono. [slope] es la pendiente
   /// `dx/dy` de los extremos; para que queden paralelos a las franjas del
-  /// fondo, `stripeSlope` del tamaño de la pantalla.
+  /// fondo, `stripeSlope` del área que ocupan las franjas.
   LargeBGDraw(Color color, {required this.slope})
     : painter = Paint()
         ..color = color
@@ -84,7 +84,7 @@ class SmallBGDraw extends CustomPainter {
   ///
   /// [color] es el color de relleno del polígono. [slope] es la pendiente
   /// `dx/dy` de los extremos; para que queden paralelos a las franjas del
-  /// fondo, `stripeSlope` del tamaño de la pantalla.
+  /// fondo, `stripeSlope` del área que ocupan las franjas.
   SmallBGDraw(Color color, {required this.slope})
     : painter = Paint()
         ..color = color

@@ -39,14 +39,16 @@ class TextBar extends StatefulWidget {
        _color = color,
        _text = text,
        _isWhiteText = isWhite,
-       _slantedBar = false;
+       _slantedBar = false,
+       _stripeArea = null;
   // coverage:ignore-end
 
   /// Barra negra, con el título principal.
   ///
-  /// Sus extremos se inclinan con la pendiente de las franjas del fondo
-  /// ([stripeSlope] de la pantalla) y se rearman al rotar. [color] rellena la
-  /// barra.
+  /// Sus extremos se inclinan con la pendiente de las franjas del fondo:
+  /// [stripeSlope] de [stripeArea], el área que ocupan las franjas, o de la
+  /// pantalla si es `null`. Se rearman cuando cambia ese tamaño, por ejemplo
+  /// al rotar. [color] rellena la barra.
   const TextBar.black({
     required String text,
     required Offset beginOffset,
@@ -57,6 +59,7 @@ class TextBar extends StatefulWidget {
     Color textColor = _kDefaultWhiteColor,
     Color textBorderColor = _kDefaultBlackColor,
     bool bounceUp = true,
+    Size? stripeArea,
     super.key,
   }) : _bounceUp = bounceUp,
        _stopEndOffset = stopEndOffset,
@@ -69,13 +72,15 @@ class TextBar extends StatefulWidget {
        _text = text,
        _painter = null,
        _isWhiteText = false,
-       _slantedBar = true;
+       _slantedBar = true,
+       _stripeArea = stripeArea;
 
   /// Barra blanca, con el subtítulo.
   ///
-  /// Sus extremos se inclinan con la pendiente de las franjas del fondo
-  /// ([stripeSlope] de la pantalla) y se rearman al rotar. [color] rellena la
-  /// barra.
+  /// Sus extremos se inclinan con la pendiente de las franjas del fondo:
+  /// [stripeSlope] de [stripeArea], el área que ocupan las franjas, o de la
+  /// pantalla si es `null`. Se rearman cuando cambia ese tamaño, por ejemplo
+  /// al rotar. [color] rellena la barra.
   const TextBar.white({
     required String text,
     required Offset beginOffset,
@@ -86,6 +91,7 @@ class TextBar extends StatefulWidget {
     Color textColor = _kDefaultBlackColor,
     Color textBorderColor = _kDefaultWhiteColor,
     bool bounceUp = false,
+    Size? stripeArea,
     super.key,
   }) : _bounceUp = bounceUp,
        _stopEndOffset = stopEndOffset,
@@ -98,7 +104,8 @@ class TextBar extends StatefulWidget {
        _text = text,
        _painter = null,
        _isWhiteText = true,
-       _slantedBar = true;
+       _slantedBar = true,
+       _stripeArea = stripeArea;
 
   final String _text;
   final Color _color;
@@ -113,8 +120,11 @@ class TextBar extends StatefulWidget {
   final bool _isWhiteText;
 
   // true en .black y .white: el painter lo arma el estado con la pendiente
-  // de la pantalla. En el constructor genérico se usa [_painter] tal cual.
+  // de [_stripeArea]. En el constructor genérico se usa [_painter] tal cual.
   final bool _slantedBar;
+
+  // Tamaño del área de las franjas; si es null, el de la pantalla.
+  final Size? _stripeArea;
 
   @override
   State<TextBar> createState() => _TextBarState();
@@ -133,7 +143,6 @@ class _TextBarState extends State<TextBar>
   double? _cachedStrokeWidth;
   Orientation? _cachedOrientation;
   Size? _cachedScreenSize;
-  double _barSlope = 0;
 
   @override
   void initState() {
@@ -171,7 +180,6 @@ class _TextBarState extends State<TextBar>
       );
       _cachedFontSize = _calculateSize(context, constraints);
       _cachedStrokeWidth = _calculateStrokeWidth(_cachedFontSize!);
-      _barSlope = stripeSlope(screenSize);
     }
   }
 
@@ -244,7 +252,9 @@ class _TextBarState extends State<TextBar>
               textBorderColor: widget._textBorderColor,
               fontSize: fontSize,
               strokeWidth: strokeWidth,
-              painter: _buildBarPainter(_barSlope),
+              painter: _buildBarPainter(
+                stripeSlope(widget._stripeArea ?? _cachedScreenSize!),
+              ),
               bounceUp: widget._bounceUp,
               isWhiteText: widget._isWhiteText,
             ),

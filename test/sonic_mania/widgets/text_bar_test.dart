@@ -398,6 +398,37 @@ void main() {
         await disposeAndSettle(tester);
       });
 
+      testWidgets('stripeArea manda sobre el tamaño de la pantalla', (
+        tester,
+      ) async {
+        addTearDown(tester.view.reset);
+        tester.view.devicePixelRatio = 1;
+        tester.view.physicalSize = const Size(844, 390);
+
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: TextBar.black(
+                text: 'AREA',
+                stripeArea: Size(400, 300),
+                beginOffset: Offset(-2, 0),
+                endOffset: Offset(2, 0),
+                stopOffset: Offset(-0.2, 0),
+                stopEndOffset: Offset(-2, 0),
+              ),
+            ),
+          ),
+        );
+        await showText(tester);
+
+        expect(
+          barPainter<LargeBGDraw>(tester).slope,
+          closeTo(stripeSlope(const Size(400, 300)), 1e-9),
+        );
+
+        await disposeAndSettle(tester);
+      });
+
       testWidgets('la negra usa su color', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
