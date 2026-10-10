@@ -370,6 +370,34 @@ void main() {
         await disposeAndSettle(tester);
       });
 
+      testWidgets('cambiar el color sin cambiar la pantalla repinta la barra', (
+        tester,
+      ) async {
+        Widget bar(Color color) => MaterialApp(
+          home: Scaffold(
+            body: TextBar.black(
+              text: 'COLOR',
+              color: color,
+              beginOffset: const Offset(-2, 0),
+              endOffset: const Offset(2, 0),
+              stopOffset: const Offset(-0.2, 0),
+              stopEndOffset: const Offset(-2, 0),
+            ),
+          ),
+        );
+
+        await tester.pumpWidget(bar(Colors.red));
+        await showText(tester);
+        await tester.pumpWidget(bar(Colors.blue));
+
+        expect(
+          barPainter<LargeBGDraw>(tester).painter.color.toARGB32(),
+          Colors.blue.toARGB32(),
+        );
+
+        await disposeAndSettle(tester);
+      });
+
       testWidgets('la negra usa su color', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(

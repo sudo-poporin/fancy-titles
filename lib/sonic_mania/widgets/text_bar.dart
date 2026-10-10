@@ -133,7 +133,7 @@ class _TextBarState extends State<TextBar>
   double? _cachedStrokeWidth;
   Orientation? _cachedOrientation;
   Size? _cachedScreenSize;
-  CustomPainter? _barPainter;
+  double _barSlope = 0;
 
   @override
   void initState() {
@@ -171,7 +171,7 @@ class _TextBarState extends State<TextBar>
       );
       _cachedFontSize = _calculateSize(context, constraints);
       _cachedStrokeWidth = _calculateStrokeWidth(_cachedFontSize!);
-      _barPainter = _buildBarPainter(stripeSlope(screenSize));
+      _barSlope = stripeSlope(screenSize);
     }
   }
 
@@ -244,7 +244,7 @@ class _TextBarState extends State<TextBar>
               textBorderColor: widget._textBorderColor,
               fontSize: fontSize,
               strokeWidth: strokeWidth,
-              painter: _barPainter,
+              painter: _buildBarPainter(_barSlope),
               bounceUp: widget._bounceUp,
               isWhiteText: widget._isWhiteText,
             ),
