@@ -82,7 +82,7 @@ class _ClippedCurtainState extends State<ClippedCurtain>
       setState(() {
         _beginOffset = widget.endOffset;
       });
-      unawaited(_controller.reverse());
+      _controller.reverse();
     });
   }
 

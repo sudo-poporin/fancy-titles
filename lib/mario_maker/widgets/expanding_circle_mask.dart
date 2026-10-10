@@ -110,14 +110,14 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
 
   void _startAnimations() {
     // Start bounce animation immediately
-    unawaited(_bounceController.forward());
+    _bounceController.forward();
 
     // Start expansion after delay
     unawaited(
       Future<void>.delayed(widget._delay, () {
         if (mounted) {
           setState(() => _shouldExpand = true);
-          unawaited(_expandController.forward());
+          _expandController.forward();
         }
       }),
     );

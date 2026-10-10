@@ -79,7 +79,7 @@ class _ContractingCircleMaskState extends State<ContractingCircleMask>
 
   void _startAnimation() {
     _isAnimating = true;
-    unawaited(_controller.forward());
+    _controller.forward();
   }
 
   @override

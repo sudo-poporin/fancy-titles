@@ -126,7 +126,7 @@ class _BouncingCircleState extends State<BouncingCircle>
     unawaited(
       _bounceController.forward().then((_) {
         if (mounted) {
-          unawaited(_imageScaleController.forward());
+          _imageScaleController.forward();
         }
       }),
     );

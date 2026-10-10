@@ -99,7 +99,7 @@ class _CurtainState extends State<Curtain>
     delayed(widget.delay, () {
       unawaited(
         _controller.forward().whenComplete(() {
-          if (mounted) unawaited(_controller.reverse());
+          if (mounted) _controller.reverse();
         }),
       );
     });

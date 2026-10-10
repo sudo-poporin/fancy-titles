@@ -106,7 +106,7 @@ class _SlidingTitleState extends State<SlidingTitle>
       Future<void>.delayed(widget._delay, () {
         if (mounted) {
           setState(() => _shouldShow = true);
-          unawaited(_entryController.forward());
+          _entryController.forward();
         }
       }),
     );
@@ -117,7 +117,7 @@ class _SlidingTitleState extends State<SlidingTitle>
         Future<void>.delayed(widget._exitDelay!, () {
           if (mounted) {
             setState(() => _isExiting = true);
-            unawaited(_exitController.forward());
+            _exitController.forward();
           }
         }),
       );

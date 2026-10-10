@@ -171,14 +171,14 @@ class _TextBarState extends State<TextBar>
 
   void _slideIn() {
     setState(() => _beginOffset = widget._stopOffset);
-    unawaited(_controller.reverse());
+    _controller.reverse();
   }
 
   void _slideOut() {
     setState(() => _canShowText = true);
     delayed(SonicManiaTiming.slideOutDelay, () {
       setState(() => _endOffset = widget._stopEndOffset);
-      unawaited(_controller.forward());
+      _controller.forward();
     });
   }
 
