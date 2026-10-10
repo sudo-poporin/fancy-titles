@@ -1,9 +1,27 @@
+<!-- markdownlint-configure-file { "MD024": { "siblings_only": true } } -->
+
 # Registro de Cambios
 
 Todos los cambios notables de este proyecto se documentan en este archivo.
 
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
+
+## [1.1.3] - 2026-10-10
+
+### Corregido
+
+- Los extremos de las barras de texto de `SonicManiaSplash` quedan paralelos a
+  las franjas diagonales del fondo, en portrait y en landscape.
+- Las barras de `TextBar.black` y `TextBar.white` se pintan con su `color`.
+
+### Interno
+
+- Quitados los `unawaited` que el analyzer marca como innecesarios.
+- Código y tests formateados con el formatter de Dart actual.
+- Android de `example/` al template de Flutter 3.47 (Gradle 9.3.1, AGP 9.1.0,
+  Kotlin 2.4.0).
+- GIF de Sonic Mania del README regenerado con el ángulo nuevo.
 
 ## [1.1.2] - 2026-07-26
 
@@ -141,7 +159,7 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   - Evangelion: 1 instancia (cached_blur_widget.dart)
   - MarioMaker: 2 instancias (bouncing_circle.dart)
 - Actualizado animation_timings.dart con 17 nuevas constantes:
-  - SonicManiaTiming: constantes clippedBar* y clippedCurtain*
+  - SonicManiaTiming: constantes `clippedBar*` y `clippedCurtain*`
   - EvangelionTiming: blurCacheDelay
   - MarioMakerTiming: bounceDurationDefault, imageScaleOutDuration
 - Mejorado README.md con ejemplos detallados y GIFs para todos los widgets
