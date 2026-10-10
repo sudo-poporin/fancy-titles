@@ -42,7 +42,11 @@ class TextBar extends StatefulWidget {
        _slantedBar = false;
   // coverage:ignore-end
 
-  /// Barra blanca
+  /// Barra negra, con el título principal.
+  ///
+  /// Sus extremos se inclinan con la pendiente de las franjas del fondo
+  /// ([stripeSlope] de la pantalla) y se rearman al rotar. [color] rellena la
+  /// barra.
   const TextBar.black({
     required String text,
     required Offset beginOffset,
@@ -67,7 +71,11 @@ class TextBar extends StatefulWidget {
        _isWhiteText = false,
        _slantedBar = true;
 
-  /// Barra negra
+  /// Barra blanca, con el subtítulo.
+  ///
+  /// Sus extremos se inclinan con la pendiente de las franjas del fondo
+  /// ([stripeSlope] de la pantalla) y se rearman al rotar. [color] rellena la
+  /// barra.
   const TextBar.white({
     required String text,
     required Offset beginOffset,
