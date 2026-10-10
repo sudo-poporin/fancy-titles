@@ -1,5 +1,20 @@
 import 'package:flutter/rendering.dart';
 
+/// Pendiente `dx/dy` de las franjas diagonales del fondo para un [size].
+///
+/// Las cuatro franjas ([OrangeBarClipper], [GreenBarClipper],
+/// [RedBarClipper] y [BlueBarClipper]) comparten esta pendiente, que depende
+/// del aspecto: unos 48° en 16:9 apaisado y unos 74° en 9:16 portrait.
+///
+/// Las barras de texto la usan para que sus extremos queden paralelos a las
+/// franjas. Ellas la calculan con el tamaño de la pantalla, y las franjas con
+/// el de la caja del splash: si el splash ocupa menos que la pantalla, las dos
+/// pendientes difieren.
+///
+/// Devuelve `0` si el alto es `0`.
+double stripeSlope(Size size) =>
+    size.height == 0 ? 0 : 0.5 * size.width / size.height;
+
 /// Clipper para la barra naranja en la animacion Sonic Mania.
 ///
 /// Crea un poligono inclinado que recorta el contenido para mostrar

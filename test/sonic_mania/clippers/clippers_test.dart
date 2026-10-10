@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -386,5 +385,38 @@ void main() {
       expect(RightCurtainClipper.debugCachedPath, isNotNull);
       expect(RightCurtainClipper.debugCachedSize, equals(const Size(240, 240)));
     });
+  });
+
+  group('stripeSlope', () {
+    test('es la mitad del aspecto ancho / alto', () {
+      expect(
+        stripeSlope(const Size(844, 390)),
+        closeTo(0.5 * 844 / 390, 1e-9),
+      );
+    });
+
+    test('devuelve 0 si el alto es 0', () {
+      expect(stripeSlope(const Size(100, 0)), 0);
+    });
+
+    for (final size in const [Size(844, 390), Size(390, 844)]) {
+      test('coincide con la pendiente de las cuatro franjas en $size', () {
+        final clippers = <CustomClipper<Path>>[
+          OrangeBarClipper(),
+          GreenBarClipper(),
+          RedBarClipper(),
+          BlueBarClipper(),
+        ];
+        for (final clipper in clippers) {
+          final metric = clipper.getClip(size).computeMetrics().first;
+          final direction = metric.getTangentForOffset(0)!.vector;
+          expect(
+            direction.dx / direction.dy,
+            closeTo(stripeSlope(size), 1e-4),
+            reason: '${clipper.runtimeType}',
+          );
+        }
+      });
+    }
   });
 }
