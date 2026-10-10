@@ -140,8 +140,9 @@ void main() {
     });
 
     group('animation lifecycle', () {
-      testWidgets('calls onAnimationStart immediately on build',
-          (tester) async {
+      testWidgets('calls onAnimationStart immediately on build', (
+        tester,
+      ) async {
         var startCalled = false;
 
         await tester.pumpWidget(
@@ -197,8 +198,9 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
       });
 
-      testWidgets('calls onAnimationComplete after totalDuration',
-          (tester) async {
+      testWidgets('calls onAnimationComplete after totalDuration', (
+        tester,
+      ) async {
         var completeCalled = false;
 
         await tester.pumpWidget(

@@ -13,8 +13,9 @@ void main() {
     }
 
     group('instantiation', () {
-      testWidgets('can be instantiated with required parameters',
-          (tester) async {
+      testWidgets('can be instantiated with required parameters', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: ClippedCurtain(

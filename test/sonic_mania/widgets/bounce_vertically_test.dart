@@ -230,8 +230,7 @@ void main() {
         await tester.pump(SonicManiaTiming.bounceVerticallyDelay);
 
         // Advance partially through animation (0.4 is fade interval)
-        final partialDuration =
-            SonicManiaTiming.bounceVerticallyDuration * 0.4;
+        final partialDuration = SonicManiaTiming.bounceVerticallyDuration * 0.4;
         await tester.pump(partialDuration);
 
         // Widget should exist and be fading
@@ -272,8 +271,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('disposes before animation starts without errors',
-          (tester) async {
+      testWidgets('disposes before animation starts without errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: BounceVertically(

@@ -23,11 +23,11 @@ class ExpandingCircleMask extends StatefulWidget {
     Duration expandDuration = MarioMakerTiming.expandDurationDefault,
     double bottomMargin = 100,
     super.key,
-  })  : _background = background,
-        _initialRadius = initialRadius,
-        _delay = delay,
-        _expandDuration = expandDuration,
-        _bottomMargin = bottomMargin;
+  }) : _background = background,
+       _initialRadius = initialRadius,
+       _delay = delay,
+       _expandDuration = expandDuration,
+       _bottomMargin = bottomMargin;
 
   final Widget _background;
   final double _initialRadius;
@@ -50,28 +50,38 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
   // TweenSequence estático para evitar recreación en cada instancia
   static final _bounceTweenSequence = TweenSequence<double>([
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1, end: 0.85)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 1,
+        end: 0.85,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 15,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 0.85, end: 1.15)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 0.85,
+        end: 1.15,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 20,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1.15, end: 0.92)
-          .chain(CurveTween(curve: Curves.easeInOut)),
+      tween: Tween<double>(
+        begin: 1.15,
+        end: 0.92,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
       weight: 18,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 0.92, end: 1.05)
-          .chain(CurveTween(curve: Curves.easeInOut)),
+      tween: Tween<double>(
+        begin: 0.92,
+        end: 1.05,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
       weight: 22,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1.05, end: 1)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 1.05,
+        end: 1,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 25,
     ),
   ]);
@@ -129,15 +139,16 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
     // Calculate max radius to cover entire screen from the circle center
     final maxRadius = _calculateMaxRadius(screenSize, circleCenter);
 
-    _radiusAnimation = Tween<double>(
-      begin: widget._initialRadius,
-      end: maxRadius,
-    ).animate(
-      CurvedAnimation(
-        parent: _expandController,
-        curve: Curves.easeInOutCubic,
-      ),
-    );
+    _radiusAnimation =
+        Tween<double>(
+          begin: widget._initialRadius,
+          end: maxRadius,
+        ).animate(
+          CurvedAnimation(
+            parent: _expandController,
+            curve: Curves.easeInOutCubic,
+          ),
+        );
   }
 
   double _calculateMaxRadius(Size screenSize, Offset center) {

@@ -125,8 +125,9 @@ void main() {
         expect(find.byType(BouncingCircle), findsOneWidget);
       });
 
-      testWidgets('completes bounce animation after bounceDuration',
-          (tester) async {
+      testWidgets('completes bounce animation after bounceDuration', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           buildTestWidget(bounceDuration: const Duration(seconds: 1)),
         );

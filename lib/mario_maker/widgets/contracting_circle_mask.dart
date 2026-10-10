@@ -27,12 +27,12 @@ class ContractingCircleMask extends StatefulWidget {
     Duration duration = MarioMakerTiming.contractDuration,
     Curve curve = Curves.easeInCubic,
     super.key,
-  })  : _child = child,
-        _alignment = alignment,
-        _edgePadding = edgePadding,
-        _delay = delay,
-        _duration = duration,
-        _curve = curve;
+  }) : _child = child,
+       _alignment = alignment,
+       _edgePadding = edgePadding,
+       _delay = delay,
+       _duration = duration,
+       _curve = curve;
 
   final Widget _child;
   final Alignment _alignment;

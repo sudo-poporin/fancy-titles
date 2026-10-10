@@ -42,11 +42,13 @@ void main() {
 
     group('rendering', () {
       testWidgets('renders with default parameters', (tester) async {
-        await tester.pumpWidget(const MaterialApp(
-          home: Scaffold(
-            body: Persona5Text(),
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Persona5Text(),
+            ),
           ),
-        ));
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
@@ -165,7 +167,10 @@ void main() {
         final textWidgets = tester.widgetList<Text>(find.text('TEST')).toList();
 
         for (final text in textWidgets) {
-          expect(text.style?.fontFamily, equals('packages/fancy_titles/Persona'));
+          expect(
+            text.style?.fontFamily,
+            equals('packages/fancy_titles/Persona'),
+          );
         }
       });
 
@@ -219,42 +224,52 @@ void main() {
       });
 
       testWidgets('handles long text', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: 'LOOKING COOL JOKER! THIS IS A VERY LONG TEXT',
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: 'LOOKING COOL JOKER! THIS IS A VERY LONG TEXT',
+          ),
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('handles multiline text', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: 'LINE 1\nLINE 2\nLINE 3',
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: 'LINE 1\nLINE 2\nLINE 3',
+          ),
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
         expect(find.text('LINE 1\nLINE 2\nLINE 3'), findsNWidgets(2));
       });
 
       testWidgets('handles special characters', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: r'!@#$%^&*()',
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: r'!@#$%^&*()',
+          ),
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('handles unicode characters', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: '日本語テキスト',
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: '日本語テキスト',
+          ),
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('handles very long single word', (tester) async {
-        await tester.pumpWidget(buildTestWidget(
-          text: 'SUPERCALIFRAGILISTICEXPIALIDOCIOUS',
-        ));
+        await tester.pumpWidget(
+          buildTestWidget(
+            text: 'SUPERCALIFRAGILISTICEXPIALIDOCIOUS',
+          ),
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
@@ -262,57 +277,65 @@ void main() {
 
     group('layout', () {
       testWidgets('can be placed in a Column', (tester) async {
-        await tester.pumpWidget(const MaterialApp(
-          home: Scaffold(
-            body: Column(
-              children: [
-                Persona5Text(text: 'TEST'),
-              ],
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Column(
+                children: [
+                  Persona5Text(text: 'TEST'),
+                ],
+              ),
             ),
           ),
-        ));
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('can be placed in a Row', (tester) async {
-        await tester.pumpWidget(const MaterialApp(
-          home: Scaffold(
-            body: Row(
-              children: [
-                Expanded(child: Persona5Text(text: 'TEST')),
-              ],
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: Row(
+                children: [
+                  Expanded(child: Persona5Text(text: 'TEST')),
+                ],
+              ),
             ),
           ),
-        ));
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('can be placed in a SizedBox', (tester) async {
-        await tester.pumpWidget(const MaterialApp(
-          home: Scaffold(
-            body: SizedBox(
-              width: 200,
-              height: 100,
-              child: Persona5Text(text: 'TEST'),
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: SizedBox(
+                width: 200,
+                height: 100,
+                child: Persona5Text(text: 'TEST'),
+              ),
             ),
           ),
-        ));
+        );
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('FittedBox allows text to scale down', (tester) async {
-        await tester.pumpWidget(const MaterialApp(
-          home: Scaffold(
-            body: SizedBox(
-              width: 50,
-              height: 20,
-              child: Persona5Text(text: 'VERY LONG TEXT HERE'),
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: SizedBox(
+                width: 50,
+                height: 20,
+                child: Persona5Text(text: 'VERY LONG TEXT HERE'),
+              ),
             ),
           ),
-        ));
+        );
 
         // Should not overflow, FittedBox handles scaling
         expect(find.byType(Persona5Text), findsOneWidget);

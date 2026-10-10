@@ -163,8 +163,9 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('Curtain.first shows ColoredBox when visible',
-          (tester) async {
+      testWidgets('Curtain.first shows ColoredBox when visible', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -181,8 +182,9 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('Curtain.second shows CustomPaint when visible',
-          (tester) async {
+      testWidgets('Curtain.second shows CustomPaint when visible', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -366,8 +368,9 @@ void main() {
     });
 
     group('disposal', () {
-      testWidgets('Curtain.first disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.first disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -380,8 +383,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('Curtain.second disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.second disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -394,8 +398,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('Curtain.third disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.third disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -408,8 +413,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('Curtain.fourth disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.fourth disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -422,8 +428,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('Curtain.fifth disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.fifth disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -436,8 +443,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('Curtain.sixth disposes without timer errors',
-          (tester) async {
+      testWidgets('Curtain.sixth disposes without timer errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -556,6 +564,5 @@ void main() {
         await disposeAndSettle(tester);
       });
     });
-
   });
 }

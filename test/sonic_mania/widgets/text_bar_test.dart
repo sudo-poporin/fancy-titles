@@ -12,8 +12,9 @@ void main() {
     }
 
     group('instantiation', () {
-      testWidgets('can be instantiated with required parameters',
-          (tester) async {
+      testWidgets('can be instantiated with required parameters', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -320,8 +321,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('disposes after text is shown without errors',
-          (tester) async {
+      testWidgets('disposes after text is shown without errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -343,6 +345,5 @@ void main() {
         expect(tester.takeException(), isNull);
       });
     });
-
   });
 }

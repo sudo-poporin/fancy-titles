@@ -357,8 +357,9 @@ void main() {
     group('with non-null imagePath', () {
       const realImagePath = 'test/fixtures/test_image.png';
 
-      testWidgets('renders Transform.rotate when imagePath is provided',
-          (tester) async {
+      testWidgets('renders Transform.rotate when imagePath is provided', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -423,8 +424,7 @@ void main() {
         );
       });
 
-      testWidgets('renders two Images when blend mode is true',
-          (tester) async {
+      testWidgets('renders two Images when blend mode is true', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(

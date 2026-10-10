@@ -9,9 +9,9 @@ class LargeBGDraw extends CustomPainter {
   ///
   /// [color] es el color de relleno del polígono.
   LargeBGDraw(Color color)
-      : painter = Paint()
-          ..color = color
-          ..style = PaintingStyle.fill;
+    : painter = Paint()
+        ..color = color
+        ..style = PaintingStyle.fill;
 
   /// El Paint usado para dibujar el fondo.
   final Paint painter;
@@ -67,9 +67,9 @@ class SmallBGDraw extends CustomPainter {
   ///
   /// [color] es el color de relleno del polígono.
   SmallBGDraw(Color color)
-      : painter = Paint()
-          ..color = color
-          ..style = PaintingStyle.fill;
+    : painter = Paint()
+        ..color = color
+        ..style = PaintingStyle.fill;
 
   /// El Paint usado para dibujar el fondo.
   final Paint painter;

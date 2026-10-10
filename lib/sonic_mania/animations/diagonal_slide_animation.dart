@@ -37,10 +37,10 @@ class DiagonalSlideTransition extends StatelessWidget {
     Offset? beginOffset = const Offset(1, 1),
     Offset? endOffset = Offset.zero,
     super.key,
-  })  : _endOffset = endOffset,
-        _beginOffset = beginOffset,
-        _animation = animation,
-        _child = child;
+  }) : _endOffset = endOffset,
+       _beginOffset = beginOffset,
+       _animation = animation,
+       _child = child;
 
   final Widget _child;
   final Animation<double> _animation;
@@ -97,10 +97,10 @@ class HorizontalSlideTransition extends StatelessWidget {
     Offset? beginOffset = const Offset(-2, 0),
     Offset? endOffset = Offset.zero,
     super.key,
-  })  : _endOffset = endOffset,
-        _beginOffset = beginOffset,
-        _animation = animation,
-        _child = child;
+  }) : _endOffset = endOffset,
+       _beginOffset = beginOffset,
+       _animation = animation,
+       _child = child;
 
   final Widget _child;
   final Animation<double> _animation;
