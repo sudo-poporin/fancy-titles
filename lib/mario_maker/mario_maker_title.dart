@@ -145,17 +145,17 @@ class MarioMakerTitle extends StatefulWidget {
     Alignment irisOutAlignment = Alignment.center,
     double irisOutEdgePadding = 50,
     super.key,
-  })  : _title = title,
-        _imagePath = imagePath,
-        _onAnimationStart = onAnimationStart,
-        _onAnimationComplete = onAnimationComplete,
-        _onPhaseChange = onPhaseChange,
-        _duration = duration,
-        _circleRadius = circleRadius,
-        _bottomMargin = bottomMargin,
-        _titleStyle = titleStyle,
-        _irisOutAlignment = irisOutAlignment,
-        _irisOutEdgePadding = irisOutEdgePadding;
+  }) : _title = title,
+       _imagePath = imagePath,
+       _onAnimationStart = onAnimationStart,
+       _onAnimationComplete = onAnimationComplete,
+       _onPhaseChange = onPhaseChange,
+       _duration = duration,
+       _circleRadius = circleRadius,
+       _bottomMargin = bottomMargin,
+       _titleStyle = titleStyle,
+       _irisOutAlignment = irisOutAlignment,
+       _irisOutEdgePadding = irisOutEdgePadding;
 
   final String _title;
   final String _imagePath;

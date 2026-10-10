@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:fancy_titles/core/animation_timings.dart';
@@ -72,7 +71,7 @@ class BounceVerticallyState extends State<BounceVertically>
     // Start animation after bounceVerticallyDelay + custom delay
     final totalDelay = SonicManiaTiming.bounceVerticallyDelay + delay;
     delayed(totalDelay, () {
-      unawaited(_controller.forward());
+      _controller.forward();
     });
   }
 

@@ -112,7 +112,7 @@ class _ClippedBarState extends State<ClippedBar>
       setState(() {
         _beginOffset = const Offset(-0.5, -1);
       });
-      unawaited(_controller.reverse());
+      _controller.reverse();
     });
   }
 

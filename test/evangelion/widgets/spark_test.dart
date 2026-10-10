@@ -571,6 +571,5 @@ void main() {
         await disposeAndSettle(tester);
       });
     });
-
   });
 }

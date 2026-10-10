@@ -15,8 +15,9 @@ void main() {
     const testTextStyle = TextStyle(fontSize: 24, color: Colors.black);
 
     group('instantiation', () {
-      testWidgets('can be instantiated with required parameters',
-          (tester) async {
+      testWidgets('can be instantiated with required parameters', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: BouncingText(

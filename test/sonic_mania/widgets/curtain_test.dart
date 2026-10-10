@@ -209,8 +209,9 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('multiple curtains animate with different delays',
-          (tester) async {
+      testWidgets('multiple curtains animate with different delays', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Column(
@@ -261,8 +262,9 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('disposes before animation starts without errors',
-          (tester) async {
+      testWidgets('disposes before animation starts without errors', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Curtain(
@@ -297,6 +299,5 @@ void main() {
         }
       });
     });
-
   });
 }

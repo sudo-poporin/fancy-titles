@@ -13,8 +13,9 @@ void main() {
     }
 
     group('instantiation', () {
-      testWidgets('can be instantiated with required parameters',
-          (tester) async {
+      testWidgets('can be instantiated with required parameters', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: ClippedBar(
@@ -330,8 +331,9 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('multiple bars animate with different delays',
-          (tester) async {
+      testWidgets('multiple bars animate with different delays', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: Stack(

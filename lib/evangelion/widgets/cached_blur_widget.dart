@@ -98,8 +98,9 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
     _isCapturing = true;
 
     try {
-      final boundary = _boundaryKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
+      final boundary =
+          _boundaryKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
 
       if (boundary == null || !boundary.hasSize) {
         _isCapturing = false; // coverage:ignore-line

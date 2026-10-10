@@ -1,4 +1,6 @@
 import 'package:fancy_titles/fancy_titles.dart';
+import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
+import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -130,12 +132,12 @@ void main() {
 
         expect(find.byType(SonicManiaSplash), findsOneWidget);
       });
-
     });
 
     group('animation lifecycle', () {
-      testWidgets('calls onAnimationStart immediately on build',
-          (tester) async {
+      testWidgets('calls onAnimationStart immediately on build', (
+        tester,
+      ) async {
         var startCalled = false;
 
         await tester.pumpWidget(
@@ -176,8 +178,9 @@ void main() {
         expect(phases, contains(AnimationPhase.exiting));
       });
 
-      testWidgets('calls onAnimationComplete after totalDuration',
-          (tester) async {
+      testWidgets('calls onAnimationComplete after totalDuration', (
+        tester,
+      ) async {
         var completeCalled = false;
 
         await tester.pumpWidget(
@@ -247,6 +250,53 @@ void main() {
         await tester.pump(const Duration(seconds: 5));
         await tester.pumpAndSettle();
       });
+    });
+  });
+
+  group('barras paralelas a las franjas', () {
+    testWidgets('en una caja más chica que la pantalla usan su aspecto', (
+      tester,
+    ) async {
+      addTearDown(tester.view.reset);
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(844, 390);
+      const box = Size(400, 300);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox(
+              width: 400,
+              height: 300,
+              child: SonicManiaSplash(
+                baseText: 'FANCY',
+                secondaryText: 'EXAMPLE',
+                lastText: 'APP',
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump(SonicManiaTiming.slideIn);
+      await tester.pump(SonicManiaTiming.slideIn);
+      await tester.pump();
+
+      final painters = tester
+          .widgetList<CustomPaint>(find.byType(CustomPaint))
+          .map((paint) => paint.painter)
+          .toList();
+      final slopes = [
+        ...painters.whereType<LargeBGDraw>().map((p) => p.slope),
+        ...painters.whereType<SmallBGDraw>().map((p) => p.slope),
+      ];
+
+      expect(slopes, hasLength(3));
+      for (final slope in slopes) {
+        expect(slope, closeTo(stripeSlope(box), 1e-9));
+      }
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(SonicManiaTiming.totalDuration);
     });
   });
 }

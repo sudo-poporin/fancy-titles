@@ -112,12 +112,12 @@ void main() {
 
         expect(find.byType(Persona5Title), findsOneWidget);
       });
-
     });
 
     group('animation lifecycle', () {
-      testWidgets('calls onAnimationStart immediately on build',
-          (tester) async {
+      testWidgets('calls onAnimationStart immediately on build', (
+        tester,
+      ) async {
         var startCalled = false;
 
         await tester.pumpWidget(
@@ -160,8 +160,9 @@ void main() {
         expect(phases, contains(AnimationPhase.exiting));
       });
 
-      testWidgets('calls onAnimationComplete after totalDuration',
-          (tester) async {
+      testWidgets('calls onAnimationComplete after totalDuration', (
+        tester,
+      ) async {
         var completeCalled = false;
 
         await tester.pumpWidget(
@@ -223,8 +224,7 @@ void main() {
     });
 
     group('image precaching', () {
-      testWidgets('precaches image when imagePath is provided',
-          (tester) async {
+      testWidgets('precaches image when imagePath is provided', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Persona5Title(
@@ -267,8 +267,9 @@ void main() {
         await tester.pump(Persona5Timing.totalDuration);
       });
 
-      testWidgets('renders Persona5Text when canShowText (height > 600)',
-          (tester) async {
+      testWidgets('renders Persona5Text when canShowText (height > 600)', (
+        tester,
+      ) async {
         // Use a height > 600 to trigger Persona5Text branch.
         tester.view.physicalSize = const Size(800, 1200);
         tester.view.devicePixelRatio = 1.0;

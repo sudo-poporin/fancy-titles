@@ -538,7 +538,8 @@ void main() {
       });
 
       test('phases sum fits within totalDuration', () {
-        final phasesSum = MarioMakerTiming.bounceDuration +
+        final phasesSum =
+            MarioMakerTiming.bounceDuration +
             MarioMakerTiming.expandDuration +
             MarioMakerTiming.irisOutDuration;
 

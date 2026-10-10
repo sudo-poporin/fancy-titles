@@ -23,11 +23,11 @@ class BouncingCircle extends StatefulWidget {
     Duration bounceDuration = MarioMakerTiming.bounceDurationDefault,
     Duration imageScaleOutDuration = MarioMakerTiming.imageScaleOutDuration,
     super.key,
-  })  : _child = child,
-        _circleRadius = circleRadius,
-        _circleColor = circleColor,
-        _bounceDuration = bounceDuration,
-        _imageScaleOutDuration = imageScaleOutDuration;
+  }) : _child = child,
+       _circleRadius = circleRadius,
+       _circleColor = circleColor,
+       _bounceDuration = bounceDuration,
+       _imageScaleOutDuration = imageScaleOutDuration;
 
   final Widget _child;
   final double _circleRadius;
@@ -55,28 +55,38 @@ class _BouncingCircleState extends State<BouncingCircle>
   // 5. Scale 1.05 → 1.0 (settle)
   static final _bounceTweenSequence = TweenSequence<double>([
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1, end: 0.85)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 1,
+        end: 0.85,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 15,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 0.85, end: 1.15)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 0.85,
+        end: 1.15,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 20,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1.15, end: 0.92)
-          .chain(CurveTween(curve: Curves.easeInOut)),
+      tween: Tween<double>(
+        begin: 1.15,
+        end: 0.92,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
       weight: 18,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 0.92, end: 1.05)
-          .chain(CurveTween(curve: Curves.easeInOut)),
+      tween: Tween<double>(
+        begin: 0.92,
+        end: 1.05,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
       weight: 22,
     ),
     TweenSequenceItem(
-      tween: Tween<double>(begin: 1.05, end: 1)
-          .chain(CurveTween(curve: Curves.easeOut)),
+      tween: Tween<double>(
+        begin: 1.05,
+        end: 1,
+      ).chain(CurveTween(curve: Curves.easeOut)),
       weight: 25,
     ),
   ]);
@@ -101,21 +111,22 @@ class _BouncingCircleState extends State<BouncingCircle>
     _scaleAnimation = _bounceTweenSequence.animate(_bounceController);
 
     // Image scales from 1.0 to 0.0 (disappears)
-    _imageScaleAnimation = Tween<double>(
-      begin: 1,
-      end: 0,
-    ).animate(
-      CurvedAnimation(
-        parent: _imageScaleController,
-        curve: Curves.easeInBack,
-      ),
-    );
+    _imageScaleAnimation =
+        Tween<double>(
+          begin: 1,
+          end: 0,
+        ).animate(
+          CurvedAnimation(
+            parent: _imageScaleController,
+            curve: Curves.easeInBack,
+          ),
+        );
 
     // Start bounce, then scale out image when bounce completes
     unawaited(
       _bounceController.forward().then((_) {
         if (mounted) {
-          unawaited(_imageScaleController.forward());
+          _imageScaleController.forward();
         }
       }),
     );
