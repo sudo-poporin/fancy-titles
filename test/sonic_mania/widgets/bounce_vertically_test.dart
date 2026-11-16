@@ -14,11 +14,7 @@ void main() {
     group('instantiation', () {
       testWidgets('can be instantiated with required child', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Test'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Test'))),
         );
 
         expect(find.byType(BounceVertically), findsOneWidget);
@@ -42,10 +38,7 @@ void main() {
       testWidgets('can be instantiated with bounceUp false', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BounceVertically(
-              bounceUp: false,
-              child: Text('Bounce Down'),
-            ),
+            home: BounceVertically(bounceUp: false, child: Text('Bounce Down')),
           ),
         );
 
@@ -72,11 +65,7 @@ void main() {
     group('renders expected widgets', () {
       testWidgets('renders FadeTransition', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Test'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Test'))),
         );
 
         // After some delay, should contain FadeTransition
@@ -88,11 +77,7 @@ void main() {
 
       testWidgets('renders child widget', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Child Text'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Child Text'))),
         );
 
         expect(find.text('Child Text'), findsOneWidget);
@@ -101,11 +86,7 @@ void main() {
 
       testWidgets('renders Transform widget', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Test'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Test'))),
         );
 
         expect(find.byType(Transform), findsWidgets);
@@ -114,36 +95,25 @@ void main() {
     });
 
     group('animation', () {
-      testWidgets(
-        'starts animation after bounce delay',
-        (tester) async {
-          await tester.pumpWidget(
-            const MaterialApp(
-              home: BounceVertically(
-                child: Text('Animate'),
-              ),
-            ),
-          );
+      testWidgets('starts animation after bounce delay', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(home: BounceVertically(child: Text('Animate'))),
+        );
 
-          // Before delay
-          expect(find.byType(BounceVertically), findsOneWidget);
+        // Before delay
+        expect(find.byType(BounceVertically), findsOneWidget);
 
-          // Advance past delay
-          await tester.pump(SonicManiaTiming.bounceVerticallyDelay);
+        // Advance past delay
+        await tester.pump(SonicManiaTiming.bounceVerticallyDelay);
 
-          expect(find.byType(BounceVertically), findsOneWidget);
+        expect(find.byType(BounceVertically), findsOneWidget);
 
-          await disposeAndSettle(tester);
-        },
-      );
+        await disposeAndSettle(tester);
+      });
 
       testWidgets('completes animation cycle', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Animate'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Animate'))),
         );
 
         // Advance through complete animation
@@ -180,11 +150,7 @@ void main() {
 
       testWidgets('bounces up by default', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Bounce Up'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Bounce Up'))),
         );
 
         // Advance to animation start
@@ -199,10 +165,7 @@ void main() {
       testWidgets('bounces down when bounceUp is false', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BounceVertically(
-              bounceUp: false,
-              child: Text('Bounce Down'),
-            ),
+            home: BounceVertically(bounceUp: false, child: Text('Bounce Down')),
           ),
         );
 
@@ -219,11 +182,7 @@ void main() {
     group('opacity', () {
       testWidgets('fades in during animation', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Fade'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Fade'))),
         );
 
         // Trigger animation
@@ -243,11 +202,7 @@ void main() {
     group('disposal', () {
       testWidgets('disposes without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Dispose'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Dispose'))),
         );
 
         await disposeAndSettle(tester);
@@ -256,11 +211,7 @@ void main() {
 
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: BounceVertically(
-              child: Text('Mid-Dispose'),
-            ),
-          ),
+          const MaterialApp(home: BounceVertically(child: Text('Mid-Dispose'))),
         );
 
         // Advance partially through animation

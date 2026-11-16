@@ -3,7 +3,7 @@ import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/mario_maker/constants/constants.dart';
 import 'package:fancy_titles/mario_maker/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Pantalla de título inspirada en Super Mario Maker.
 ///
@@ -69,30 +69,30 @@ import 'package:flutter/material.dart';
 class MarioMakerTitle extends StatefulWidget {
   /// Crea una pantalla de título estilo Mario Maker.
   ///
-  /// [title] texto a mostrar después de que el círculo se expande.
+  /// `title` texto a mostrar después de que el círculo se expande.
   ///
-  /// [imagePath] ruta del asset para la imagen dentro del círculo.
+  /// `imagePath` ruta del asset para la imagen dentro del círculo.
   /// Soporta imágenes estáticas y GIFs animados.
   ///
-  /// [onAnimationStart] callback opcional ejecutado cuando inicia la animación.
+  /// `onAnimationStart` callback opcional ejecutado cuando inicia la animación.
   /// Útil para sincronizar efectos de sonido.
   ///
-  /// [duration] duración total de la animación.
+  /// `duration` duración total de la animación.
   /// Por defecto es [MarioMakerTiming.defaultTotalDuration] (4 segundos).
   ///
-  /// [circleRadius] radio base del círculo en píxeles (por defecto: 80).
+  /// `circleRadius` radio base del círculo en píxeles (por defecto: 80).
   ///
-  /// [bottomMargin] distancia desde el borde inferior de la pantalla hasta
+  /// `bottomMargin` distancia desde el borde inferior de la pantalla hasta
   /// el centro del círculo (por defecto: 100).
   ///
-  /// [titleStyle] estilo personalizado para el texto del título.
+  /// `titleStyle` estilo personalizado para el texto del título.
   /// Si no se proporciona, usa el estilo por defecto.
   ///
-  /// [irisOutAlignment] punto hacia donde converge el efecto iris-out.
+  /// `irisOutAlignment` punto hacia donde converge el efecto iris-out.
   /// Por defecto es `Alignment.center`. Usa constantes como
   /// `Alignment.bottomRight`, `Alignment.topLeft`, etc.
   ///
-  /// [irisOutEdgePadding] distancia mínima desde los bordes de la pantalla
+  /// `irisOutEdgePadding` distancia mínima desde los bordes de la pantalla
   /// para el efecto iris-out (por defecto: 50).
   ///
   /// Ejemplo básico:
@@ -132,30 +132,20 @@ class MarioMakerTitle extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
-  const MarioMakerTitle({
-    required String title,
-    required String imagePath,
-    VoidCallback? onAnimationStart,
-    VoidCallback? onAnimationComplete,
-    void Function(AnimationPhase phase)? onPhaseChange,
-    Duration duration = MarioMakerTiming.defaultTotalDuration,
-    double circleRadius = 80,
-    double bottomMargin = 100,
-    TextStyle? titleStyle,
-    Alignment irisOutAlignment = Alignment.center,
-    double irisOutEdgePadding = 50,
+  const new({
+    required this._title,
+    required this._imagePath,
+    this._onAnimationStart,
+    this._onAnimationComplete,
+    this._onPhaseChange,
+    this._duration = MarioMakerTiming.defaultTotalDuration,
+    this._circleRadius = 80,
+    this._bottomMargin = 100,
+    this._titleStyle,
+    this._irisOutAlignment = Alignment.center,
+    this._irisOutEdgePadding = 50,
     super.key,
-  }) : _title = title,
-       _imagePath = imagePath,
-       _onAnimationStart = onAnimationStart,
-       _onAnimationComplete = onAnimationComplete,
-       _onPhaseChange = onPhaseChange,
-       _duration = duration,
-       _circleRadius = circleRadius,
-       _bottomMargin = bottomMargin,
-       _titleStyle = titleStyle,
-       _irisOutAlignment = irisOutAlignment,
-       _irisOutEdgePadding = irisOutEdgePadding;
+  });
 
   final String _title;
   final String _imagePath;
@@ -277,9 +267,7 @@ class _MarioMakerTitleState extends State<MarioMakerTitle>
         child: Stack(
           children: [
             // Black background (initial state)
-            const SizedBox.expand(
-              child: ColoredBox(color: marioMakerBlack),
-            ),
+            const SizedBox.expand(child: ColoredBox(color: marioMakerBlack)),
 
             // Expanding circle mask that reveals yellow background
             ExpandingCircleMask(

@@ -174,10 +174,7 @@ void main() {
       final painter = LargeBGDraw(Colors.blue, slope: 1);
       await tester.pumpWidget(
         MaterialApp(
-          home: CustomPaint(
-            painter: painter,
-            size: const Size(200, 100),
-          ),
+          home: CustomPaint(painter: painter, size: const Size(200, 100)),
         ),
       );
 
@@ -193,10 +190,7 @@ void main() {
       final painter = SmallBGDraw(Colors.red, slope: 1);
       await tester.pumpWidget(
         MaterialApp(
-          home: CustomPaint(
-            painter: painter,
-            size: const Size(200, 100),
-          ),
+          home: CustomPaint(painter: painter, size: const Size(200, 100)),
         ),
       );
 
@@ -215,14 +209,8 @@ void main() {
         MaterialApp(
           home: Column(
             children: [
-              CustomPaint(
-                painter: largePainter,
-                size: const Size(200, 50),
-              ),
-              CustomPaint(
-                painter: smallPainter,
-                size: const Size(200, 50),
-              ),
+              CustomPaint(painter: largePainter, size: const Size(200, 50)),
+              CustomPaint(painter: smallPainter, size: const Size(200, 50)),
             ],
           ),
         ),

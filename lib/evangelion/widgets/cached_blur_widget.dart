@@ -3,8 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget que pre-renderiza cualquier widget hijo con blur a una imagen.
 ///
@@ -12,7 +12,7 @@ import 'package:flutter/rendering.dart';
 /// y lo cachea para evitar recalcular el blur en cada frame.
 class CachedBlurWidget extends StatefulWidget {
   /// Crea un [CachedBlurWidget] con el hijo y blur especificados.
-  const CachedBlurWidget({
+  const new({
     required this.child,
     required this.size,
     this.sigmaX = 10,
@@ -139,10 +139,7 @@ class _CachedBlurWidgetState extends State<CachedBlurWidget>
       return SizedBox(
         width: widget.size.width,
         height: widget.size.height,
-        child: RawImage(
-          image: _cachedImage,
-          fit: BoxFit.fill,
-        ),
+        child: RawImage(image: _cachedImage, fit: BoxFit.fill),
       );
     }
 

@@ -27,11 +27,7 @@ void main() {
     group('instantiation', () {
       testWidgets('Curtain.first can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -40,11 +36,7 @@ void main() {
 
       testWidgets('Curtain.second can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.second())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -53,11 +45,7 @@ void main() {
 
       testWidgets('Curtain.third can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.third())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -66,11 +54,7 @@ void main() {
 
       testWidgets('Curtain.fourth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fourth())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -79,11 +63,7 @@ void main() {
 
       testWidgets('Curtain.fifth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fifth())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -92,11 +72,7 @@ void main() {
 
       testWidgets('Curtain.sixth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.sixth())),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -106,9 +82,7 @@ void main() {
       testWidgets('can be instantiated with custom order', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: Curtain(order: CurtainOrder.first),
-            ),
+            home: Scaffold(body: Curtain(order: CurtainOrder.first)),
           ),
         );
 
@@ -138,11 +112,7 @@ void main() {
     group('renders expected widgets', () {
       testWidgets('contains AnimatedSwitcher', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         expect(find.byType(AnimatedSwitcher), findsOneWidget);
@@ -151,11 +121,7 @@ void main() {
 
       testWidgets('initially shows SizedBox.shrink', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Before delay completes, should show shrunk box
@@ -167,11 +133,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Advance past delay to show curtain
@@ -186,11 +148,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.second())),
         );
 
         // Advance past delay to show curtain
@@ -205,11 +163,7 @@ void main() {
     group('animation', () {
       testWidgets('Curtain.first shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Advance past first curtain delay
@@ -222,11 +176,7 @@ void main() {
 
       testWidgets('Curtain.second shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.second())),
         );
 
         // Advance past second curtain delay
@@ -239,11 +189,7 @@ void main() {
 
       testWidgets('Curtain.third shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.third())),
         );
 
         // Advance past third curtain delay
@@ -256,11 +202,7 @@ void main() {
 
       testWidgets('Curtain.fourth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fourth())),
         );
 
         // Advance past fourth curtain delay
@@ -273,11 +215,7 @@ void main() {
 
       testWidgets('Curtain.fifth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fifth())),
         );
 
         // Advance past fifth curtain delay
@@ -290,11 +228,7 @@ void main() {
 
       testWidgets('Curtain.sixth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.sixth())),
         );
 
         // Advance past sixth curtain delay
@@ -307,11 +241,7 @@ void main() {
 
       testWidgets('curtain fades out after duration', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Advance past delay + duration
@@ -330,11 +260,7 @@ void main() {
           const MaterialApp(
             home: Scaffold(
               body: Stack(
-                children: [
-                  Curtain.first(),
-                  Curtain.second(),
-                  Curtain.third(),
-                ],
+                children: [Curtain.first(), Curtain.second(), Curtain.third()],
               ),
             ),
           ),
@@ -372,11 +298,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         await disposeAndSettle(tester);
@@ -387,11 +309,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.second())),
         );
 
         await disposeAndSettle(tester);
@@ -402,11 +320,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.third())),
         );
 
         await disposeAndSettle(tester);
@@ -417,11 +331,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fourth())),
         );
 
         await disposeAndSettle(tester);
@@ -432,11 +342,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.fifth())),
         );
 
         await disposeAndSettle(tester);
@@ -447,11 +353,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.sixth())),
         );
 
         await disposeAndSettle(tester);
@@ -460,11 +362,7 @@ void main() {
 
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Advance partially through animation
@@ -500,9 +398,7 @@ void main() {
           Curtain.fifth(),
           Curtain.sixth(),
         ]) {
-          await tester.pumpWidget(
-            MaterialApp(home: Scaffold(body: curtain)),
-          );
+          await tester.pumpWidget(MaterialApp(home: Scaffold(body: curtain)));
           await disposeAndSettle(tester);
           expect(tester.takeException(), isNull);
         }
@@ -512,11 +408,7 @@ void main() {
     group('curtain order variations', () {
       testWidgets('Curtain.first uses FadeTransition', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.first())),
         );
 
         // Advance to show curtain
@@ -530,11 +422,7 @@ void main() {
 
       testWidgets('Curtain.second uses ScaleTransition', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.second())),
         );
 
         // Advance to show curtain
@@ -548,11 +436,7 @@ void main() {
 
       testWidgets('Curtain.third uses ScaleTransition', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Curtain.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Curtain.third())),
         );
 
         // Advance to show curtain

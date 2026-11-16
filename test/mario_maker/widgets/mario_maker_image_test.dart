@@ -11,10 +11,7 @@ void main() {
       });
 
       test('can be instantiated with all parameters', () {
-        const widget = MarioMakerImage(
-          imagePath: 'assets/test.png',
-          size: 200,
-        );
+        const widget = MarioMakerImage(imagePath: 'assets/test.png', size: 200);
         expect(widget, isNotNull);
       });
 
@@ -37,9 +34,7 @@ void main() {
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: MarioMakerImage(imagePath: 'assets/test.png'),
-            ),
+            home: Scaffold(body: MarioMakerImage(imagePath: 'assets/test.png')),
           ),
         );
 
@@ -59,9 +54,7 @@ void main() {
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: MarioMakerImage(imagePath: 'assets/test.png'),
-            ),
+            home: Scaffold(body: MarioMakerImage(imagePath: 'assets/test.png')),
           ),
         );
 
@@ -87,10 +80,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: MarioMakerImage(
-                imagePath: 'assets/test.png',
-                size: 200,
-              ),
+              body: MarioMakerImage(imagePath: 'assets/test.png', size: 200),
             ),
           ),
         );
@@ -136,9 +126,7 @@ void main() {
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: MarioMakerImage(imagePath: 'assets/test.png'),
-            ),
+            home: Scaffold(body: MarioMakerImage(imagePath: 'assets/test.png')),
           ),
         );
 
@@ -157,9 +145,7 @@ void main() {
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: MarioMakerImage(imagePath: 'assets/test.gif'),
-            ),
+            home: Scaffold(body: MarioMakerImage(imagePath: 'assets/test.gif')),
           ),
         );
 
@@ -181,10 +167,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: MarioMakerImage(
-                imagePath: 'assets/test.png',
-                size: 0,
-              ),
+              body: MarioMakerImage(imagePath: 'assets/test.png', size: 0),
             ),
           ),
         );
@@ -204,10 +187,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: MarioMakerImage(
-                imagePath: 'assets/test.png',
-                size: 1000,
-              ),
+              body: MarioMakerImage(imagePath: 'assets/test.png', size: 1000),
             ),
           ),
         );

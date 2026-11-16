@@ -3,7 +3,7 @@ import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
 import 'package:fancy_titles/sonic_mania/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Pantalla de título inspirada en Sonic Mania.
 ///
@@ -68,13 +68,13 @@ import 'package:flutter/material.dart';
 class SonicManiaSplash extends StatefulWidget {
   /// Crea una pantalla de título estilo Sonic Mania.
   ///
-  /// [baseText] es requerido y se muestra en la primera barra (MAYÚSCULAS).
+  /// `baseText` es requerido y se muestra en la primera barra (MAYÚSCULAS).
   ///
-  /// [secondaryText] es opcional y se muestra en la segunda barra (MAYÚSCULAS).
+  /// `secondaryText` es opcional y se muestra en la segunda barra (MAYÚSCULAS).
   /// Cuando está presente, el layout de las barras se ajusta para acomodar
   /// tres líneas de texto.
   ///
-  /// [lastText] es opcional y se muestra en la tercera barra (minúsculas).
+  /// `lastText` es opcional y se muestra en la tercera barra (minúsculas).
   /// Máximo 4 caracteres. Lanza [FlutterError] si excede este límite.
   ///
   /// Ejemplo con una línea:
@@ -108,20 +108,15 @@ class SonicManiaSplash extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
-  SonicManiaSplash({
-    required String baseText,
-    String? secondaryText,
-    String? lastText,
-    VoidCallback? onAnimationStart,
-    VoidCallback? onAnimationComplete,
-    void Function(AnimationPhase phase)? onPhaseChange,
+  new({
+    required this._baseText,
+    this._secondaryText,
+    this._lastText,
+    this._onAnimationStart,
+    this._onAnimationComplete,
+    this._onPhaseChange,
     super.key,
-  }) : _baseText = baseText,
-       _secondaryText = secondaryText,
-       _lastText = lastText,
-       _onAnimationStart = onAnimationStart,
-       _onAnimationComplete = onAnimationComplete,
-       _onPhaseChange = onPhaseChange {
+  }) {
     if (_lastText != null && _lastText.length > 4) {
       throw FlutterError('El tercer texto no puede tener más de 4 caracteres');
     }
@@ -215,7 +210,7 @@ class _SonicManiaSplashState extends State<SonicManiaSplash>
           // reciben ese mismo tamaño para inclinarse con su pendiente.
           : LayoutBuilder(
               builder: (context, constraints) => ColoredBox(
-                color: Colors.transparent,
+                color: const Color(0x00000000),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

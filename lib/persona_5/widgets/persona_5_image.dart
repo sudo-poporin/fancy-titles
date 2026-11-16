@@ -1,5 +1,5 @@
 import 'package:fancy_titles/persona_5/constants/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget que muestra una imagen con el estilo visual de Persona 5.
 ///
@@ -28,14 +28,13 @@ import 'package:flutter/material.dart';
 class Persona5Image extends StatelessWidget {
   /// Crea una imagen estilo Persona 5.
   ///
-  /// [imagePath] ruta del asset de imagen. Si es null, no se muestra nada.
-  /// [withImageBlendMode] si es true, agrega un halo blanco detras.
-  const Persona5Image({
-    required String? imagePath,
-    required bool withImageBlendMode,
+  /// `imagePath` ruta del asset de imagen. Si es null, no se muestra nada.
+  /// `withImageBlendMode` si es true, agrega un halo blanco detras.
+  const new({
+    required this._imagePath,
+    required this._withImageBlendMode,
     super.key,
-  }) : _imagePath = imagePath,
-       _withImageBlendMode = withImageBlendMode;
+  });
 
   final String? _imagePath;
   final bool _withImageBlendMode;

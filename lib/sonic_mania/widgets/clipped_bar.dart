@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 const Color _redBarColor = Color(0xFFD15529);
 const Color _orangeBarColor = Color(0xFFFB9B0F);
@@ -13,7 +13,7 @@ const Color _greenBarColor = Color(0xFF4E9B89);
 /// Barra azul del splash de Sonic Mania
 class ClippedBar extends StatefulWidget {
   /// Barra azul del splash de Sonic Mania
-  const ClippedBar({
+  const new({
     required this.color,
     required this.customClipper,
     this.duration = SonicManiaTiming.clippedBarDefaultDuration,
@@ -23,7 +23,7 @@ class ClippedBar extends StatefulWidget {
   });
 
   /// Barra roja
-  const ClippedBar.red({
+  const new red({
     required this.customClipper,
     this.color = _redBarColor,
     this.duration = SonicManiaTiming.clippedBarRedDuration,
@@ -33,7 +33,7 @@ class ClippedBar extends StatefulWidget {
   });
 
   /// Barra naranja
-  const ClippedBar.orange({
+  const new orange({
     required this.customClipper,
     this.color = _orangeBarColor,
     this.duration = SonicManiaTiming.clippedBarOrangeDuration,
@@ -43,7 +43,7 @@ class ClippedBar extends StatefulWidget {
   });
 
   /// Barra azul
-  const ClippedBar.blue({
+  const new blue({
     required this.customClipper,
     this.color = _blueBarColor,
     this.duration = SonicManiaTiming.clippedBarBlueDuration,
@@ -53,7 +53,7 @@ class ClippedBar extends StatefulWidget {
   });
 
   /// Barra verde
-  const ClippedBar.green({
+  const new green({
     required this.customClipper,
     this.color = _greenBarColor,
     this.duration = SonicManiaTiming.clippedBarGreenDuration,

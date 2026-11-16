@@ -6,7 +6,7 @@ import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dar
 import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
 import 'package:fancy_titles/sonic_mania/widgets/bouncing_text.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 const Color _kDefaultBlackColor = Color(0xFF212121);
 const Color _kDefaultWhiteColor = Color(0xFFF3F3F3);
@@ -15,30 +15,20 @@ const Color _kDefaultWhiteColor = Color(0xFFF3F3F3);
 class TextBar extends StatefulWidget {
   /// Barra de texto
   // coverage:ignore-start
-  const TextBar({
-    required Color color,
-    required String text,
-    required Color textColor,
-    Color textBorderColor = Colors.transparent,
-    Offset beginOffset = const Offset(-2, 0),
-    Offset endOffset = const Offset(2, 0),
-    Offset stopOffset = const Offset(-0.2, 0),
-    Offset stopEndOffset = const Offset(-2, 0),
-    CustomPainter? painter,
-    bool bounceUp = true,
+  const new({
+    required this._color,
+    required this._text,
+    required this._textColor,
+    this._textBorderColor = const Color(0x00000000),
+    this._beginOffset = const Offset(-2, 0),
+    this._endOffset = const Offset(2, 0),
+    this._stopOffset = const Offset(-0.2, 0),
+    this._stopEndOffset = const Offset(-2, 0),
+    this._painter,
+    this._bounceUp = true,
     bool isWhite = false,
     super.key,
-  }) : _bounceUp = bounceUp,
-       _painter = painter,
-       _stopEndOffset = stopEndOffset,
-       _stopOffset = stopOffset,
-       _endOffset = endOffset,
-       _beginOffset = beginOffset,
-       _textBorderColor = textBorderColor,
-       _textColor = textColor,
-       _color = color,
-       _text = text,
-       _isWhiteText = isWhite,
+  }) : _isWhiteText = isWhite,
        _slantedBar = false,
        _stripeArea = null;
   // coverage:ignore-end
@@ -46,66 +36,46 @@ class TextBar extends StatefulWidget {
   /// Barra negra, con el título principal.
   ///
   /// Sus extremos se inclinan con la pendiente de las franjas del fondo:
-  /// [stripeSlope] de [stripeArea], el área que ocupan las franjas, o de la
+  /// [stripeSlope] de `stripeArea`, el área que ocupan las franjas, o de la
   /// pantalla si es `null`. Se rearman cuando cambia ese tamaño, por ejemplo
-  /// al rotar. [color] rellena la barra.
-  const TextBar.black({
-    required String text,
-    required Offset beginOffset,
-    required Offset endOffset,
-    required Offset stopOffset,
-    required Offset stopEndOffset,
-    Color color = _kDefaultBlackColor,
-    Color textColor = _kDefaultWhiteColor,
-    Color textBorderColor = _kDefaultBlackColor,
-    bool bounceUp = true,
-    Size? stripeArea,
+  /// al rotar. `color` rellena la barra.
+  const new black({
+    required this._text,
+    required this._beginOffset,
+    required this._endOffset,
+    required this._stopOffset,
+    required this._stopEndOffset,
+    this._color = _kDefaultBlackColor,
+    this._textColor = _kDefaultWhiteColor,
+    this._textBorderColor = _kDefaultBlackColor,
+    this._bounceUp = true,
+    this._stripeArea,
     super.key,
-  }) : _bounceUp = bounceUp,
-       _stopEndOffset = stopEndOffset,
-       _stopOffset = stopOffset,
-       _endOffset = endOffset,
-       _beginOffset = beginOffset,
-       _textBorderColor = textBorderColor,
-       _textColor = textColor,
-       _color = color,
-       _text = text,
-       _painter = null,
+  }) : _painter = null,
        _isWhiteText = false,
-       _slantedBar = true,
-       _stripeArea = stripeArea;
+       _slantedBar = true;
 
   /// Barra blanca, con el subtítulo.
   ///
   /// Sus extremos se inclinan con la pendiente de las franjas del fondo:
-  /// [stripeSlope] de [stripeArea], el área que ocupan las franjas, o de la
+  /// [stripeSlope] de `stripeArea`, el área que ocupan las franjas, o de la
   /// pantalla si es `null`. Se rearman cuando cambia ese tamaño, por ejemplo
-  /// al rotar. [color] rellena la barra.
-  const TextBar.white({
-    required String text,
-    required Offset beginOffset,
-    required Offset endOffset,
-    required Offset stopOffset,
-    required Offset stopEndOffset,
-    Color color = _kDefaultWhiteColor,
-    Color textColor = _kDefaultBlackColor,
-    Color textBorderColor = _kDefaultWhiteColor,
-    bool bounceUp = false,
-    Size? stripeArea,
+  /// al rotar. `color` rellena la barra.
+  const new white({
+    required this._text,
+    required this._beginOffset,
+    required this._endOffset,
+    required this._stopOffset,
+    required this._stopEndOffset,
+    this._color = _kDefaultWhiteColor,
+    this._textColor = _kDefaultBlackColor,
+    this._textBorderColor = _kDefaultWhiteColor,
+    this._bounceUp = false,
+    this._stripeArea,
     super.key,
-  }) : _bounceUp = bounceUp,
-       _stopEndOffset = stopEndOffset,
-       _stopOffset = stopOffset,
-       _endOffset = endOffset,
-       _beginOffset = beginOffset,
-       _textBorderColor = textBorderColor,
-       _textColor = textColor,
-       _color = color,
-       _text = text,
-       _painter = null,
+  }) : _painter = null,
        _isWhiteText = true,
-       _slantedBar = true,
-       _stripeArea = stripeArea;
+       _slantedBar = true;
 
   final String _text;
   final Color _color;
@@ -265,7 +235,7 @@ class _TextBarState extends State<TextBar>
 }
 
 class _PlaceholderBar extends StatelessWidget {
-  const _PlaceholderBar({
+  const new({
     required this.color,
     required this.minWidth,
     required this.minHeight,
@@ -280,10 +250,7 @@ class _PlaceholderBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 48),
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: minWidth,
-          minHeight: minHeight,
-        ),
+        constraints: BoxConstraints(minWidth: minWidth, minHeight: minHeight),
         child: ColoredBox(color: color),
       ),
     );
@@ -291,7 +258,7 @@ class _PlaceholderBar extends StatelessWidget {
 }
 
 class _TextContent extends StatelessWidget {
-  const _TextContent({
+  const new({
     required this.text,
     required this.textColor,
     required this.textBorderColor,

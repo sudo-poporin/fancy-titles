@@ -1,5 +1,5 @@
 import 'package:fancy_titles/core/animation_phase.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget base abstracto para todas las pantallas de título.
 ///
@@ -50,7 +50,7 @@ abstract class BaseTitleWidget extends StatefulWidget {
   /// [onAnimationStart] se llama cuando la animación comienza.
   /// [onAnimationComplete] se llama cuando la animación termina.
   /// [onPhaseChange] se llama cada vez que cambia la fase.
-  const BaseTitleWidget({
+  const new({
     this.onAnimationStart,
     this.onAnimationComplete,
     this.onPhaseChange,

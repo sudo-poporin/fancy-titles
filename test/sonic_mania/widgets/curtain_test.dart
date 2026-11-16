@@ -14,9 +14,7 @@ void main() {
     group('instantiation', () {
       testWidgets('can be instantiated with required color', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         expect(find.byType(Curtain), findsOneWidget);
@@ -37,83 +35,56 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets(
-        'can be instantiated with default zero delay',
-        (tester) async {
-          await tester.pumpWidget(
-            const MaterialApp(
-              home: Curtain(color: Colors.green),
-            ),
-          );
+      testWidgets('can be instantiated with default zero delay', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          const MaterialApp(home: Curtain(color: Colors.green)),
+        );
 
-          expect(find.byType(Curtain), findsOneWidget);
-          await disposeAndSettle(tester);
-        },
-      );
+        expect(find.byType(Curtain), findsOneWidget);
+        await disposeAndSettle(tester);
+      });
     });
 
     group('color variants', () {
       testWidgets('Curtain.blue creates blue curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.blue(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.blue()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('Curtain.orange creates orange curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.orange(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.orange()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('Curtain.amber creates amber curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.amber(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.amber()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('Curtain.green creates green curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.green(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.green()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('Curtain.yellow creates yellow curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.yellow(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.yellow()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('Curtain.black creates black curtain', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain.black(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: Curtain.black()));
 
         expect(find.byType(Curtain), findsOneWidget);
         await disposeAndSettle(tester);
@@ -123,9 +94,7 @@ void main() {
     group('renders expected widgets', () {
       testWidgets('contains SizeTransition', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         expect(find.byType(SizeTransition), findsOneWidget);
@@ -134,9 +103,7 @@ void main() {
 
       testWidgets('contains AnimatedSize', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         expect(find.byType(AnimatedSize), findsOneWidget);
@@ -145,9 +112,7 @@ void main() {
 
       testWidgets('contains ColoredBox with correct color', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.red),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.red)),
         );
 
         // Find all ColoredBox widgets and check if one has the expected color
@@ -187,9 +152,7 @@ void main() {
 
       testWidgets('animates expand and contract', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         // Trigger animation start
@@ -239,9 +202,7 @@ void main() {
     group('disposal', () {
       testWidgets('disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         await disposeAndSettle(tester);
@@ -250,9 +211,7 @@ void main() {
 
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Curtain(color: Colors.blue),
-          ),
+          const MaterialApp(home: Curtain(color: Colors.blue)),
         );
 
         // Advance partially through animation
@@ -267,10 +226,7 @@ void main() {
       ) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: Curtain(
-              color: Colors.blue,
-              delay: Duration(seconds: 1),
-            ),
+            home: Curtain(color: Colors.blue, delay: Duration(seconds: 1)),
           ),
         );
 
@@ -291,9 +247,7 @@ void main() {
           Curtain.yellow(),
           Curtain.black(),
         ]) {
-          await tester.pumpWidget(
-            MaterialApp(home: curtain),
-          );
+          await tester.pumpWidget(MaterialApp(home: curtain));
           await disposeAndSettle(tester);
           expect(tester.takeException(), isNull);
         }

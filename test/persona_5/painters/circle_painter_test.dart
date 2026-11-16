@@ -281,10 +281,7 @@ void main() {
         final recorder = PictureRecorder();
         final canvas = Canvas(recorder);
 
-        expect(
-          () => painter.paint(canvas, Size.zero),
-          returnsNormally,
-        );
+        expect(() => painter.paint(canvas, Size.zero), returnsNormally);
       });
 
       test('handles very small size canvas', () {
@@ -292,10 +289,7 @@ void main() {
         final recorder = PictureRecorder();
         final canvas = Canvas(recorder);
 
-        expect(
-          () => painter.paint(canvas, const Size(1, 1)),
-          returnsNormally,
-        );
+        expect(() => painter.paint(canvas, const Size(1, 1)), returnsNormally);
       });
 
       test('handles large inflated values', () {

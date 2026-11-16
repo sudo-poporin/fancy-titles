@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget que pre-renderiza un CustomPainter con blur a una imagen.
 ///
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 /// renderizando el efecto una sola vez y mostrando la imagen cacheada.
 class CachedBlurPainter extends StatefulWidget {
   /// Crea un [CachedBlurPainter] con el painter y blur especificados.
-  const CachedBlurPainter({
+  const new({
     required this.painter,
     required this.size,
     this.sigmaX = 10,
@@ -135,10 +135,7 @@ class _CachedBlurPainterState extends State<CachedBlurPainter> {
           sigmaX: widget.sigmaX,
           sigmaY: widget.sigmaY,
         ),
-        child: CustomPaint(
-          painter: widget.painter,
-          size: widget.size,
-        ),
+        child: CustomPaint(painter: widget.painter, size: widget.size),
       ),
     );
   }

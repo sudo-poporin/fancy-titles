@@ -6,31 +6,21 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Persona5Text', () {
     // Helper to create a widget wrapped in MaterialApp
-    Widget buildTestWidget({
-      String text = 'TAKE YOUR HEART',
-    }) {
+    Widget buildTestWidget({String text = 'TAKE YOUR HEART'}) {
       return MaterialApp(
         home: Scaffold(
-          body: Center(
-            child: Persona5Text(text: text),
-          ),
+          body: Center(child: Persona5Text(text: text)),
         ),
       );
     }
 
     group('instantiation', () {
       test('can be instantiated with default parameters', () {
-        expect(
-          const Persona5Text(),
-          isNotNull,
-        );
+        expect(const Persona5Text(), isNotNull);
       });
 
       test('can be instantiated with custom text', () {
-        expect(
-          const Persona5Text(text: 'CUSTOM TEXT'),
-          isNotNull,
-        );
+        expect(const Persona5Text(text: 'CUSTOM TEXT'), isNotNull);
       });
 
       test('has default text value', () {
@@ -43,11 +33,7 @@ void main() {
     group('rendering', () {
       testWidgets('renders with default parameters', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Persona5Text(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Persona5Text())),
         );
 
         expect(find.byType(Persona5Text), findsOneWidget);
@@ -225,9 +211,7 @@ void main() {
 
       testWidgets('handles long text', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            text: 'LOOKING COOL JOKER! THIS IS A VERY LONG TEXT',
-          ),
+          buildTestWidget(text: 'LOOKING COOL JOKER! THIS IS A VERY LONG TEXT'),
         );
 
         expect(find.byType(Persona5Text), findsOneWidget);
@@ -235,9 +219,7 @@ void main() {
 
       testWidgets('handles multiline text', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            text: 'LINE 1\nLINE 2\nLINE 3',
-          ),
+          buildTestWidget(text: 'LINE 1\nLINE 2\nLINE 3'),
         );
 
         expect(find.byType(Persona5Text), findsOneWidget);
@@ -245,30 +227,20 @@ void main() {
       });
 
       testWidgets('handles special characters', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(
-            text: r'!@#$%^&*()',
-          ),
-        );
+        await tester.pumpWidget(buildTestWidget(text: r'!@#$%^&*()'));
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('handles unicode characters', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(
-            text: '日本語テキスト',
-          ),
-        );
+        await tester.pumpWidget(buildTestWidget(text: '日本語テキスト'));
 
         expect(find.byType(Persona5Text), findsOneWidget);
       });
 
       testWidgets('handles very long single word', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            text: 'SUPERCALIFRAGILISTICEXPIALIDOCIOUS',
-          ),
+          buildTestWidget(text: 'SUPERCALIFRAGILISTICEXPIALIDOCIOUS'),
         );
 
         expect(find.byType(Persona5Text), findsOneWidget);
@@ -280,11 +252,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Column(
-                children: [
-                  Persona5Text(text: 'TEST'),
-                ],
-              ),
+              body: Column(children: [Persona5Text(text: 'TEST')]),
             ),
           ),
         );
@@ -297,9 +265,7 @@ void main() {
           const MaterialApp(
             home: Scaffold(
               body: Row(
-                children: [
-                  Expanded(child: Persona5Text(text: 'TEST')),
-                ],
+                children: [Expanded(child: Persona5Text(text: 'TEST'))],
               ),
             ),
           ),

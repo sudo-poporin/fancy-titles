@@ -3,7 +3,7 @@ import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:fancy_titles/persona_5/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Pantalla de título inspirada en Persona 5.
 ///
@@ -69,19 +69,19 @@ import 'package:flutter/material.dart';
 class Persona5Title extends StatefulWidget {
   /// Crea una pantalla de título estilo Persona 5.
   ///
-  /// [text] es requerido y se muestra debajo de la imagen con el estilo
+  /// `text` es requerido y se muestra debajo de la imagen con el estilo
   /// de fuente característico de Persona 5.
   ///
-  /// [imagePath] es opcional. Si se proporciona, la imagen se muestra
+  /// `imagePath` es opcional. Si se proporciona, la imagen se muestra
   /// dentro del círculo animado. Soporta PNG, JPG y otros formatos de asset.
   ///
-  /// [withImageBlendMode] si es `true`, aplica un modo de mezcla a la imagen
+  /// `withImageBlendMode` si es `true`, aplica un modo de mezcla a la imagen
   /// para integrarla mejor con el fondo rojo. Por defecto es `false`.
   ///
-  /// [delay] es el tiempo de espera antes de iniciar la animación.
+  /// `delay` es el tiempo de espera antes de iniciar la animación.
   /// Por defecto es [Persona5Timing.initialDelay] (125ms).
   ///
-  /// [duration] es la duración de la fase principal de la animación.
+  /// `duration` es la duración de la fase principal de la animación.
   /// Por defecto es [Persona5Timing.mainDuration] (3400ms).
   ///
   /// Ejemplo básico:
@@ -116,24 +116,17 @@ class Persona5Title extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
-  const Persona5Title({
-    required String text,
-    String? imagePath,
-    bool withImageBlendMode = false,
-    Duration delay = Persona5Timing.initialDelay,
-    Duration duration = Persona5Timing.mainDuration,
-    VoidCallback? onAnimationStart,
-    VoidCallback? onAnimationComplete,
-    void Function(AnimationPhase phase)? onPhaseChange,
+  const new({
+    required this._text,
+    this._imagePath,
+    this._withImageBlendMode = false,
+    this._delay = Persona5Timing.initialDelay,
+    this._duration = Persona5Timing.mainDuration,
+    this._onAnimationStart,
+    this._onAnimationComplete,
+    this._onPhaseChange,
     super.key,
-  }) : _text = text,
-       _imagePath = imagePath,
-       _delay = delay,
-       _duration = duration,
-       _withImageBlendMode = withImageBlendMode,
-       _onAnimationStart = onAnimationStart,
-       _onAnimationComplete = onAnimationComplete,
-       _onPhaseChange = onPhaseChange;
+  });
 
   final Duration _delay;
   final Duration _duration;

@@ -20,10 +20,7 @@ void main() {
       ) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'TEST',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'TEST', textStyle: testTextStyle),
           ),
         );
 
@@ -49,10 +46,7 @@ void main() {
       testWidgets('can be instantiated with empty text', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: '',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: '', textStyle: testTextStyle),
           ),
         );
 
@@ -63,10 +57,7 @@ void main() {
       testWidgets('can be instantiated with long text', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'VERYLONGTEXT',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'VERYLONGTEXT', textStyle: testTextStyle),
           ),
         );
 
@@ -77,10 +68,7 @@ void main() {
       testWidgets('can be instantiated with single character', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'A',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'A', textStyle: testTextStyle),
           ),
         );
 
@@ -93,10 +81,7 @@ void main() {
       testWidgets('contains RepaintBoundary', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'TEST',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'TEST', textStyle: testTextStyle),
           ),
         );
 
@@ -107,10 +92,7 @@ void main() {
       testWidgets('contains RichText', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'TEST',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'TEST', textStyle: testTextStyle),
           ),
         );
 
@@ -118,35 +100,28 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets(
-        'creates BounceVertically for each character',
-        (tester) async {
-          const testText = 'ABC';
+      testWidgets('creates BounceVertically for each character', (
+        tester,
+      ) async {
+        const testText = 'ABC';
 
-          await tester.pumpWidget(
-            const MaterialApp(
-              home: BouncingText(
-                text: testText,
-                textStyle: testTextStyle,
-              ),
-            ),
-          );
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: BouncingText(text: testText, textStyle: testTextStyle),
+          ),
+        );
 
-          // Should have one BounceVertically per character
-          expect(find.byType(BounceVertically), findsNWidgets(testText.length));
-          await disposeAndSettle(tester);
-        },
-      );
+        // Should have one BounceVertically per character
+        expect(find.byType(BounceVertically), findsNWidgets(testText.length));
+        await disposeAndSettle(tester);
+      });
 
       testWidgets('renders Text widgets for each character', (tester) async {
         const testText = 'AB';
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: testText,
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: testText, textStyle: testTextStyle),
           ),
         );
 
@@ -167,10 +142,7 @@ void main() {
 
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'STYLED',
-              textStyle: customStyle,
-            ),
+            home: BouncingText(text: 'STYLED', textStyle: customStyle),
           ),
         );
 
@@ -189,10 +161,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: BouncingText(
-              text: 'STROKE',
-              textStyle: strokeStyle,
-            ),
+            home: BouncingText(text: 'STROKE', textStyle: strokeStyle),
           ),
         );
 
@@ -205,10 +174,7 @@ void main() {
       testWidgets('bounces up by default', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'UP',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'UP', textStyle: testTextStyle),
           ),
         );
 
@@ -237,10 +203,7 @@ void main() {
       testWidgets('animates after delay', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'ANIMATE',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'ANIMATE', textStyle: testTextStyle),
           ),
         );
 
@@ -255,10 +218,7 @@ void main() {
       testWidgets('each character has different delay', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'ABC',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'ABC', textStyle: testTextStyle),
           ),
         );
 
@@ -279,10 +239,7 @@ void main() {
       testWidgets('disposes without errors', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'DISPOSE',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'DISPOSE', textStyle: testTextStyle),
           ),
         );
 
@@ -293,10 +250,7 @@ void main() {
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: BouncingText(
-              text: 'MID',
-              textStyle: testTextStyle,
-            ),
+            home: BouncingText(text: 'MID', textStyle: testTextStyle),
           ),
         );
 

@@ -88,10 +88,7 @@ void main() {
         const size = Size(250, 175);
         await tester.pumpWidget(
           MaterialApp(
-            home: CachedBlurWidget(
-              size: size,
-              child: Container(),
-            ),
+            home: CachedBlurWidget(size: size, child: Container()),
           ),
         );
 
@@ -160,10 +157,7 @@ void main() {
         const size = Size(150, 200);
         await tester.pumpWidget(
           MaterialApp(
-            home: CachedBlurWidget(
-              size: size,
-              child: Container(),
-            ),
+            home: CachedBlurWidget(size: size, child: Container()),
           ),
         );
 
@@ -418,9 +412,7 @@ void main() {
           const MaterialApp(
             home: CachedBlurWidget(
               size: Size(200, 100),
-              child: Center(
-                child: Text('Blurred Text'),
-              ),
+              child: Center(child: Text('Blurred Text')),
             ),
           ),
         );

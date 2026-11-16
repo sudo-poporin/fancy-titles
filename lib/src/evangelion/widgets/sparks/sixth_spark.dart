@@ -1,13 +1,13 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.sixth`. Internal to spark dispatcher.
 @internal
 class SixthSpark extends StatelessWidget {
   /// Creates the sixth spark visual.
-  const SixthSpark({
+  const new({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -34,10 +34,7 @@ class SixthSpark extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
-            Tween<double>(
-              begin: 0.5,
-              end: 1,
-            ).chain(CurveTween(curve: curve)),
+            Tween<double>(begin: 0.5, end: 1).chain(CurveTween(curve: curve)),
           ),
           child: child,
         );

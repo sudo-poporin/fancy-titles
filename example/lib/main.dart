@@ -6,7 +6,7 @@ void main() {
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+  const new({super.key});
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -114,7 +114,7 @@ class _MainAppState extends State<MainApp> {
 }
 
 class _Button extends StatelessWidget {
-  const _Button({
+  const new({
     required this.onPressed,
     required this.label,
     required this.isSelected,

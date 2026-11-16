@@ -1,14 +1,14 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.second`. Internal to spark dispatcher.
 @internal
 class SecondSpark extends StatelessWidget {
   /// Creates the second spark visual.
-  const SecondSpark({
+  const new({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -35,10 +35,7 @@ class SecondSpark extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
-            Tween<double>(
-              begin: 0.7,
-              end: 1,
-            ).chain(CurveTween(curve: curve)),
+            Tween<double>(begin: 0.7, end: 1).chain(CurveTween(curve: curve)),
           ),
           child: child,
         );
@@ -51,10 +48,7 @@ class SecondSpark extends StatelessWidget {
                   right: screenSize.width * 0.08,
                   top: screenSize.height * 0.08,
                   child: CachedBlurWidget(
-                    size: Size(
-                      screenSize.width * 1.3,
-                      screenSize.height * 1.3,
-                    ),
+                    size: Size(screenSize.width * 1.3, screenSize.height * 1.3),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -76,7 +70,7 @@ class SecondSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),

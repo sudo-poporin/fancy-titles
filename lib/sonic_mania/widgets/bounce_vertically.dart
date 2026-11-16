@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Class [BounceVertically]: Bounce animation vertically using sin function.
 /// [child]: mandatory, widget to animate
@@ -10,14 +10,12 @@ import 'package:flutter/material.dart';
 /// [key]: optional widget key reference
 class BounceVertically extends StatefulWidget {
   /// Constructor
-  const BounceVertically({
-    required Widget child,
-    Duration delay = Duration.zero,
-    bool bounceUp = true,
+  const new({
+    required this._child,
+    this._delay = Duration.zero,
+    this._bounceUp = true,
     super.key,
-  }) : _delay = delay,
-       _child = child,
-       _bounceUp = bounceUp;
+  });
 
   final Widget _child;
 

@@ -42,9 +42,7 @@ void main() {
     group('instantiation', () {
       test('can be instantiated with required parameters', () {
         expect(
-          const ContractingCircleMask(
-            child: ColoredBox(color: Colors.blue),
-          ),
+          const ContractingCircleMask(child: ColoredBox(color: Colors.blue)),
           isNotNull,
         );
       });
@@ -88,10 +86,7 @@ void main() {
       testWidgets('renders child widget', (tester) async {
         await tester.pumpWidget(
           buildTestWidget(
-            child: const ColoredBox(
-              key: Key('child'),
-              color: Colors.red,
-            ),
+            child: const ColoredBox(key: Key('child'), color: Colors.red),
           ),
         );
 
@@ -107,9 +102,7 @@ void main() {
 
       testWidgets('uses IgnorePointer during animation', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            duration: const Duration(seconds: 10),
-          ),
+          buildTestWidget(duration: const Duration(seconds: 10)),
         );
 
         // Start animation
@@ -133,9 +126,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            duration: const Duration(milliseconds: 500),
-          ),
+          buildTestWidget(duration: const Duration(milliseconds: 500)),
         );
 
         // Animation should start immediately
@@ -146,9 +137,7 @@ void main() {
 
       testWidgets('delays animation when delay is specified', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(milliseconds: 500),
-          ),
+          buildTestWidget(delay: const Duration(milliseconds: 500)),
         );
 
         // Should not be animating yet
@@ -159,9 +148,7 @@ void main() {
 
       testWidgets('starts animation after delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(milliseconds: 100),
-          ),
+          buildTestWidget(delay: const Duration(milliseconds: 100)),
         );
 
         // Wait for delay
@@ -205,30 +192,20 @@ void main() {
       });
 
       testWidgets('handles topLeft alignment', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(
-            alignment: Alignment.topLeft,
-          ),
-        );
+        await tester.pumpWidget(buildTestWidget(alignment: Alignment.topLeft));
         expect(find.byType(ContractingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('handles topRight alignment', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(
-            alignment: Alignment.topRight,
-          ),
-        );
+        await tester.pumpWidget(buildTestWidget(alignment: Alignment.topRight));
         expect(find.byType(ContractingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
       });
 
       testWidgets('handles bottomLeft alignment', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            alignment: Alignment.bottomLeft,
-          ),
+          buildTestWidget(alignment: Alignment.bottomLeft),
         );
         expect(find.byType(ContractingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
@@ -236,9 +213,7 @@ void main() {
 
       testWidgets('handles bottomRight alignment', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            alignment: Alignment.bottomRight,
-          ),
+          buildTestWidget(alignment: Alignment.bottomRight),
         );
         expect(find.byType(ContractingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
@@ -246,9 +221,7 @@ void main() {
 
       testWidgets('handles custom alignment', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            alignment: const Alignment(0.5, -0.3),
-          ),
+          buildTestWidget(alignment: const Alignment(0.5, -0.3)),
         );
         expect(find.byType(ContractingCircleMask), findsOneWidget);
         await disposeAndSettle(tester);
@@ -270,9 +243,7 @@ void main() {
 
       testWidgets('handles dispose during animation', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            duration: const Duration(seconds: 10),
-          ),
+          buildTestWidget(duration: const Duration(seconds: 10)),
         );
 
         // Start animation
@@ -287,9 +258,7 @@ void main() {
 
       testWidgets('handles dispose before delay completes', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Dispose before delay
@@ -325,9 +294,7 @@ void main() {
 
       testWidgets('handles very short duration', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            duration: const Duration(milliseconds: 1),
-          ),
+          buildTestWidget(duration: const Duration(milliseconds: 1)),
         );
 
         await tester.pump(const Duration(milliseconds: 10));
@@ -337,9 +304,7 @@ void main() {
 
       testWidgets('handles very short delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(microseconds: 1),
-          ),
+          buildTestWidget(delay: const Duration(microseconds: 1)),
         );
 
         await tester.pump(const Duration(milliseconds: 10));

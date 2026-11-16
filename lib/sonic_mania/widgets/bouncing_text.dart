@@ -1,22 +1,20 @@
 import 'package:fancy_titles/sonic_mania/widgets/bounce_vertically.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A Romantic Bouncing Text
 /// Ideally it is a [RichText] to control the paragraph easier.
 /// The helper method [_createBouncingSpans] is used to create its
 /// child spans.
-/// [_text] : the text to animate.
-/// [_textStyle] : see [Text.style].
+/// `text` : the text to animate.
+/// `textStyle` : see [Text.style].
 class BouncingText extends StatelessWidget {
   /// Constructor.
-  const BouncingText({
-    required String text,
-    required TextStyle textStyle,
-    bool bounceUp = true,
+  const new({
+    required this._text,
+    required this._textStyle,
+    this._bounceUp = true,
     super.key,
-  }) : _textStyle = textStyle,
-       _text = text,
-       _bounceUp = bounceUp;
+  });
 
   final String _text;
   final TextStyle _textStyle;

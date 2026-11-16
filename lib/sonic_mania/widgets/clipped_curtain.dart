@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/sonic_mania/animations/diagonal_slide_animation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Cortina clippeada
 class ClippedCurtain extends StatefulWidget {
@@ -12,7 +12,7 @@ class ClippedCurtain extends StatefulWidget {
   ///
   /// [customClipper] es el clipper personalizado.
   /// [endOffset] es el offset final de la animación.
-  const ClippedCurtain({
+  const new({
     required this.customClipper,
     required this.beginOffset,
     required this.endOffset,
@@ -20,7 +20,7 @@ class ClippedCurtain extends StatefulWidget {
   });
 
   /// Barra clippeada personalizada a la izquierda
-  const ClippedCurtain.left({
+  const new left({
     required this.customClipper,
     this.beginOffset = const Offset(-1, 0),
     this.endOffset = const Offset(-1, 0),
@@ -28,7 +28,7 @@ class ClippedCurtain extends StatefulWidget {
   });
 
   /// Barra clippeada personalizada a la derecha
-  const ClippedCurtain.right({
+  const new right({
     required this.customClipper,
     this.beginOffset = const Offset(1, 0),
     this.endOffset = const Offset(1, 0),

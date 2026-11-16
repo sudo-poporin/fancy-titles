@@ -48,29 +48,28 @@ void main() {
         expect(callbackExecuted, isFalse);
       });
 
-      testWidgets(
-        'returns Timer that can be manually cancelled',
-        (tester) async {
-          var callbackExecuted = false;
-          Timer? timer;
+      testWidgets('returns Timer that can be manually cancelled', (
+        tester,
+      ) async {
+        var callbackExecuted = false;
+        Timer? timer;
 
-          await tester.pumpWidget(
-            _TestWidget(
-              onInit: (state) {
-                timer = state.testDelayed(
-                  const Duration(seconds: 1),
-                  () => callbackExecuted = true,
-                );
-              },
-            ),
-          );
+        await tester.pumpWidget(
+          _TestWidget(
+            onInit: (state) {
+              timer = state.testDelayed(
+                const Duration(seconds: 1),
+                () => callbackExecuted = true,
+              );
+            },
+          ),
+        );
 
-          timer?.cancel();
-          await tester.pump(const Duration(seconds: 2));
+        timer?.cancel();
+        await tester.pump(const Duration(seconds: 2));
 
-          expect(callbackExecuted, isFalse);
-        },
-      );
+        expect(callbackExecuted, isFalse);
+      });
 
       testWidgets('multiple timers can be scheduled', (tester) async {
         final callOrder = <int>[];
@@ -308,10 +307,7 @@ void main() {
           _TestWidget(
             onInit: (state) {
               capturedState = state;
-              state.testDelayed(
-                const Duration(seconds: 1),
-                () {},
-              );
+              state.testDelayed(const Duration(seconds: 1), () {});
             },
           ),
         );
@@ -330,7 +326,7 @@ void main() {
 
 /// Test helper widget that uses CancelableTimersMixin.
 class _TestWidget extends StatefulWidget {
-  const _TestWidget({required this.onInit});
+  const new({required this.onInit});
 
   final void Function(_TestWidgetState state) onInit;
 

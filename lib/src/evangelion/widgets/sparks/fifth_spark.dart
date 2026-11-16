@@ -1,14 +1,14 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.fifth`. Internal to spark dispatcher.
 @internal
 class FifthSpark extends StatelessWidget {
   /// Creates the fifth spark visual.
-  const FifthSpark({
+  const new({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -35,10 +35,7 @@ class FifthSpark extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
-            Tween<double>(
-              begin: 0.5,
-              end: 1,
-            ).chain(CurveTween(curve: curve)),
+            Tween<double>(begin: 0.5, end: 1).chain(CurveTween(curve: curve)),
           ),
           child: child,
         );
@@ -51,14 +48,11 @@ class FifthSpark extends StatelessWidget {
                   right: screenSize.width * -1.45,
                   top: screenSize.height * -0.5,
                   child: CachedBlurWidget(
-                    size: Size(
-                      screenSize.width * 3.7,
-                      screenSize.height * 2,
-                    ),
+                    size: Size(screenSize.width * 3.7, screenSize.height * 2),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.white,
+                          color: const Color(0xFFFFFFFF),
                           width: 120,
                         ),
                         boxShadow: const [
@@ -76,7 +70,7 @@ class FifthSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),

@@ -119,9 +119,7 @@ void main() {
     group('animation phases', () {
       testWidgets('starts in bounce phase immediately', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Should be in bounce phase (using ClipPath)
@@ -131,9 +129,7 @@ void main() {
 
       testWidgets('bounce animation runs during delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(milliseconds: 500),
-          ),
+          buildTestWidget(delay: const Duration(milliseconds: 500)),
         );
 
         // Advance through bounce phase
@@ -161,9 +157,7 @@ void main() {
 
       testWidgets('expand animation runs after delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            expandDuration: const Duration(milliseconds: 500),
-          ),
+          buildTestWidget(expandDuration: const Duration(milliseconds: 500)),
         );
 
         // Wait for delay
@@ -183,9 +177,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(milliseconds: 50),
-          ),
+          buildTestWidget(delay: const Duration(milliseconds: 50)),
         );
 
         // Wait for delay
@@ -215,9 +207,7 @@ void main() {
 
       testWidgets('handles dispose during bounce phase', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Start bounce animation
@@ -254,9 +244,7 @@ void main() {
 
       testWidgets('handles dispose before delay completes', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Dispose immediately
@@ -302,9 +290,7 @@ void main() {
     group('edge cases', () {
       testWidgets('handles very short delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(microseconds: 1),
-          ),
+          buildTestWidget(delay: const Duration(microseconds: 1)),
         );
 
         await tester.pump(const Duration(milliseconds: 10));

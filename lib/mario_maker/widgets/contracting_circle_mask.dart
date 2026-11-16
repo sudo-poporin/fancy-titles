@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/clippers/circle_mask_clipper.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A widget that clips its child with a contracting circle (iris-out effect).
 ///
@@ -13,26 +13,21 @@ import 'package:flutter/material.dart';
 class ContractingCircleMask extends StatefulWidget {
   /// Creates a contracting circle mask widget.
   ///
-  /// [child] - The content to clip with the contracting circle
-  /// [alignment] - Where the circle contracts to (default: center)
-  /// [edgePadding] - Minimum distance from screen edges (default: 50)
-  /// [delay] - Time to wait before starting the contraction
-  /// [duration] - How long the contraction animation takes
-  /// [curve] - Animation curve for the contraction
-  const ContractingCircleMask({
-    required Widget child,
-    Alignment alignment = Alignment.center,
-    double edgePadding = 50,
-    Duration delay = Duration.zero,
-    Duration duration = MarioMakerTiming.contractDuration,
-    Curve curve = Curves.easeInCubic,
+  /// `child` - The content to clip with the contracting circle
+  /// `alignment` - Where the circle contracts to (default: center)
+  /// `edgePadding` - Minimum distance from screen edges (default: 50)
+  /// `delay` - Time to wait before starting the contraction
+  /// `duration` - How long the contraction animation takes
+  /// `curve` - Animation curve for the contraction
+  const new({
+    required this._child,
+    this._alignment = Alignment.center,
+    this._edgePadding = 50,
+    this._delay = Duration.zero,
+    this._duration = MarioMakerTiming.contractDuration,
+    this._curve = Curves.easeInCubic,
     super.key,
-  }) : _child = child,
-       _alignment = alignment,
-       _edgePadding = edgePadding,
-       _delay = delay,
-       _duration = duration,
-       _curve = curve;
+  });
 
   final Widget _child;
   final Alignment _alignment;
@@ -55,10 +50,7 @@ class _ContractingCircleMaskState extends State<ContractingCircleMask>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget._duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget._duration);
 
     _startAnimationAfterDelay();
   }
@@ -152,10 +144,7 @@ class _ContractingCircleMaskState extends State<ContractingCircleMask>
         return IgnorePointer(
           ignoring: _isAnimating,
           child: ClipPath(
-            clipper: CircleMaskClipper(
-              radius: radius,
-              center: _center,
-            ),
+            clipper: CircleMaskClipper(radius: radius, center: _center),
             child: child,
           ),
         );

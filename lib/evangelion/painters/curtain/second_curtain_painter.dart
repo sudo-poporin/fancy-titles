@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 /// repeated Path object creation on each paint call.
 class SecondCurtainPainter extends CustomPainter {
   /// Creates a second curtain painter.
-  const SecondCurtainPainter();
+  const new();
 
   // Static cache for path and size
   static Path? _cachedPath;

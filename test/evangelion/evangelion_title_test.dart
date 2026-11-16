@@ -6,10 +6,7 @@ void main() {
   group('EvangelionTitle', () {
     group('instantiation', () {
       test('can be instantiated with no parameters (uses defaults)', () {
-        expect(
-          const EvangelionTitle(),
-          isNotNull,
-        );
+        expect(const EvangelionTitle(), isNotNull);
       });
 
       test('can be instantiated with all parameters', () {
@@ -52,9 +49,7 @@ void main() {
 
       test('can be instantiated with onPhaseChange callback', () {
         final phases = <AnimationPhase>[];
-        final widget = EvangelionTitle(
-          onPhaseChange: phases.add,
-        );
+        final widget = EvangelionTitle(onPhaseChange: phases.add);
         expect(widget, isNotNull);
         expect(phases, isEmpty); // Not called until widget is built
       });
@@ -82,11 +77,7 @@ void main() {
 
     group('widget rendering', () {
       testWidgets('renders with default parameters', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: EvangelionTitle(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: EvangelionTitle()));
 
         expect(find.byType(EvangelionTitle), findsOneWidget);
       });
@@ -116,9 +107,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: EvangelionTitle(
-              onAnimationStart: () => startCalled = true,
-            ),
+            home: EvangelionTitle(onAnimationStart: () => startCalled = true),
           ),
         );
 
@@ -129,11 +118,7 @@ void main() {
         final phases = <AnimationPhase>[];
 
         await tester.pumpWidget(
-          MaterialApp(
-            home: EvangelionTitle(
-              onPhaseChange: phases.add,
-            ),
-          ),
+          MaterialApp(home: EvangelionTitle(onPhaseChange: phases.add)),
         );
 
         // Initial phase should be entering
@@ -173,11 +158,7 @@ void main() {
       });
 
       testWidgets('shows text after textAppearDelay', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: EvangelionTitle(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: EvangelionTitle()));
 
         // Initially text should not be visible (black background only)
         expect(find.text('NEON'), findsNothing);
@@ -202,11 +183,7 @@ void main() {
           tester.view.resetDevicePixelRatio();
         });
 
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: EvangelionTitle(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: EvangelionTitle()));
 
         expect(find.byType(EvangelionTitle), findsOneWidget);
 
@@ -224,11 +201,7 @@ void main() {
           tester.view.resetDevicePixelRatio();
         });
 
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: EvangelionTitle(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: EvangelionTitle()));
 
         expect(find.byType(EvangelionTitle), findsOneWidget);
 
@@ -245,11 +218,7 @@ void main() {
           tester.view.resetDevicePixelRatio();
         });
 
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: EvangelionTitle(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: EvangelionTitle()));
 
         expect(find.byType(EvangelionTitle), findsOneWidget);
 

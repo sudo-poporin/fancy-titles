@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Clipper que crea una máscara circular para la animación Mario Maker.
 ///
@@ -12,10 +12,7 @@ class CircleMaskClipper extends CustomClipper<Path> {
   ///
   /// [radius] - El radio de la máscara circular
   /// [center] - El punto central del círculo
-  CircleMaskClipper({
-    required this.radius,
-    required this.center,
-  });
+  new({required this.radius, required this.center});
 
   /// El radio de la máscara circular
   final double radius;
