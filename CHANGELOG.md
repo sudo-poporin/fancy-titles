@@ -7,6 +7,41 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [2.0.0] - 2026-11-15
+
+### Modificado
+
+- **Cambio que rompe:** el SDK mínimo pasa a Dart 3.14 (`sdk: ^3.14.0`) y
+  Flutter 3.50 (`flutter: ">=3.50.0"`). El código usa sintaxis de Dart 3.14
+  (`const new(...)` y parámetros nombrados privados `this._x`), así que no
+  compila con un SDK anterior.
+- Piso de `meta` a `^1.19.0`, la versión que exige Flutter 3.50.
+
+#### Migración
+
+- Subir el proyecto consumidor a Dart 3.14 y Flutter 3.50 o posteriores, y el
+  `ref:` del paquete a `v2.0.0`. La API pública no cambia: los widgets, sus
+  constructores y los nombres de sus parámetros son los mismos.
+
+### Interno
+
+- `very_good_analysis` a `^11.0.0` en el paquete y en `example/`. Sus reglas
+  nuevas se corrigen con `dart fix` y a mano, sin `// ignore`. Las referencias
+  `[x]` a parámetros en la documentación pasan a `` `x` ``.
+- Fuera de `example/analysis_options.yaml` las reglas deprecadas en
+  `very_good_analysis` 11.
+- `lib/` importa `package:flutter/widgets.dart` en lugar de
+  `package:flutter/material.dart`, deprecado en Flutter 3.50. `Colors.transparent`,
+  `Colors.black` y `Colors.white` se reemplazan por sus literales `Color(...)`,
+  con el mismo valor.
+- Los tests y `example/` migran a `material_ui` (`^1.11.0`), el reemplazo
+  oficial de `package:flutter/material.dart`.
+- `analysis_options.yaml` excluye `build/` (y `android/`, `ios/` en
+  `example/`), como agrega Flutter 3.50.
+- Código y tests formateados con el formatter de Dart 3.14.
+- README: requisitos de SDK, `ref: v2.0.0` y el ejemplo de uso con
+  `material_ui`.
+
 ## [1.1.3] - 2026-10-10
 
 ### Corregido
