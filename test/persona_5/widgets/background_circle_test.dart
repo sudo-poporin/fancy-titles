@@ -1,18 +1,14 @@
 import 'package:fancy_titles/persona_5/painters/circle_painter.dart';
 import 'package:fancy_titles/persona_5/widgets/background_circle.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('BackgroundCircle', () {
     group('instantiation', () {
       testWidgets('can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         expect(find.byType(BackgroundCircle), findsOneWidget);
@@ -31,11 +27,7 @@ void main() {
     group('renders expected widgets', () {
       testWidgets('contains RepaintBoundary', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         // Find RepaintBoundary within BackgroundCircle
@@ -50,11 +42,7 @@ void main() {
 
       testWidgets('contains SizedBox.expand', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         // SizedBox.expand creates a SizedBox with expand constraints
@@ -72,11 +60,7 @@ void main() {
 
       testWidgets('contains CustomPaint', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         // Find CustomPaint within BackgroundCircle
@@ -91,11 +75,7 @@ void main() {
 
       testWidgets('CustomPaint uses CirclePainter', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         final customPaint = tester.widget<CustomPaint>(
@@ -112,11 +92,7 @@ void main() {
     group('widget hierarchy', () {
       testWidgets('has correct widget hierarchy', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         // RepaintBoundary should be a descendant of BackgroundCircle
@@ -151,11 +127,7 @@ void main() {
     group('inflated values', () {
       testWidgets('CirclePainter has correct inflated values', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         final customPaint = tester.widget<CustomPaint>(
@@ -176,13 +148,7 @@ void main() {
       testWidgets('renders in Stack', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: Stack(
-                children: [
-                  BackgroundCircle(),
-                ],
-              ),
-            ),
+            home: Scaffold(body: Stack(children: [BackgroundCircle()])),
           ),
         );
 
@@ -209,13 +175,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Column(
-                children: [
-                  Expanded(
-                    child: BackgroundCircle(),
-                  ),
-                ],
-              ),
+              body: Column(children: [Expanded(child: BackgroundCircle())]),
             ),
           ),
         );
@@ -301,10 +261,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: ColoredBox(
-                color: Colors.red,
-                child: BackgroundCircle(),
-              ),
+              body: ColoredBox(color: Colors.red, child: BackgroundCircle()),
             ),
           ),
         );
@@ -315,10 +272,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: ColoredBox(
-                color: Colors.blue,
-                child: BackgroundCircle(),
-              ),
+              body: ColoredBox(color: Colors.blue, child: BackgroundCircle()),
             ),
           ),
         );
@@ -328,19 +282,11 @@ void main() {
 
       testWidgets('disposes without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: BackgroundCircle())),
         );
 
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: SizedBox.shrink(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
         );
 
         expect(tester.takeException(), isNull);
@@ -351,9 +297,7 @@ void main() {
       testWidgets('can be instantiated with key', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: BackgroundCircle(key: Key('test-key')),
-            ),
+            home: Scaffold(body: BackgroundCircle(key: Key('test-key'))),
           ),
         );
 

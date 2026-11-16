@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:fancy_titles/persona_5/painters/circle_painter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('CirclePainter', () {
@@ -281,10 +281,7 @@ void main() {
         final recorder = PictureRecorder();
         final canvas = Canvas(recorder);
 
-        expect(
-          () => painter.paint(canvas, Size.zero),
-          returnsNormally,
-        );
+        expect(() => painter.paint(canvas, Size.zero), returnsNormally);
       });
 
       test('handles very small size canvas', () {
@@ -292,10 +289,7 @@ void main() {
         final recorder = PictureRecorder();
         final canvas = Canvas(recorder);
 
-        expect(
-          () => painter.paint(canvas, const Size(1, 1)),
-          returnsNormally,
-        );
+        expect(() => painter.paint(canvas, const Size(1, 1)), returnsNormally);
       });
 
       test('handles large inflated values', () {

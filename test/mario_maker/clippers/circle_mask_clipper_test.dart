@@ -136,10 +136,7 @@ void main() {
       });
 
       test('handles center at origin', () {
-        final clipper = CircleMaskClipper(
-          radius: 50,
-          center: Offset.zero,
-        );
+        final clipper = CircleMaskClipper(radius: 50, center: Offset.zero);
         final path = clipper.getClip(const Size(200, 200));
         final bounds = path.getBounds();
 

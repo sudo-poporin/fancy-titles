@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget de transicion que desliza su hijo en direccion diagonal.
 ///
@@ -27,20 +27,17 @@ import 'package:flutter/material.dart';
 class DiagonalSlideTransition extends StatelessWidget {
   /// Crea una transicion de deslizamiento diagonal.
   ///
-  /// [child] es el widget a animar.
-  /// [animation] controla el progreso de la transicion.
-  /// [beginOffset] posicion inicial (por defecto esquina inferior derecha).
-  /// [endOffset] posicion final (por defecto centro/origen).
-  const DiagonalSlideTransition({
-    required Widget child,
-    required Animation<double> animation,
-    Offset? beginOffset = const Offset(1, 1),
-    Offset? endOffset = Offset.zero,
+  /// `child` es el widget a animar.
+  /// `animation` controla el progreso de la transicion.
+  /// `beginOffset` posicion inicial (por defecto esquina inferior derecha).
+  /// `endOffset` posicion final (por defecto centro/origen).
+  const new({
+    required this._child,
+    required this._animation,
+    this._beginOffset = const Offset(1, 1),
+    this._endOffset = Offset.zero,
     super.key,
-  }) : _endOffset = endOffset,
-       _beginOffset = beginOffset,
-       _animation = animation,
-       _child = child;
+  });
 
   final Widget _child;
   final Animation<double> _animation;
@@ -49,10 +46,7 @@ class DiagonalSlideTransition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offsetTween = Tween<Offset>(
-      begin: _beginOffset,
-      end: _endOffset,
-    );
+    final offsetTween = Tween<Offset>(begin: _beginOffset, end: _endOffset);
 
     return SlideTransition(
       position: _animation.drive(offsetTween),
@@ -87,20 +81,17 @@ class DiagonalSlideTransition extends StatelessWidget {
 class HorizontalSlideTransition extends StatelessWidget {
   /// Crea una transicion de deslizamiento horizontal.
   ///
-  /// [child] es el widget a animar.
-  /// [animation] controla el progreso de la transicion.
-  /// [beginOffset] posicion inicial (por defecto fuera por la izquierda).
-  /// [endOffset] posicion final (por defecto centro/origen).
-  const HorizontalSlideTransition({
-    required Widget child,
-    required Animation<double> animation,
-    Offset? beginOffset = const Offset(-2, 0),
-    Offset? endOffset = Offset.zero,
+  /// `child` es el widget a animar.
+  /// `animation` controla el progreso de la transicion.
+  /// `beginOffset` posicion inicial (por defecto fuera por la izquierda).
+  /// `endOffset` posicion final (por defecto centro/origen).
+  const new({
+    required this._child,
+    required this._animation,
+    this._beginOffset = const Offset(-2, 0),
+    this._endOffset = Offset.zero,
     super.key,
-  }) : _endOffset = endOffset,
-       _beginOffset = beginOffset,
-       _animation = animation,
-       _child = child;
+  });
 
   final Widget _child;
   final Animation<double> _animation;
@@ -109,10 +100,7 @@ class HorizontalSlideTransition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offsetTween = Tween<Offset>(
-      begin: _beginOffset,
-      end: _endOffset,
-    );
+    final offsetTween = Tween<Offset>(begin: _beginOffset, end: _endOffset);
 
     return SlideTransition(
       position: _animation.drive(offsetTween),

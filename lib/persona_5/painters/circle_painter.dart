@@ -1,6 +1,6 @@
 import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:flutter/foundation.dart' show listEquals;
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Painter que dibuja círculos concéntricos para la animación Persona 5.
 ///
@@ -13,10 +13,9 @@ class CirclePainter extends CustomPainter {
   /// Crea un [CirclePainter] que dibuja círculos basados en los valores
   /// de inflación proporcionados.
   ///
-  /// [inflatedValues] lista de valores que determinan el radio adicional
+  /// `inflatedValues` lista de valores que determinan el radio adicional
   /// de cada círculo concéntrico.
-  const CirclePainter({required List<int> inflatedValues})
-    : _inflatedValues = inflatedValues;
+  const new({required this._inflatedValues});
 
   final List<int> _inflatedValues;
 

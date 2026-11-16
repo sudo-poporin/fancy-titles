@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/clippers/circle_mask_clipper.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A widget that expands a circular mask to reveal the background.
 ///
@@ -11,23 +11,19 @@ import 'package:flutter/material.dart';
 class ExpandingCircleMask extends StatefulWidget {
   /// Creates an expanding circle mask widget.
   ///
-  /// [background] - The widget to reveal (usually a colored background)
-  /// [initialRadius] - Starting radius of the circle
-  /// [delay] - Time to wait before starting the expansion
-  /// [expandDuration] - How long the expansion animation takes
-  /// [bottomMargin] - Distance from bottom of screen to circle center
-  const ExpandingCircleMask({
-    required Widget background,
-    double initialRadius = 80,
-    Duration delay = MarioMakerTiming.expandDelayDefault,
-    Duration expandDuration = MarioMakerTiming.expandDurationDefault,
-    double bottomMargin = 100,
+  /// `background` - The widget to reveal (usually a colored background)
+  /// `initialRadius` - Starting radius of the circle
+  /// `delay` - Time to wait before starting the expansion
+  /// `expandDuration` - How long the expansion animation takes
+  /// `bottomMargin` - Distance from bottom of screen to circle center
+  const new({
+    required this._background,
+    this._initialRadius = 80,
+    this._delay = MarioMakerTiming.expandDelayDefault,
+    this._expandDuration = MarioMakerTiming.expandDurationDefault,
+    this._bottomMargin = 100,
     super.key,
-  }) : _background = background,
-       _initialRadius = initialRadius,
-       _delay = delay,
-       _expandDuration = expandDuration,
-       _bottomMargin = bottomMargin;
+  });
 
   final Widget _background;
   final double _initialRadius;
@@ -140,10 +136,7 @@ class _ExpandingCircleMaskState extends State<ExpandingCircleMask>
     final maxRadius = _calculateMaxRadius(screenSize, circleCenter);
 
     _radiusAnimation =
-        Tween<double>(
-          begin: widget._initialRadius,
-          end: maxRadius,
-        ).animate(
+        Tween<double>(begin: widget._initialRadius, end: maxRadius).animate(
           CurvedAnimation(
             parent: _expandController,
             curve: Curves.easeInOutCubic,

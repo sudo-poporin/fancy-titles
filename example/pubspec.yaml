@@ -4,20 +4,21 @@ publish_to: "none"
 version: 1.0.2
 
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.14.0
 
 dependencies:
   fancy_titles:
     path: ../
   flutter:
     sdk: flutter
+  material_ui: ^1.11.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  very_good_analysis: ^10.2.0
+  very_good_analysis: ^11.0.0
 
 flutter:
   uses-material-design: true

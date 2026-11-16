@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget that displays an image inside the Mario Maker circle.
 ///
@@ -6,14 +6,9 @@ import 'package:flutter/material.dart';
 class MarioMakerImage extends StatelessWidget {
   /// Creates a Mario Maker image widget.
   ///
-  /// [imagePath] - Asset path for the image (supports GIFs)
-  /// [size] - Size of the image container (default: 150)
-  const MarioMakerImage({
-    required String imagePath,
-    double size = 150,
-    super.key,
-  }) : _imagePath = imagePath,
-       _size = size;
+  /// `imagePath` - Asset path for the image (supports GIFs)
+  /// `size` - Size of the image container (default: 150)
+  const new({required this._imagePath, this._size = 150, super.key});
 
   final String _imagePath;
   final double _size;

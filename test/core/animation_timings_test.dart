@@ -288,10 +288,7 @@ void main() {
   group('EvangelionTiming', () {
     group('main durations', () {
       test('textAppearDelay has positive duration', () {
-        expect(
-          EvangelionTiming.textAppearDelay.inMilliseconds,
-          greaterThan(0),
-        );
+        expect(EvangelionTiming.textAppearDelay.inMilliseconds, greaterThan(0));
       });
 
       test('backgroundFadeTime has positive duration', () {
@@ -306,10 +303,7 @@ void main() {
       });
 
       test('fadeTransition has positive duration', () {
-        expect(
-          EvangelionTiming.fadeTransition.inMilliseconds,
-          greaterThan(0),
-        );
+        expect(EvangelionTiming.fadeTransition.inMilliseconds, greaterThan(0));
       });
 
       test('containerTransition has positive duration', () {
@@ -424,10 +418,7 @@ void main() {
 
     group('blur cache timings (OPT-005)', () {
       test('blurCacheDelay has positive duration', () {
-        expect(
-          EvangelionTiming.blurCacheDelay.inMilliseconds,
-          greaterThan(0),
-        );
+        expect(EvangelionTiming.blurCacheDelay.inMilliseconds, greaterThan(0));
       });
 
       test('blurCacheDelay equals 16ms (approximately 1 frame at 60fps)', () {
@@ -449,17 +440,11 @@ void main() {
       });
 
       test('irisOutDuration has positive duration', () {
-        expect(
-          MarioMakerTiming.irisOutDuration.inMilliseconds,
-          greaterThan(0),
-        );
+        expect(MarioMakerTiming.irisOutDuration.inMilliseconds, greaterThan(0));
       });
 
       test('titleEntryDelay has positive duration', () {
-        expect(
-          MarioMakerTiming.titleEntryDelay.inMilliseconds,
-          greaterThan(0),
-        );
+        expect(MarioMakerTiming.titleEntryDelay.inMilliseconds, greaterThan(0));
       });
     });
 

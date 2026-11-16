@@ -3,7 +3,7 @@ import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/constants/constants.dart';
 import 'package:fancy_titles/evangelion/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Pantalla de título inspirada en Neon Genesis Evangelion.
 ///
@@ -125,24 +125,21 @@ class EvangelionTitle extends StatefulWidget {
   ///   onPhaseChange: (phase) => print('Fase: $phase'),
   /// )
   /// ```
-  const EvangelionTitle({
+  const new({
     String? firstText,
     String? secondText,
     String? thirdText,
     String? fourthText,
     String? fifthText,
-    VoidCallback? onAnimationStart,
-    VoidCallback? onAnimationComplete,
-    void Function(AnimationPhase phase)? onPhaseChange,
+    this._onAnimationStart,
+    this._onAnimationComplete,
+    this._onPhaseChange,
     super.key,
   }) : _firstText = firstText ?? 'NEON',
        _secondText = secondText ?? 'GENESIS',
        _thirdText = thirdText ?? 'EVANGELION',
        _fourthText = fourthText ?? 'EPISODE:1',
-       _fifthText = fifthText ?? 'ANGEL ATTACK',
-       _onAnimationStart = onAnimationStart,
-       _onAnimationComplete = onAnimationComplete,
-       _onPhaseChange = onPhaseChange;
+       _fifthText = fifthText ?? 'ANGEL ATTACK';
 
   final String _firstText;
   final String _secondText;
@@ -267,7 +264,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                 AnimatedContainer(
                   duration: EvangelionTiming.containerTransition,
                   color: _showTransparentBg
-                      ? Colors.transparent
+                      ? const Color(0x00000000)
                       : const Color(0xFF040404),
                   child: _canShowText
                       ? SafeArea(
@@ -290,8 +287,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: _shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily:
-                                                'packages/fancy_titles/EVAMatisseClassic',
+                                            fontFamily: 'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),
@@ -308,8 +304,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: _shortTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily:
-                                                'packages/fancy_titles/EVAMatisseClassic',
+                                            fontFamily: 'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),
@@ -326,8 +321,7 @@ class _EvangelionTitleState extends State<EvangelionTitle>
                                             fontSize: _longTitleFontSize,
                                             letterSpacing: -5.9,
                                             decoration: TextDecoration.none,
-                                            fontFamily:
-                                                'packages/fancy_titles/EVAMatisseClassic',
+                                            fontFamily: 'packages/fancy_titles/EVAMatisseClassic',
                                             shadows: shadows,
                                           ),
                                         ),

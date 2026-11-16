@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('LargeBGDraw', () {
@@ -174,10 +174,7 @@ void main() {
       final painter = LargeBGDraw(Colors.blue, slope: 1);
       await tester.pumpWidget(
         MaterialApp(
-          home: CustomPaint(
-            painter: painter,
-            size: const Size(200, 100),
-          ),
+          home: CustomPaint(painter: painter, size: const Size(200, 100)),
         ),
       );
 
@@ -193,10 +190,7 @@ void main() {
       final painter = SmallBGDraw(Colors.red, slope: 1);
       await tester.pumpWidget(
         MaterialApp(
-          home: CustomPaint(
-            painter: painter,
-            size: const Size(200, 100),
-          ),
+          home: CustomPaint(painter: painter, size: const Size(200, 100)),
         ),
       );
 
@@ -215,14 +209,8 @@ void main() {
         MaterialApp(
           home: Column(
             children: [
-              CustomPaint(
-                painter: largePainter,
-                size: const Size(200, 50),
-              ),
-              CustomPaint(
-                painter: smallPainter,
-                size: const Size(200, 50),
-              ),
+              CustomPaint(painter: largePainter, size: const Size(200, 50)),
+              CustomPaint(painter: smallPainter, size: const Size(200, 50)),
             ],
           ),
         ),

@@ -1,12 +1,12 @@
 import 'package:fancy_titles/fancy_titles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+  const new({super.key});
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -114,7 +114,7 @@ class _MainAppState extends State<MainApp> {
 }
 
 class _Button extends StatelessWidget {
-  const _Button({
+  const new({
     required this.onPressed,
     required this.label,
     required this.isSelected,

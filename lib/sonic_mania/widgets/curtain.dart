@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 const Color _blueCurtainColor = Color(0xFF3D62AA);
 const Color _orangeCurtainColor = Color(0xFFFE6933);
@@ -18,43 +18,39 @@ class Curtain extends StatefulWidget {
   ///
   /// Se puede personalizar el color de la cortina y el retardo de la animación.
   // coverage:ignore-start
-  const Curtain({
-    required this.color,
-    this.delay = Duration.zero,
-    super.key,
-  });
+  const new({required this.color, this.delay = Duration.zero, super.key});
   // coverage:ignore-end
 
   /// Cortina azul
-  const Curtain.blue({
+  const new blue({
     this.color = _blueCurtainColor,
     this.delay = SonicManiaTiming.curtainBlueDelay,
     super.key,
   });
 
   /// Cortina naranja
-  const Curtain.orange({
+  const new orange({
     this.color = _orangeCurtainColor,
     this.delay = SonicManiaTiming.curtainOrangeDelay,
     super.key,
   });
 
   /// Cortina ámbar
-  const Curtain.amber({
+  const new amber({
     this.color = _amberCurtainColor,
     this.delay = SonicManiaTiming.curtainAmberDelay,
     super.key,
   });
 
   /// Cortina verde
-  const Curtain.green({
+  const new green({
     this.color = _greenCurtainColor,
     this.delay = SonicManiaTiming.curtainGreenDelay,
     super.key,
   });
 
   /// Cortina amarilla
-  const Curtain.yellow({
+  const new yellow({
     this.color = _yellowCurtainColor,
     this.delay = SonicManiaTiming.curtainYellowDelay,
     super.key,
@@ -62,7 +58,7 @@ class Curtain extends StatefulWidget {
 
   /// Cortina negra
   // coverage:ignore-start
-  const Curtain.black({
+  const new black({
     this.color = _blackCurtainColor,
     this.delay = SonicManiaTiming.curtainBlackDelay,
     super.key,

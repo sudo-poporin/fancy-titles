@@ -1,8 +1,8 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
 import 'package:fancy_titles/sonic_mania/widgets/clipped_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('ClippedBar', () {
@@ -50,11 +50,7 @@ void main() {
     group('color variants', () {
       testWidgets('ClippedBar.red creates red bar', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: ClippedBar.red(
-              customClipper: RedBarClipper(),
-            ),
-          ),
+          MaterialApp(home: ClippedBar.red(customClipper: RedBarClipper())),
         );
 
         expect(find.byType(ClippedBar), findsOneWidget);
@@ -64,9 +60,7 @@ void main() {
       testWidgets('ClippedBar.orange creates orange bar', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedBar.orange(
-              customClipper: OrangeBarClipper(),
-            ),
+            home: ClippedBar.orange(customClipper: OrangeBarClipper()),
           ),
         );
 
@@ -76,11 +70,7 @@ void main() {
 
       testWidgets('ClippedBar.blue creates blue bar', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: ClippedBar.blue(
-              customClipper: BlueBarClipper(),
-            ),
-          ),
+          MaterialApp(home: ClippedBar.blue(customClipper: BlueBarClipper())),
         );
 
         expect(find.byType(ClippedBar), findsOneWidget);
@@ -89,11 +79,7 @@ void main() {
 
       testWidgets('ClippedBar.green creates green bar', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: ClippedBar.green(
-              customClipper: GreenBarClipper(),
-            ),
-          ),
+          MaterialApp(home: ClippedBar.green(customClipper: GreenBarClipper())),
         );
 
         expect(find.byType(ClippedBar), findsOneWidget);
@@ -119,10 +105,7 @@ void main() {
       testWidgets('contains ColoredBox with correct color', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedBar(
-              color: Colors.red,
-              customClipper: RedBarClipper(),
-            ),
+            home: ClippedBar(color: Colors.red, customClipper: RedBarClipper()),
           ),
         );
 
@@ -142,10 +125,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedBar(
-              color: Colors.blue,
-              customClipper: clipper,
-            ),
+            home: ClippedBar(color: Colors.blue, customClipper: clipper),
           ),
         );
 

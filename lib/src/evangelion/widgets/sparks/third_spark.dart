@@ -1,14 +1,14 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.third`. Internal to spark dispatcher.
 @internal
 class ThirdSpark extends StatelessWidget {
   /// Creates the third spark visual.
-  const ThirdSpark({
+  const new({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -35,10 +35,7 @@ class ThirdSpark extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
-            Tween<double>(
-              begin: 0,
-              end: 1,
-            ).chain(CurveTween(curve: curve)),
+            Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: curve)),
           ),
           child: child,
         );
@@ -76,7 +73,7 @@ class ThirdSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),
@@ -110,7 +107,7 @@ class ThirdSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),
@@ -119,10 +116,7 @@ class ThirdSpark extends StatelessWidget {
                   right: screenSize.width * -0.5,
                   top: screenSize.height * -0.5,
                   child: CachedBlurWidget(
-                    size: Size(
-                      screenSize.width * 1.5,
-                      screenSize.height * 1.5,
-                    ),
+                    size: Size(screenSize.width * 1.5, screenSize.height * 1.5),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -144,7 +138,7 @@ class ThirdSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),

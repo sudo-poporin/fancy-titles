@@ -301,6 +301,21 @@ void main() {
         }
       });
 
+      test('all painters are constructible at runtime', () {
+        final constructors = <Object Function()>[
+          FirstCrossPainter.new,
+          SecondCrossPainter.new,
+          ThirdCrossPainter.new,
+          FourthCrossPainter.new,
+          FifthCrossPainter.new,
+          SixthCrossPainter.new,
+        ];
+
+        for (final create in constructors) {
+          expect(create(), isNotNull);
+        }
+      });
+
       test('all painters return false for shouldRepaint', () {
         const firstPainter = FirstCrossPainter();
         const secondPainter = SecondCrossPainter();

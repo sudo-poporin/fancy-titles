@@ -1,7 +1,7 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/widgets/spark.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Spark', () {
@@ -26,11 +26,7 @@ void main() {
     group('instantiation', () {
       testWidgets('Spark.first can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -39,11 +35,7 @@ void main() {
 
       testWidgets('Spark.second can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.second())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -52,11 +44,7 @@ void main() {
 
       testWidgets('Spark.third can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.third())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -65,11 +53,7 @@ void main() {
 
       testWidgets('Spark.fourth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fourth())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -78,11 +62,7 @@ void main() {
 
       testWidgets('Spark.fifth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fifth())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -91,11 +71,7 @@ void main() {
 
       testWidgets('Spark.sixth can be instantiated', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.sixth())),
         );
 
         expect(find.byType(Spark), findsOneWidget);
@@ -105,9 +81,7 @@ void main() {
       testWidgets('can be instantiated with custom order', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: Scaffold(
-              body: Spark(order: SparkOrder.first),
-            ),
+            home: Scaffold(body: Spark(order: SparkOrder.first)),
           ),
         );
 
@@ -137,11 +111,7 @@ void main() {
     group('renders expected widgets', () {
       testWidgets('contains AnimatedSwitcher', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         expect(find.byType(AnimatedSwitcher), findsOneWidget);
@@ -150,11 +120,7 @@ void main() {
 
       testWidgets('initially shows SizedBox.shrink', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         // Before delay completes, should show shrunk box
@@ -166,11 +132,7 @@ void main() {
     group('animation', () {
       testWidgets('Spark.first shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         // Advance past first spark delay
@@ -183,11 +145,7 @@ void main() {
 
       testWidgets('Spark.second shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.second())),
         );
 
         // Advance past second spark delay
@@ -200,11 +158,7 @@ void main() {
 
       testWidgets('Spark.third shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.third())),
         );
 
         // Advance past third spark delay
@@ -217,11 +171,7 @@ void main() {
 
       testWidgets('Spark.fourth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fourth())),
         );
 
         // Advance past fourth spark delay
@@ -234,11 +184,7 @@ void main() {
 
       testWidgets('Spark.fifth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fifth())),
         );
 
         // Advance past fifth spark delay
@@ -251,11 +197,7 @@ void main() {
 
       testWidgets('Spark.sixth shows content after delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.sixth())),
         );
 
         // Advance past sixth spark delay
@@ -268,11 +210,7 @@ void main() {
 
       testWidgets('spark fades out after duration', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         // Advance past delay + duration
@@ -291,11 +229,7 @@ void main() {
           const MaterialApp(
             home: Scaffold(
               body: Stack(
-                children: [
-                  Spark.first(),
-                  Spark.second(),
-                  Spark.third(),
-                ],
+                children: [Spark.first(), Spark.second(), Spark.third()],
               ),
             ),
           ),
@@ -331,11 +265,7 @@ void main() {
     group('disposal', () {
       testWidgets('Spark.first disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         await disposeAndSettle(tester);
@@ -344,11 +274,7 @@ void main() {
 
       testWidgets('Spark.second disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.second())),
         );
 
         await disposeAndSettle(tester);
@@ -357,11 +283,7 @@ void main() {
 
       testWidgets('Spark.third disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.third())),
         );
 
         await disposeAndSettle(tester);
@@ -370,11 +292,7 @@ void main() {
 
       testWidgets('Spark.fourth disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fourth())),
         );
 
         await disposeAndSettle(tester);
@@ -383,11 +301,7 @@ void main() {
 
       testWidgets('Spark.fifth disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fifth())),
         );
 
         await disposeAndSettle(tester);
@@ -396,11 +310,7 @@ void main() {
 
       testWidgets('Spark.sixth disposes without timer errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.sixth())),
         );
 
         await disposeAndSettle(tester);
@@ -409,11 +319,7 @@ void main() {
 
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         // Advance partially through animation
@@ -449,9 +355,7 @@ void main() {
           Spark.fifth(),
           Spark.sixth(),
         ]) {
-          await tester.pumpWidget(
-            MaterialApp(home: Scaffold(body: spark)),
-          );
+          await tester.pumpWidget(MaterialApp(home: Scaffold(body: spark)));
           await disposeAndSettle(tester);
           expect(tester.takeException(), isNull);
         }
@@ -461,11 +365,7 @@ void main() {
     group('default values', () {
       testWidgets('Spark.first has correct default duration', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -475,11 +375,7 @@ void main() {
 
       testWidgets('Spark.first has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -489,11 +385,7 @@ void main() {
 
       testWidgets('Spark.second has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.second(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.second())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -503,11 +395,7 @@ void main() {
 
       testWidgets('Spark.third has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.third(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.third())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -517,11 +405,7 @@ void main() {
 
       testWidgets('Spark.fourth has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fourth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fourth())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -531,11 +415,7 @@ void main() {
 
       testWidgets('Spark.fifth has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.fifth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.fifth())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -545,11 +425,7 @@ void main() {
 
       testWidgets('Spark.sixth has correct default delay', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.sixth(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.sixth())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));
@@ -559,11 +435,7 @@ void main() {
 
       testWidgets('default curve is easeInOut', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: Spark.first(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: Spark.first())),
         );
 
         final spark = tester.widget<Spark>(find.byType(Spark));

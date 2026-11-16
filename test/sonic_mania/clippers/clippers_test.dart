@@ -263,59 +263,23 @@ void main() {
     test('all clippers handle zero size gracefully', () {
       const zeroSize = Size.zero;
 
-      expect(
-        () => OrangeBarClipper().getClip(zeroSize),
-        returnsNormally,
-      );
-      expect(
-        () => GreenBarClipper().getClip(zeroSize),
-        returnsNormally,
-      );
-      expect(
-        () => RedBarClipper().getClip(zeroSize),
-        returnsNormally,
-      );
-      expect(
-        () => BlueBarClipper().getClip(zeroSize),
-        returnsNormally,
-      );
-      expect(
-        () => LeftCurtainClipper().getClip(zeroSize),
-        returnsNormally,
-      );
-      expect(
-        () => RightCurtainClipper().getClip(zeroSize),
-        returnsNormally,
-      );
+      expect(() => OrangeBarClipper().getClip(zeroSize), returnsNormally);
+      expect(() => GreenBarClipper().getClip(zeroSize), returnsNormally);
+      expect(() => RedBarClipper().getClip(zeroSize), returnsNormally);
+      expect(() => BlueBarClipper().getClip(zeroSize), returnsNormally);
+      expect(() => LeftCurtainClipper().getClip(zeroSize), returnsNormally);
+      expect(() => RightCurtainClipper().getClip(zeroSize), returnsNormally);
     });
 
     test('all clippers handle large size', () {
       const largeSize = Size(10000, 10000);
 
-      expect(
-        () => OrangeBarClipper().getClip(largeSize),
-        returnsNormally,
-      );
-      expect(
-        () => GreenBarClipper().getClip(largeSize),
-        returnsNormally,
-      );
-      expect(
-        () => RedBarClipper().getClip(largeSize),
-        returnsNormally,
-      );
-      expect(
-        () => BlueBarClipper().getClip(largeSize),
-        returnsNormally,
-      );
-      expect(
-        () => LeftCurtainClipper().getClip(largeSize),
-        returnsNormally,
-      );
-      expect(
-        () => RightCurtainClipper().getClip(largeSize),
-        returnsNormally,
-      );
+      expect(() => OrangeBarClipper().getClip(largeSize), returnsNormally);
+      expect(() => GreenBarClipper().getClip(largeSize), returnsNormally);
+      expect(() => RedBarClipper().getClip(largeSize), returnsNormally);
+      expect(() => BlueBarClipper().getClip(largeSize), returnsNormally);
+      expect(() => LeftCurtainClipper().getClip(largeSize), returnsNormally);
+      expect(() => RightCurtainClipper().getClip(largeSize), returnsNormally);
     });
   });
 
@@ -389,10 +353,7 @@ void main() {
 
   group('stripeSlope', () {
     test('es la mitad del aspecto ancho / alto', () {
-      expect(
-        stripeSlope(const Size(844, 390)),
-        closeTo(0.5 * 844 / 390, 1e-9),
-      );
+      expect(stripeSlope(const Size(844, 390)), closeTo(0.5 * 844 / 390, 1e-9));
     });
 
     test('devuelve 0 si el alto es 0', () {

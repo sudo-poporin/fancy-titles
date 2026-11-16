@@ -2,8 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('CachedBlurWidget', () {
@@ -88,10 +88,7 @@ void main() {
         const size = Size(250, 175);
         await tester.pumpWidget(
           MaterialApp(
-            home: CachedBlurWidget(
-              size: size,
-              child: Container(),
-            ),
+            home: CachedBlurWidget(size: size, child: Container()),
           ),
         );
 
@@ -160,10 +157,7 @@ void main() {
         const size = Size(150, 200);
         await tester.pumpWidget(
           MaterialApp(
-            home: CachedBlurWidget(
-              size: size,
-              child: Container(),
-            ),
+            home: CachedBlurWidget(size: size, child: Container()),
           ),
         );
 
@@ -418,9 +412,7 @@ void main() {
           const MaterialApp(
             home: CachedBlurWidget(
               size: Size(200, 100),
-              child: Center(
-                child: Text('Blurred Text'),
-              ),
+              child: Center(child: Text('Blurred Text')),
             ),
           ),
         );

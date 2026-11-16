@@ -11,6 +11,8 @@ Funciona tanto en modo retrato como en modo paisaje.
 
 ## Instalación 💻
 
+Requiere Dart 3.14 y Flutter 3.50 o posteriores.
+
 Instalar a través del archivo `pubspec.yaml` agregando la dependencia:
 
 ```yaml
@@ -18,7 +20,7 @@ dependencies:
   fancy_titles:
     git:
       url: https://github.com/sudo-poporin/fancy-titles
-      ref: v1.1.2
+      ref: v2.0.0
 ```
 
 ---
@@ -33,9 +35,13 @@ import 'package:fancy_titles/fancy_titles.dart';
 
 Luego, podés usar las pantallas de inicio personalizadas en tu aplicación Flutter. Acá tenés un ejemplo básico de cómo implementar una pantalla de inicio personalizada:
 
+El ejemplo usa `MaterialApp`, que desde Flutter 3.50 viene en el paquete
+`material_ui`: agregalo a tus dependencias. Los widgets del paquete no
+dependen de Material.
+
 ```dart
-import 'package:flutter/material.dart';
 import 'package:fancy_titles/fancy_titles.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(MyApp());

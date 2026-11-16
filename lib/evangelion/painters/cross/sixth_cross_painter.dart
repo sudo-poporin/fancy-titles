@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 /// repeated Path object creation on each paint call.
 class SixthCrossPainter extends CustomPainter {
   /// Creates a sixth cross painter.
-  const SixthCrossPainter();
+  const new();
 
   // Static cache for path and size
   static Path? _cachedPath;

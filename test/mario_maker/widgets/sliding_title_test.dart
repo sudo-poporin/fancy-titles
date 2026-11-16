@@ -1,7 +1,7 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/mario_maker/widgets/sliding_title.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('SlidingTitle', () {
@@ -61,10 +61,7 @@ void main() {
 
     group('instantiation', () {
       test('can be instantiated with required parameters', () {
-        expect(
-          const SlidingTitle(text: 'TEST'),
-          isNotNull,
-        );
+        expect(const SlidingTitle(text: 'TEST'), isNotNull);
       });
 
       test('can be instantiated with all parameters', () {
@@ -101,9 +98,7 @@ void main() {
         tester,
       ) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Before delay passes, should show SizedBox.shrink
@@ -114,9 +109,7 @@ void main() {
 
       testWidgets('shows text after delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(milliseconds: 50),
-          ),
+          buildTestWidget(delay: const Duration(milliseconds: 50)),
         );
 
         // Advance past delay
@@ -131,10 +124,7 @@ void main() {
         const customStyle = TextStyle(fontSize: 48, color: Colors.red);
 
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: Duration.zero,
-            textStyle: customStyle,
-          ),
+          buildTestWidget(delay: Duration.zero, textStyle: customStyle),
         );
 
         // Advance to show text
@@ -298,9 +288,7 @@ void main() {
 
       testWidgets('handles dispose before delay completes', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(seconds: 10),
-          ),
+          buildTestWidget(delay: const Duration(seconds: 10)),
         );
 
         // Dispose before delay
@@ -356,10 +344,7 @@ void main() {
     group('edge cases', () {
       testWidgets('handles empty text', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            text: '',
-            delay: Duration.zero,
-          ),
+          buildTestWidget(text: '', delay: Duration.zero),
         );
 
         await tester.pump(const Duration(milliseconds: 50));
@@ -386,9 +371,7 @@ void main() {
 
       testWidgets('handles very short delay', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            delay: const Duration(microseconds: 1),
-          ),
+          buildTestWidget(delay: const Duration(microseconds: 1)),
         );
 
         await tester.pump(const Duration(milliseconds: 10));
@@ -414,11 +397,7 @@ void main() {
       });
 
       testWidgets('handles no exitDelay (null)', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(
-            delay: Duration.zero,
-          ),
-        );
+        await tester.pumpWidget(buildTestWidget(delay: Duration.zero));
 
         await tester.pump(const Duration(milliseconds: 50));
         await tester.pump();

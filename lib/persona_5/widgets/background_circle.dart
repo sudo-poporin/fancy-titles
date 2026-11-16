@@ -1,5 +1,5 @@
 import 'package:fancy_titles/persona_5/painters/circle_painter.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Widget que muestra los circulos concentricos del fondo de Persona 5.
 ///
@@ -33,7 +33,7 @@ import 'package:flutter/material.dart';
 /// - `Persona5Title` widget principal que usa este componente
 class BackgroundCircle extends StatelessWidget {
   /// Crea el fondo de circulos concentricos estilo Persona 5.
-  const BackgroundCircle({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

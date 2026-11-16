@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A title that slides in from the top and fades out with scale effect.
 ///
@@ -10,23 +10,19 @@ import 'package:flutter/material.dart';
 class SlidingTitle extends StatefulWidget {
   /// Creates a sliding title widget.
   ///
-  /// [text] - The title text to display
-  /// [delay] - Time to wait before sliding in (default: 3.5s)
-  /// [slideDuration] - How long the slide animation takes (default: 500ms)
-  /// [exitDelay] - Time to wait before fading out (from animation start)
-  /// [textStyle] - Optional custom text style
-  const SlidingTitle({
-    required String text,
-    Duration delay = MarioMakerTiming.slideDelayDefault,
-    Duration slideDuration = MarioMakerTiming.slideDuration,
-    Duration? exitDelay,
-    TextStyle? textStyle,
+  /// `text` - The title text to display
+  /// `delay` - Time to wait before sliding in (default: 3.5s)
+  /// `slideDuration` - How long the slide animation takes (default: 500ms)
+  /// `exitDelay` - Time to wait before fading out (from animation start)
+  /// `textStyle` - Optional custom text style
+  const new({
+    required this._text,
+    this._delay = MarioMakerTiming.slideDelayDefault,
+    this._slideDuration = MarioMakerTiming.slideDuration,
+    this._exitDelay,
+    this._textStyle,
     super.key,
-  }) : _text = text,
-       _delay = delay,
-       _slideDuration = slideDuration,
-       _exitDelay = exitDelay,
-       _textStyle = textStyle;
+  });
 
   final String _text;
   final Duration _delay;
@@ -64,39 +60,21 @@ class _SlidingTitleState extends State<SlidingTitle>
 
     // Slide in from top (y = -1) to center (y = 0)
     _entrySlideAnimation =
-        Tween<Offset>(
-          begin: const Offset(0, -1),
-          end: Offset.zero,
-        ).animate(
-          CurvedAnimation(
-            parent: _entryController,
-            curve: Curves.easeOutBack,
-          ),
+        Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero).animate(
+          CurvedAnimation(parent: _entryController, curve: Curves.easeOutBack),
         );
 
     // Fade out from 1.0 to 0.0 during exit
-    _exitFadeAnimation =
-        Tween<double>(
-          begin: 1,
-          end: 0,
-        ).animate(
-          CurvedAnimation(
-            parent: _exitController,
-            curve: Curves.easeIn,
-          ),
-        );
+    _exitFadeAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _exitController, curve: Curves.easeIn));
 
     // Scale down during exit
-    _exitScaleAnimation =
-        Tween<double>(
-          begin: 1,
-          end: 0.2,
-        ).animate(
-          CurvedAnimation(
-            parent: _exitController,
-            curve: Curves.easeIn,
-          ),
-        );
+    _exitScaleAnimation = Tween<double>(
+      begin: 1,
+      end: 0.2,
+    ).animate(CurvedAnimation(parent: _exitController, curve: Curves.easeIn));
 
     _startDelayedSlide();
   }
@@ -143,7 +121,7 @@ class _SlidingTitleState extends State<SlidingTitle>
       package: 'fancy_titles',
       fontSize: screenWidth * 0.1,
       fontWeight: FontWeight.bold,
-      color: Colors.black,
+      color: const Color(0xFF000000),
       decoration: TextDecoration.none,
     );
 

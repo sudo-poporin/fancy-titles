@@ -1,6 +1,6 @@
 import 'package:fancy_titles/mario_maker/widgets/bouncing_circle.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('BouncingCircle', () {
@@ -30,10 +30,7 @@ void main() {
     group('instantiation', () {
       test('can be instantiated with required parameters', () {
         expect(
-          const BouncingCircle(
-            circleRadius: 80,
-            child: Icon(Icons.star),
-          ),
+          const BouncingCircle(circleRadius: 80, child: Icon(Icons.star)),
           isNotNull,
         );
       });
@@ -75,17 +72,13 @@ void main() {
       });
 
       testWidgets('renders child widget', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(child: const Text('TEST')),
-        );
+        await tester.pumpWidget(buildTestWidget(child: const Text('TEST')));
 
         expect(find.text('TEST'), findsOneWidget);
       });
 
       testWidgets('applies circleColor to container', (tester) async {
-        await tester.pumpWidget(
-          buildTestWidget(circleColor: Colors.blue),
-        );
+        await tester.pumpWidget(buildTestWidget(circleColor: Colors.blue));
 
         // Find Container with decoration
         final container = tester.widget<Container>(
@@ -188,9 +181,7 @@ void main() {
         await tester.pumpWidget(buildTestWidget(circleRadius: 100));
 
         // The SizedBox should be 2 * circleRadius = 200
-        final sizedBox = tester.widget<SizedBox>(
-          find.byType(SizedBox).first,
-        );
+        final sizedBox = tester.widget<SizedBox>(find.byType(SizedBox).first);
         expect(sizedBox.width, equals(200));
         expect(sizedBox.height, equals(200));
       });
@@ -214,9 +205,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 500));
 
         // Remove widget - should not throw
-        await tester.pumpWidget(
-          const MaterialApp(home: SizedBox.shrink()),
-        );
+        await tester.pumpWidget(const MaterialApp(home: SizedBox.shrink()));
 
         expect(find.byType(BouncingCircle), findsNothing);
       });
@@ -239,9 +228,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 200));
 
         // Dispose widget mid-bounce
-        await tester.pumpWidget(
-          const MaterialApp(home: SizedBox.shrink()),
-        );
+        await tester.pumpWidget(const MaterialApp(home: SizedBox.shrink()));
 
         // Should not throw
         expect(find.byType(BouncingCircle), findsNothing);
@@ -249,18 +236,14 @@ void main() {
 
       testWidgets('handles dispose during image scale out', (tester) async {
         await tester.pumpWidget(
-          buildTestWidget(
-            bounceDuration: const Duration(milliseconds: 100),
-          ),
+          buildTestWidget(bounceDuration: const Duration(milliseconds: 100)),
         );
 
         // Complete bounce, start image scale out
         await tester.pump(const Duration(milliseconds: 150));
 
         // Dispose widget mid-scale
-        await tester.pumpWidget(
-          const MaterialApp(home: SizedBox.shrink()),
-        );
+        await tester.pumpWidget(const MaterialApp(home: SizedBox.shrink()));
 
         // Should not throw
         expect(find.byType(BouncingCircle), findsNothing);
@@ -313,10 +296,7 @@ void main() {
           buildTestWidget(
             child: const Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.star),
-                Text('Label'),
-              ],
+              children: [Icon(Icons.star), Text('Label')],
             ),
           ),
         );

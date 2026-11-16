@@ -74,9 +74,7 @@ mixin CancelableTimersMixin<T extends StatefulWidget> on State<T> {
   /// ]);
   /// ```
   @protected
-  void delayedChain(
-    List<({Duration duration, VoidCallback callback})> chain,
-  ) {
+  void delayedChain(List<({Duration duration, VoidCallback callback})> chain) {
     var accumulatedDuration = Duration.zero;
 
     for (final item in chain) {

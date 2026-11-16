@@ -1,14 +1,14 @@
 import 'package:fancy_titles/evangelion/painters/painters.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Visual contents for `SparkOrder.fourth`. Internal to spark dispatcher.
 @internal
 class FourthSpark extends StatelessWidget {
   /// Creates the fourth spark visual.
-  const FourthSpark({
+  const new({
     required this.duration,
     required this.curve,
     required this.fadeOut,
@@ -35,10 +35,7 @@ class FourthSpark extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation.drive(
-            Tween<double>(
-              begin: 0.5,
-              end: 1,
-            ).chain(CurveTween(curve: curve)),
+            Tween<double>(begin: 0.5, end: 1).chain(CurveTween(curve: curve)),
           ),
           child: child,
         );
@@ -58,7 +55,7 @@ class FourthSpark extends StatelessWidget {
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.white,
+                          color: const Color(0xFFFFFFFF),
                           width: 100,
                         ),
                         boxShadow: const [
@@ -76,7 +73,7 @@ class FourthSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),
@@ -92,7 +89,7 @@ class FourthSpark extends StatelessWidget {
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.white,
+                          color: const Color(0xFFFFFFFF),
                           width: 100,
                         ),
                         boxShadow: const [
@@ -110,7 +107,7 @@ class FourthSpark extends StatelessWidget {
                           ),
                         ],
                         shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        color: const Color(0x00000000),
                       ),
                     ),
                   ),

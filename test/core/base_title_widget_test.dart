@@ -1,7 +1,7 @@
 import 'package:fancy_titles/core/animation_phase.dart';
 import 'package:fancy_titles/core/base_title_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('BaseTitleWidget', () {
@@ -109,27 +109,26 @@ void main() {
       expect(phases, [AnimationPhase.entering, AnimationPhase.active]);
     });
 
-    testWidgets(
-      'updatePhase triggers onAnimationStart for entering phase',
-      (tester) async {
-        var startCalled = false;
-        late _TestTitleWidgetState capturedState;
+    testWidgets('updatePhase triggers onAnimationStart for entering phase', (
+      tester,
+    ) async {
+      var startCalled = false;
+      late _TestTitleWidgetState capturedState;
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: _TestTitleWidget(
-              onAnimationStart: () => startCalled = true,
-              captureState: (state) => capturedState = state,
-            ),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: _TestTitleWidget(
+            onAnimationStart: () => startCalled = true,
+            captureState: (state) => capturedState = state,
           ),
-        );
+        ),
+      );
 
-        expect(startCalled, isFalse);
+      expect(startCalled, isFalse);
 
-        capturedState.testUpdatePhase(AnimationPhase.entering);
-        expect(startCalled, isTrue);
-      },
-    );
+      capturedState.testUpdatePhase(AnimationPhase.entering);
+      expect(startCalled, isTrue);
+    });
 
     testWidgets(
       'updatePhase triggers onAnimationComplete for completed phase',
@@ -181,29 +180,28 @@ void main() {
       expect(callCount, 2);
     });
 
-    testWidgets(
-      'onAnimationStart only triggers once for entering',
-      (tester) async {
-        var startCallCount = 0;
-        late _TestTitleWidgetState capturedState;
+    testWidgets('onAnimationStart only triggers once for entering', (
+      tester,
+    ) async {
+      var startCallCount = 0;
+      late _TestTitleWidgetState capturedState;
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: _TestTitleWidget(
-              onAnimationStart: () => startCallCount++,
-              captureState: (state) => capturedState = state,
-            ),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: _TestTitleWidget(
+            onAnimationStart: () => startCallCount++,
+            captureState: (state) => capturedState = state,
           ),
-        );
+        ),
+      );
 
-        capturedState.testUpdatePhase(AnimationPhase.entering);
-        expect(startCallCount, 1);
+      capturedState.testUpdatePhase(AnimationPhase.entering);
+      expect(startCallCount, 1);
 
-        // Try entering again (should be ignored)
-        capturedState.testUpdatePhase(AnimationPhase.entering);
-        expect(startCallCount, 1);
-      },
-    );
+      // Try entering again (should be ignored)
+      capturedState.testUpdatePhase(AnimationPhase.entering);
+      expect(startCallCount, 1);
+    });
 
     testWidgets('safeSetState does nothing when not mounted', (tester) async {
       late _TestTitleWidgetState capturedState;
@@ -220,10 +218,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: SizedBox.shrink()));
 
       // Should not throw even though widget is disposed
-      expect(
-        () => capturedState.testSafeSetState(() {}),
-        returnsNormally,
-      );
+      expect(() => capturedState.testSafeSetState(() {}), returnsNormally);
     });
 
     testWidgets('safeSetState updates state when mounted', (tester) async {
@@ -322,7 +317,7 @@ void main() {
 
 /// Test implementation of BaseTitleWidget.
 class _TestTitleWidget extends BaseTitleWidget {
-  const _TestTitleWidget({
+  const new({
     super.onAnimationStart,
     super.onAnimationComplete,
     super.onPhaseChange,

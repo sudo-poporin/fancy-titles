@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fancy_titles/core/animation_timings.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A circle that bounces (scales up and down) during animation.
 ///
@@ -10,24 +10,20 @@ import 'package:flutter/material.dart';
 class BouncingCircle extends StatefulWidget {
   /// Creates a bouncing circle widget.
   ///
-  /// [child] - The widget to display inside the circle (usually an image)
-  /// [circleRadius] - The base radius of the circle
-  /// [circleColor] - Background color of the circle (default: transparent)
-  /// [bounceDuration] - How long the bounce animation lasts (default: 2s)
-  /// [imageScaleOutDuration] - How long the image scale-out takes
+  /// `child` - The widget to display inside the circle (usually an image)
+  /// `circleRadius` - The base radius of the circle
+  /// `circleColor` - Background color of the circle (default: transparent)
+  /// `bounceDuration` - How long the bounce animation lasts (default: 2s)
+  /// `imageScaleOutDuration` - How long the image scale-out takes
   ///   (default: 300ms)
-  const BouncingCircle({
-    required Widget child,
-    required double circleRadius,
-    Color circleColor = Colors.transparent,
-    Duration bounceDuration = MarioMakerTiming.bounceDurationDefault,
-    Duration imageScaleOutDuration = MarioMakerTiming.imageScaleOutDuration,
+  const new({
+    required this._child,
+    required this._circleRadius,
+    this._circleColor = const Color(0x00000000),
+    this._bounceDuration = MarioMakerTiming.bounceDurationDefault,
+    this._imageScaleOutDuration = MarioMakerTiming.imageScaleOutDuration,
     super.key,
-  }) : _child = child,
-       _circleRadius = circleRadius,
-       _circleColor = circleColor,
-       _bounceDuration = bounceDuration,
-       _imageScaleOutDuration = imageScaleOutDuration;
+  });
 
   final Widget _child;
   final double _circleRadius;
@@ -111,16 +107,9 @@ class _BouncingCircleState extends State<BouncingCircle>
     _scaleAnimation = _bounceTweenSequence.animate(_bounceController);
 
     // Image scales from 1.0 to 0.0 (disappears)
-    _imageScaleAnimation =
-        Tween<double>(
-          begin: 1,
-          end: 0,
-        ).animate(
-          CurvedAnimation(
-            parent: _imageScaleController,
-            curve: Curves.easeInBack,
-          ),
-        );
+    _imageScaleAnimation = Tween<double>(begin: 1, end: 0).animate(
+      CurvedAnimation(parent: _imageScaleController, curve: Curves.easeInBack),
+    );
 
     // Start bounce, then scale out image when bounce completes
     unawaited(

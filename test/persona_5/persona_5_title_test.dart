@@ -1,15 +1,12 @@
 import 'package:fancy_titles/fancy_titles.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Persona5Title', () {
     group('instantiation', () {
       test('can be instantiated with required parameters', () {
-        expect(
-          const Persona5Title(text: 'TEST'),
-          isNotNull,
-        );
+        expect(const Persona5Title(text: 'TEST'), isNotNull);
       });
 
       test('can be instantiated with all parameters', () {
@@ -59,10 +56,7 @@ void main() {
 
       test('can be instantiated with onPhaseChange callback', () {
         final phases = <AnimationPhase>[];
-        final widget = Persona5Title(
-          text: 'TEST',
-          onPhaseChange: phases.add,
-        );
+        final widget = Persona5Title(text: 'TEST', onPhaseChange: phases.add);
         expect(widget, isNotNull);
         expect(phases, isEmpty); // Not called until widget is built
       });
@@ -90,9 +84,7 @@ void main() {
     group('widget rendering', () {
       testWidgets('renders with required parameters', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Persona5Title(text: 'TEST'),
-          ),
+          const MaterialApp(home: Persona5Title(text: 'TEST')),
         );
 
         expect(find.byType(Persona5Title), findsOneWidget);
@@ -137,10 +129,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: Persona5Title(
-              text: 'TEST',
-              onPhaseChange: phases.add,
-            ),
+            home: Persona5Title(text: 'TEST', onPhaseChange: phases.add),
           ),
         );
 
@@ -252,9 +241,7 @@ void main() {
         });
 
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Persona5Title(text: 'LANDSCAPE'),
-          ),
+          const MaterialApp(home: Persona5Title(text: 'LANDSCAPE')),
         );
 
         // Pump past textAppearDelay so the canShowText branch is exercised.
@@ -279,9 +266,7 @@ void main() {
         });
 
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Persona5Title(text: 'SHOW TEXT'),
-          ),
+          const MaterialApp(home: Persona5Title(text: 'SHOW TEXT')),
         );
 
         // Pump past textAppearDelay so _showText becomes true.

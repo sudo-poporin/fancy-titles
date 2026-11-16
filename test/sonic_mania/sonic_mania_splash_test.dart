@@ -1,17 +1,14 @@
 import 'package:fancy_titles/fancy_titles.dart';
 import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('SonicManiaSplash', () {
     group('instantiation', () {
       test('can be instantiated with only baseText', () {
-        expect(
-          SonicManiaSplash(baseText: 'TEST'),
-          isNotNull,
-        );
+        expect(SonicManiaSplash(baseText: 'TEST'), isNotNull);
       });
 
       test('can be instantiated with all parameters', () {
@@ -27,32 +24,17 @@ void main() {
 
       test('throws FlutterError if lastText exceeds 4 characters', () {
         expect(
-          () => SonicManiaSplash(
-            baseText: 'TEST',
-            lastText: 'TOOLONG',
-          ),
+          () => SonicManiaSplash(baseText: 'TEST', lastText: 'TOOLONG'),
           throwsFlutterError,
         );
       });
 
       test('accepts lastText with exactly 4 characters', () {
-        expect(
-          SonicManiaSplash(
-            baseText: 'TEST',
-            lastText: 'ACT1',
-          ),
-          isNotNull,
-        );
+        expect(SonicManiaSplash(baseText: 'TEST', lastText: 'ACT1'), isNotNull);
       });
 
       test('handles single character lastText', () {
-        expect(
-          SonicManiaSplash(
-            baseText: 'TEST',
-            lastText: 'A',
-          ),
-          isNotNull,
-        );
+        expect(SonicManiaSplash(baseText: 'TEST', lastText: 'A'), isNotNull);
       });
     });
 
@@ -111,9 +93,7 @@ void main() {
     group('widget rendering', () {
       testWidgets('renders with required parameters', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: SonicManiaSplash(baseText: 'TEST'),
-          ),
+          MaterialApp(home: SonicManiaSplash(baseText: 'TEST')),
         );
 
         expect(find.byType(SonicManiaSplash), findsOneWidget);
@@ -157,10 +137,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: SonicManiaSplash(
-              baseText: 'TEST',
-              onPhaseChange: phases.add,
-            ),
+            home: SonicManiaSplash(baseText: 'TEST', onPhaseChange: phases.add),
           ),
         );
 
@@ -202,9 +179,7 @@ void main() {
 
       testWidgets('auto-destructs after totalDuration', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: SonicManiaSplash(baseText: 'TEST'),
-          ),
+          MaterialApp(home: SonicManiaSplash(baseText: 'TEST')),
         );
 
         expect(find.byType(SonicManiaSplash), findsOneWidget);
@@ -223,10 +198,7 @@ void main() {
       testWidgets('renders secondaryText in uppercase', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: SonicManiaSplash(
-              baseText: 'BASE',
-              secondaryText: 'zone',
-            ),
+            home: SonicManiaSplash(baseText: 'BASE', secondaryText: 'zone'),
           ),
         );
         // Pump past slideIn (forward + reverse) so _canShowText becomes true

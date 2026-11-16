@@ -1,6 +1,6 @@
 import 'package:fancy_titles/fancy_titles.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   // Use a real asset bundled in pubspec.yaml under test/fixtures/.
@@ -10,10 +10,7 @@ void main() {
     group('instantiation', () {
       test('can be instantiated with required parameters', () {
         expect(
-          const MarioMakerTitle(
-            title: 'TEST',
-            imagePath: 'assets/test.png',
-          ),
+          const MarioMakerTitle(title: 'TEST', imagePath: 'assets/test.png'),
           isNotNull,
         );
       });
@@ -101,10 +98,7 @@ void main() {
       testWidgets('renders with required parameters', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: MarioMakerTitle(
-              title: 'TEST',
-              imagePath: realImagePath,
-            ),
+            home: MarioMakerTitle(title: 'TEST', imagePath: realImagePath),
           ),
         );
 
@@ -227,10 +221,7 @@ void main() {
       testWidgets('hides itself after animation completes', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: MarioMakerTitle(
-              title: 'TEST',
-              imagePath: realImagePath,
-            ),
+            home: MarioMakerTitle(title: 'TEST', imagePath: realImagePath),
           ),
         );
 
@@ -293,10 +284,7 @@ void main() {
       testWidgets('disposes without errors mid-animation', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: MarioMakerTitle(
-              title: 'TEST',
-              imagePath: realImagePath,
-            ),
+            home: MarioMakerTitle(title: 'TEST', imagePath: realImagePath),
           ),
         );
 

@@ -2,12 +2,12 @@ import 'dart:ui' as ui;
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A simple test painter for testing CachedBlurPainter
 class _TestPainter extends CustomPainter {
-  const _TestPainter({this.color = Colors.red});
+  const new({this.color = Colors.red});
 
   final Color color;
 
@@ -27,7 +27,7 @@ class _TestPainter extends CustomPainter {
 
 /// A painter that tracks paint calls for testing
 class _TrackingPainter extends CustomPainter {
-  _TrackingPainter({this.onPaint});
+  new({this.onPaint});
 
   final VoidCallback? onPaint;
 
@@ -88,9 +88,7 @@ void main() {
         await disposeAndSettle(tester);
       });
 
-      testWidgets('can be instantiated with zero sigma values', (
-        tester,
-      ) async {
+      testWidgets('can be instantiated with zero sigma values', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: CachedBlurPainter(
@@ -497,10 +495,7 @@ void main() {
       testWidgets('handles very small size', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            home: CachedBlurPainter(
-              painter: _TestPainter(),
-              size: Size(1, 1),
-            ),
+            home: CachedBlurPainter(painter: _TestPainter(), size: Size(1, 1)),
           ),
         );
 

@@ -1,7 +1,7 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:fancy_titles/evangelion/painters/painters.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Define el orden de aparicion de las cortinas en la animacion de Evangelion.
 ///
@@ -69,60 +69,57 @@ enum CurtainOrder {
 class Curtain extends StatefulWidget {
   /// Crea una cortina con orden, duracion, curva y delay personalizados.
   ///
-  /// [order] determina que painter y animacion usar.
-  /// [duration] tiempo que dura visible la cortina.
-  /// [delay] tiempo antes de que aparezca la cortina.
-  /// [curve] curva de la animacion.
+  /// `order` determina que painter y animacion usar.
+  /// `duration` tiempo que dura visible la cortina.
+  /// `delay` tiempo antes de que aparezca la cortina.
+  /// `curve` curva de la animacion.
   // coverage:ignore-start
-  const Curtain({
-    required CurtainOrder order,
-    Duration duration = EvangelionTiming.sparkDefaultDuration,
-    Curve curve = Curves.easeInOut,
-    Duration delay = EvangelionTiming.curtainFirstDelay,
+  const new({
+    required this._order,
+    this._duration = EvangelionTiming.sparkDefaultDuration,
+    this._curve = Curves.easeInOut,
+    this._delay = EvangelionTiming.curtainFirstDelay,
     super.key,
-  }) : _delay = delay,
-       _curve = curve,
-       _duration = duration,
-       _order = order;
+  });
   // coverage:ignore-end
 
   /// Shows the first curtain of Evangelion title
-  const Curtain.first({super.key})
+  const new first({super.key})
     : _order = CurtainOrder.first,
       _duration = EvangelionTiming.curtainFirstDuration,
       _curve = Curves.easeInOut,
       _delay = EvangelionTiming.curtainFirstDelay;
 
   /// Shows the second curtain of Evangelion title
-  const Curtain.second({super.key})
+  const new second({super.key})
     : _order = CurtainOrder.second,
       _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
       _delay = EvangelionTiming.curtainSecondDelay;
 
   /// Shows the third curtain of Evangelion title
-  const Curtain.third({super.key})
+  const new third({super.key})
     : _order = CurtainOrder.third,
       _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
       _delay = EvangelionTiming.curtainThirdDelay;
 
   /// Shows the fourth curtain of Evangelion title
-  const Curtain.fourth({super.key})
+  const new fourth({super.key})
     : _order = CurtainOrder.fourth,
       _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
       _delay = EvangelionTiming.curtainFourthDelay;
 
   /// Shows the fifth curtain of Evangelion title
-  const Curtain.fifth({super.key})
+  const new fifth({super.key})
     : _order = CurtainOrder.fifth,
       _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
       _delay = EvangelionTiming.curtainFifthDelay;
 
   /// Shows the sixth curtain of Evangelion title
-  const Curtain.sixth({super.key})
+  const new sixth({super.key})
     : _order = CurtainOrder.sixth,
       _duration = EvangelionTiming.curtainSecondaryDuration,
       _curve = Curves.easeInOut,
@@ -167,7 +164,9 @@ class _CurtainState extends State<Curtain> with CancelableTimersMixin {
               FadeTransition(opacity: animation, child: child),
           child: _fadeOut
               ? const SizedBox.shrink()
-              : const SizedBox.expand(child: ColoredBox(color: Colors.black)),
+              : const SizedBox.expand(
+                  child: ColoredBox(color: Color(0xFF000000)),
+                ),
         );
       case CurtainOrder.second:
         return AnimatedSwitcher(

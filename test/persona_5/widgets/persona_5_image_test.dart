@@ -1,6 +1,6 @@
 import 'package:fancy_titles/persona_5/widgets/persona_5_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Persona5Image', () {
@@ -9,10 +9,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -26,10 +23,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -48,16 +42,11 @@ void main() {
         expect(find.byType(SizedBox), findsWidgets);
       });
 
-      testWidgets('shows no Transform when imagePath is null', (
-        tester,
-      ) async {
+      testWidgets('shows no Transform when imagePath is null', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -75,10 +64,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -97,10 +83,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -120,10 +103,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: true,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: true),
             ),
           ),
         );
@@ -212,10 +192,7 @@ void main() {
                 alignment: Alignment.center,
                 children: [
                   SizedBox.expand(),
-                  Persona5Image(
-                    imagePath: null,
-                    withImageBlendMode: true,
-                  ),
+                  Persona5Image(imagePath: null, withImageBlendMode: true),
                 ],
               ),
             ),
@@ -232,10 +209,7 @@ void main() {
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Persona5Image(
-                    imagePath: null,
-                    withImageBlendMode: false,
-                  ),
+                  Persona5Image(imagePath: null, withImageBlendMode: false),
                 ],
               ),
             ),
@@ -272,10 +246,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
@@ -292,10 +263,7 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: true,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: true),
             ),
           ),
         );
@@ -314,20 +282,13 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
 
         await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: SizedBox.shrink(),
-            ),
-          ),
+          const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
         );
 
         expect(tester.takeException(), isNull);
@@ -339,17 +300,12 @@ void main() {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
-              body: Persona5Image(
-                imagePath: null,
-                withImageBlendMode: false,
-              ),
+              body: Persona5Image(imagePath: null, withImageBlendMode: false),
             ),
           ),
         );
 
-        final widget = tester.widget<Persona5Image>(
-          find.byType(Persona5Image),
-        );
+        final widget = tester.widget<Persona5Image>(find.byType(Persona5Image));
         expect(widget, isA<StatelessWidget>());
       });
     });

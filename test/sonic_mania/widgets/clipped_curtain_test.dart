@@ -1,8 +1,8 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/clippers/clippers.dart';
 import 'package:fancy_titles/sonic_mania/widgets/clipped_curtain.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('ClippedCurtain', () {
@@ -50,9 +50,7 @@ void main() {
       testWidgets('ClippedCurtain.left creates left curtain', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -63,9 +61,7 @@ void main() {
       testWidgets('ClippedCurtain.right creates right curtain', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.right(
-              customClipper: RightCurtainClipper(),
-            ),
+            home: ClippedCurtain.right(customClipper: RightCurtainClipper()),
           ),
         );
 
@@ -76,9 +72,7 @@ void main() {
       testWidgets('left variant uses correct default offsets', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -90,9 +84,7 @@ void main() {
       testWidgets('right variant uses correct default offsets', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.right(
-              customClipper: RightCurtainClipper(),
-            ),
+            home: ClippedCurtain.right(customClipper: RightCurtainClipper()),
           ),
         );
 
@@ -106,9 +98,7 @@ void main() {
       testWidgets('contains ClipPath', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -119,9 +109,7 @@ void main() {
       testWidgets('contains ColoredBox with yellow color', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -141,11 +129,7 @@ void main() {
         final clipper = LeftCurtainClipper();
 
         await tester.pumpWidget(
-          MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: clipper,
-            ),
-          ),
+          MaterialApp(home: ClippedCurtain.left(customClipper: clipper)),
         );
 
         final clipPath = tester.widget<ClipPath>(find.byType(ClipPath));
@@ -158,9 +142,7 @@ void main() {
       testWidgets('starts animation after initial delay', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -177,9 +159,7 @@ void main() {
       testWidgets('slides out after hold delay', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -228,9 +208,7 @@ void main() {
       testWidgets('disposes without errors', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -241,9 +219,7 @@ void main() {
       testWidgets('disposes mid-animation without errors', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
@@ -257,9 +233,7 @@ void main() {
       testWidgets('disposes during slide out without errors', (tester) async {
         await tester.pumpWidget(
           MaterialApp(
-            home: ClippedCurtain.left(
-              customClipper: LeftCurtainClipper(),
-            ),
+            home: ClippedCurtain.left(customClipper: LeftCurtainClipper()),
           ),
         );
 
