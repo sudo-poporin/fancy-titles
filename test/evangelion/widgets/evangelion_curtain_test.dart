@@ -1,8 +1,8 @@
 import 'package:fancy_titles/core/animation_timings.dart';
 // Using direct import to avoid name conflict with sonic_mania Curtain
 import 'package:fancy_titles/evangelion/widgets/evangelion_curtain.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Evangelion Curtain', () {

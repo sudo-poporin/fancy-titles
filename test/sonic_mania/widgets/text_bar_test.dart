@@ -2,8 +2,8 @@ import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/sonic_mania/clippers/bar_clipper.dart';
 import 'package:fancy_titles/sonic_mania/painters/text_bg_painters.dart';
 import 'package:fancy_titles/sonic_mania/widgets/text_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('TextBar', () {

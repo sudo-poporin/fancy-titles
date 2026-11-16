@@ -2,8 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:fancy_titles/core/animation_timings.dart';
 import 'package:fancy_titles/evangelion/widgets/cached_blur_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A simple test painter for testing CachedBlurPainter
 class _TestPainter extends CustomPainter {

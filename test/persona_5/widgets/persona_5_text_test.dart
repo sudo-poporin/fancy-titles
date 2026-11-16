@@ -1,7 +1,7 @@
 import 'package:fancy_titles/persona_5/constants/constants.dart';
 import 'package:fancy_titles/persona_5/widgets/persona_5_text.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Persona5Text', () {
