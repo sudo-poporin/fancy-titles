@@ -28,8 +28,8 @@ import 'package:flutter/widgets.dart';
 class Persona5Text extends StatelessWidget {
   /// Crea un texto estilo Persona 5 con efecto de trazo.
   ///
-  /// `text` el texto a mostrar. Por defecto es 'HADOKEN\n\n\ntakes your heart'.
-  const new({super.key, this._text = 'HADOKEN\n\n\ntakes your heart'});
+  /// `text` el texto a mostrar. Por defecto es 'FANCY TITLES\n\n\ntakes your heart'.
+  const new({super.key, this._text = 'FANCY TITLES\n\n\ntakes your heart'});
 
   final String _text;
 

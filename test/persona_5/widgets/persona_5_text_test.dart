@@ -26,7 +26,7 @@ void main() {
       test('has default text value', () {
         const widget = Persona5Text();
         expect(widget, isNotNull);
-        // Default text is 'HADOKEN\n\n\ntakes your heart'
+        // Default text is 'FANCY TITLES\n\n\ntakes your heart'
       });
     });
 
