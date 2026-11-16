@@ -5,9 +5,9 @@ import 'package:fancy_titles/core/cancelable_timers.dart';
 import 'package:flutter/widgets.dart';
 
 /// Class [BounceVertically]: Bounce animation vertically using sin function.
-/// [child]: mandatory, widget to animate
-/// [duration]: how much time the animation should take
-/// [key]: optional widget key reference
+/// `child`: mandatory, widget to animate
+/// `delay`: extra wait added before the animation starts
+/// `key`: optional widget key reference
 class BounceVertically extends StatefulWidget {
   /// Constructor
   const new({
