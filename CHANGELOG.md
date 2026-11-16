@@ -7,6 +7,19 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
+## [2.0.1] - 2026-11-15
+
+### Modificado
+
+- El texto por defecto de `Persona5Text` pasa a `'FANCY TITLES\n\n\ntakes your heart'`.
+  `Persona5Text` no se exporta y `Persona5Title` siempre le pasa su `text`, así que lo
+  que se ve no cambia.
+
+### Interno
+
+- `example/`: el título activo se arma con un widget privado (`_Title`) en lugar de un
+  método helper.
+
 ## [2.0.0] - 2026-11-15
 
 ### Modificado

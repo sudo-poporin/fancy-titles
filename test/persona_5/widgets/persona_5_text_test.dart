@@ -22,12 +22,6 @@ void main() {
       test('can be instantiated with custom text', () {
         expect(const Persona5Text(text: 'CUSTOM TEXT'), isNotNull);
       });
-
-      test('has default text value', () {
-        const widget = Persona5Text();
-        expect(widget, isNotNull);
-        // Default text is 'HADOKEN\n\n\ntakes your heart'
-      });
     });
 
     group('rendering', () {
@@ -37,6 +31,11 @@ void main() {
         );
 
         expect(find.byType(Persona5Text), findsOneWidget);
+        // Text appears twice due to stroke effect (Stack with 2 Text widgets)
+        expect(
+          find.text('FANCY TITLES\n\n\ntakes your heart'),
+          findsNWidgets(2),
+        );
       });
 
       testWidgets('renders with custom text', (tester) async {
